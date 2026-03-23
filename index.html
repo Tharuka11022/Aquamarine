@@ -100,8 +100,22 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    .pets { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-    .pet-card { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease, transform 0.3s ease; background: white; }
+    .pets { 
+      display: grid; 
+      gap: 2rem; 
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+      justify-content: center;
+    }
+    .pet-card { 
+      max-width: 320px; /* Prevents the card from getting huge */
+      width: 100%;
+      margin: 0 auto; /* Keeps it centered */
+      border-radius: 12px; 
+      overflow: hidden; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+      transition: box-shadow 0.3s ease, transform 0.3s ease; 
+      background: white; 
+    }
     .pet-card img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.3s ease; }
     .pet-card:hover img { transform: scale(1.05); }
     .pet-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.2); transform: translateY(-5px); }
