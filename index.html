@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Aquamarine | Premium Pets</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #38a169;
       --primary-dark: #2f855a;
-      --accent: #4fd1c5;
-      --glass: rgba(255, 255, 255, 0.7);
+      --primary-light: #c6f6d5; 
+      --glass: rgba(255, 255, 255, 0.75);
       --dark: #1a202c;
     }
 
@@ -25,7 +25,7 @@
 
     html { scroll-behavior: smooth; }
 
-    /* --- Scroll Animation Classes --- */
+    /* --- Apple Style Scroll Animations --- */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -36,28 +36,40 @@
       transform: translateY(0);
     }
 
-    /* --- Apple Style Glass Header --- */
+    /* --- Navigation (Glassmorphism) --- */
     nav {
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
       background: var(--glass);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-      padding: 1rem 2rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 0.8rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .logo { font-family: 'Baloo 2', cursive; font-size: 1.5rem; color: var(--primary); font-weight: 800; }
+    .logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; color: var(--primary); font-weight: 800; }
+    
+    .nav-btn {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 0.85rem;
+      background: rgba(0,0,0,0.05);
+      padding: 8px 16px;
+      border-radius: 50px;
+      transition: 0.3s;
+    }
+    .nav-btn:hover { background: var(--primary); color: white; }
 
-    /* --- Hero Slideshow --- */
-    header { position: relative; height: 90vh; overflow: hidden; margin-top: 0; }
+    /* --- Hero Section --- */
+    header { position: relative; height: 100vh; overflow: hidden; }
     .slideshow-container { position: relative; width: 100%; height: 100%; }
     .slide { display: none; position: absolute; width: 100%; height: 100%; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(65%); }
+    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(60%); }
 
     .header-text {
       position: absolute;
@@ -72,23 +84,23 @@
 
     .header-text h1 {
       font-family: 'Baloo 2', cursive;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-size: clamp(2.2rem, 10vw, 4.5rem);
       line-height: 1.1;
       margin-bottom: 1.5rem;
       letter-spacing: -1px;
     }
 
     .header-text p {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       font-weight: 300;
       margin-bottom: 2rem;
       opacity: 0.9;
     }
 
-    /* --- Search Bar Apple Style --- */
+    /* --- Search Bar with Expanding Effect --- */
     .search-wrapper {
         background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px);
         padding: 8px;
         border-radius: 100px;
         display: inline-flex;
@@ -97,19 +109,23 @@
     }
 
     #pet-search {
-      padding: 12px 25px;
-      width: 350px;
+      padding: 14px 25px;
+      width: 300px; /* Starting width */
       border-radius: 50px;
       border: none;
       background: white;
       font-size: 1rem;
-      transition: all 0.4s ease;
       outline: none;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth expansion */
     }
-    #pet-search:focus { width: 450px; box-shadow: 0 0 20px rgba(79, 209, 197, 0.4); }
+    
+    /* Grows when clicked (Desktop only) */
+    @media (min-width: 601px) {
+        #pet-search:focus { width: 480px; }
+    }
 
     .btn-main {
-      padding: 14px 35px;
+      padding: 14px 30px;
       background: var(--primary);
       color: white;
       border: none;
@@ -117,96 +133,114 @@
       font-weight: 600;
       cursor: pointer;
       margin-left: 10px;
-      transition: 0.3s;
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); }
 
-    section { padding: 6rem 2rem; max-width: 1300px; margin: auto; }
+    section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
 
-    /* --- Features Section --- */
+    /* --- Features --- */
     .features {
       display: grid;
-      gap: 3rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      text-align: center;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
     .feature {
       padding: 3rem 2rem;
       border-radius: 30px;
       background: #f9f9f9;
+      text-align: center;
       transition: 0.4s;
     }
     .feature:hover { background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-    .feature h3 { font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: -0.5px; }
-    .feature .icon-circle {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      display: block;
-    }
 
-    /* --- Pet Cards Apple Style --- */
+    /* --- Pet Cards --- */
     .pets { 
       display: grid; 
-      gap: 2.5rem; 
+      gap: 2rem; 
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
       justify-content: center;
     }
     .pet-card { 
       background: white;
-      border-radius: 24px; 
+      border-radius: 28px; 
       overflow: hidden; 
       transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-      border: 1px solid #eee;
+      border: 1px solid #f0f0f0;
     }
     .pet-card:hover { 
-      transform: translateY(-12px); 
-      box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-      border-color: transparent;
+      transform: translateY(-10px); 
+      box-shadow: 0 30px 60px rgba(0,0,0,0.1);
     }
     .pet-card img { 
       width: 100%; 
-      height: 280px; 
+      aspect-ratio: 1/1; 
       object-fit: cover; 
-      transition: 0.5s; 
     }
     .pet-card .info { padding: 1.5rem; }
-    .pet-card .info h4 { font-size: 1.25rem; margin-bottom: 0.3rem; letter-spacing: -0.5px;}
-    .pet-card .info p { color: #718096; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem;}
+    .pet-card .info h4 { font-size: 1.3rem; margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+    .pet-card .info p { color: #718096; font-weight: 600; margin-bottom: 1.2rem; }
 
+    /* --- Buy Button --- */
     .buy-btn {
       width: 100%;
-      padding: 12px;
-      background-color: #f0fdf4;
-      color: var(--primary);
+      padding: 14px;
+      background-color: var(--primary);
+      color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 16px;
       cursor: pointer;
       font-weight: 700;
-      transition: 0.3s;
+      transition: all 0.2s ease;
     }
-    .buy-btn:hover { background-color: var(--primary); color: white; }
+    .buy-btn:hover { background-color: var(--primary-dark); }
+    
+    .buy-btn:active {
+      background-color: var(--primary-light) !important;
+      color: var(--primary-dark);
+      transform: scale(0.96);
+    }
 
-    /* --- Stats Section --- */
+    /* --- Stats --- */
     .stats { 
       display: grid; 
       gap: 2rem; 
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-      text-align: center; 
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
       background: var(--dark); 
       color: white;
       border-radius: 40px; 
-      padding: 5rem 2rem;
-      margin-bottom: 4rem;
+      padding: 4rem 2rem;
+      text-align: center;
     }
-    .stats div { font-size: 3rem; font-weight: 800; color: var(--accent); }
-    .stats p { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; }
+    .stats div { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
 
-    footer { background: #f9f9f9; color: #1a202c; padding: 4rem 2rem; text-align: center; border-top: 1px solid #eee; }
-    footer a { color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: 600; }
+    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid #eee; color: #718096; font-size: 0.9rem; }
 
-    @media(max-width: 768px){ 
-        #pet-search { width: 200px; }
-        #pet-search:focus { width: 250px; }
+    /* --- MOBILE PERFECT FIXES --- */
+    @media (max-width: 600px) {
+        nav { padding: 0.8rem 1.2rem; }
+        .header-text { width: 92%; }
+        
+        .search-wrapper {
+            flex-direction: column;
+            background: none;
+            backdrop-filter: none;
+            border: none;
+            gap: 12px;
+            padding: 0;
+            width: 100%;
+        }
+        #pet-search {
+            width: 100% !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-main {
+            width: 100%;
+            margin-left: 0;
+            padding: 16px;
+        }
+        
+        section { padding: 3.5rem 1.2rem; }
     }
   </style>
 </head>
@@ -215,7 +249,7 @@
 <nav>
     <div class="logo">AQUAMARINE</div>
     <div>
-        <a href="#featured-pets" style="text-decoration:none; color:inherit; font-weight:600; font-size:0.9rem;">Browse Inventory</a>
+        <a href="#featured-pets" class="nav-btn">Browse Inventory</a>
     </div>
 </nav>
 
@@ -226,53 +260,45 @@
     <div class="slide fade"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide3.jpg" alt="Slide 3"></div>
 
     <div class="header-text">
-      <h1 class="reveal active">Pure Joy, <br>Pure Breed.</h1>
-      <p class="reveal active">Experience the harmony of nature with companions that redefine love.</p>
+      <h1 class="reveal active">Pure Joy. <br>Pure Breed.</h1>
+      <p class="reveal active">Companions that redefine unconditional love.</p>
       
       <div class="search-wrapper reveal active">
-          <input type="text" id="pet-search" placeholder="Search for your new friend..." />
-          <button class="btn-main" onclick="document.getElementById('featured-pets').scrollIntoView()">Explore</button>
+          <input type="text" id="pet-search" placeholder="Search our collection..." />
+          <button class="btn-main" onclick="document.getElementById('featured-pets').scrollIntoView({behavior:'smooth'})">Explore</button>
       </div>
     </div>
   </div>
 </header>
 
-<!-- Features -->
 <section class="features">
   <div class="feature reveal">
-    <span class="icon-circle">🛡️</span>
+    <div style="font-size:2.5rem; margin-bottom:1rem;">🛡️</div>
     <h3>Lifetime Health</h3>
-    <p>Industry-leading health guarantees for every companion we provide.</p>
+    <p>Premium health guarantees for every companion we provide.</p>
   </div>
   <div class="feature reveal">
-    <span class="icon-circle">💎</span>
+    <div style="font-size:2.5rem; margin-bottom:1rem;">💎</div>
     <h3>Elite Lineage</h3>
-    <p>Ethically sourced from globally recognized and verified breeders.</p>
-  </div>
-  <div class="feature reveal">
-    <span class="icon-circle">☁️</span>
-    <h3>Concierge Support</h3>
-    <p>Our experts are available around the clock to guide your journey.</p>
+    <p>Sourced from globally recognized and verified elite breeders.</p>
   </div>
 </section>
 
-<!-- Pets -->
 <section id="featured-pets">
-  <h2 style="text-align:center; font-size: 2.5rem; margin-bottom:4rem; letter-spacing:-1px;">Featured Collections</h2>
+  <h2 style="text-align:center; font-size: 2.2rem; margin-bottom:3.5rem; letter-spacing:-1px;">Available Pets</h2>
   <div class="pets reveal" id="pets-container"></div>
 </section>
 
-<!-- Stats -->
 <section class="reveal">
     <div class="stats">
-        <div>10k<span>+</span><p>Happy Owners</p></div>
-        <div>500<span>+</span><p>Global Partners</p></div>
-        <div>24<span>/7</span><p>Care Experts</p></div>
+        <div>10k<span>+</span><p style="font-size:0.8rem; text-transform:uppercase; opacity:0.6">Owners</p></div>
+        <div>500<span>+</span><p style="font-size:0.8rem; text-transform:uppercase; opacity:0.6">Partners</p></div>
+        <div>24<span>/7</span><p style="font-size:0.8rem; text-transform:uppercase; opacity:0.6">Care</p></div>
     </div>
 </section>
 
 <footer>
-  <p>&copy; 2024 Aquamarine Premium Pets. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="admin.html">Admin</a></p>
+  <p>&copy; 2024 Aquamarine. <a href="admin.html" style="color:var(--primary); text-decoration:none; font-weight:600;">Admin Portal</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -281,34 +307,33 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJia3ptcXVwdnR2aHFjamF4bWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjgwMTYsImV4cCI6MjA4OTgwNDAxNn0.upfrcHG8B0qZM_ruy97UL1AA-ykpCmyQ_1db0B7vkjg';
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // --- Smooth Reveal Animation ---
+  // --- Apple Reveal Logic ---
   function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    for (var i = 0; i < reveals.length; i++) {
-      var windowHeight = window.innerHeight;
-      var elementTop = reveals[i].getBoundingClientRect().top;
-      var elementVisible = 150;
-      if (elementTop < windowHeight - elementVisible) {
-        reveals[i].classList.add("active");
+    const reveals = document.querySelectorAll(".reveal");
+    reveals.forEach(el => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+      if (elementTop < windowHeight - 100) {
+        el.classList.add("active");
       }
-    }
+    });
   }
   window.addEventListener("scroll", reveal);
+  reveal();
 
   // --- Slideshow ---
   let slideIndex = 0;
   const slides = document.querySelectorAll(".slide");
   function showSlides() {
-    slides.forEach(slide => { slide.style.display = "none"; slide.classList.remove('fade'); });
+    slides.forEach(s => s.style.display = "none");
     slideIndex++;
-    if(slideIndex > slides.length) { slideIndex = 1 }
+    if(slideIndex > slides.length) slideIndex = 1;
     slides[slideIndex - 1].style.display = "block";
-    slides[slideIndex - 1].classList.add('fade');
-    setTimeout(showSlides, 5000);
+    setTimeout(showSlides, 4500);
   }
   showSlides();
 
-  // --- Load Data ---
+  // --- Supabase Loading ---
   const petsContainer = document.getElementById('pets-container');
   let allPets = [];
 
@@ -321,8 +346,8 @@
         <img src="${pet.image_url}" alt="${pet.name}" loading="lazy">
         <div class="info">
           <h4>${pet.name}</h4>
-          <p>Investment: Rs. ${pet.price}</p>
-          <button class="buy-btn" onclick="buyPet('${pet.name}', '${pet.price}')">Acquire Companion</button>
+          <p>Price: Rs. ${pet.price}</p>
+          <button class="buy-btn" onclick="buyPet('${pet.name}', '${pet.price}')">Buy Now</button>
         </div>
       `;
       petsContainer.appendChild(card);
@@ -338,16 +363,15 @@
   loadPets();
 
   // --- Search Logic ---
-  const searchInput = document.getElementById('pet-search');
-  searchInput.addEventListener('input', () => {
-    const filter = searchInput.value.toLowerCase();
-    const filteredPets = allPets.filter(pet => pet.name.toLowerCase().includes(filter));
-    renderPets(filteredPets);
+  document.getElementById('pet-search').addEventListener('input', (e) => {
+    const filter = e.target.value.toLowerCase();
+    const filtered = allPets.filter(p => p.name.toLowerCase().includes(filter));
+    renderPets(filtered);
   });
 
   function buyPet(name, price) {
     const phone = "94742934189";
-    const message = `Hello, I would like to inquire about acquiring the following companion:\n\nPet: ${name}\nPrice: Rs.${price}`;
+    const message = `Hello, I'm interested in buying: ${name} for Rs.${price}`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
   }
 </script>
