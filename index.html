@@ -31,7 +31,7 @@
     body.showing-details #main-content { display: none; }
     body.showing-details #detail-view { display: block; }
 
-    /* --- Original Apple Style Scroll Animations --- */
+    /* --- Apple Style Scroll Animations --- */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -42,33 +42,15 @@
       transform: translateY(0);
     }
 
-    /* --- Navigation (Glassmorphism) --- */
+    /* --- Navigation --- */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      padding: 0.8rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.05); padding: 0.8rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
     }
     .logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; color: var(--primary); font-weight: 800; cursor: pointer; }
-    
-    .nav-btn {
-      text-decoration: none;
-      color: var(--dark);
-      font-weight: 600;
-      font-size: 0.85rem;
-      background: rgba(0,0,0,0.05);
-      padding: 8px 16px;
-      border-radius: 50px;
-      transition: 0.3s;
-    }
+    .nav-btn { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.85rem; background: rgba(0,0,0,0.05); padding: 8px 16px; border-radius: 50px; transition: 0.3s; }
     .nav-btn:hover { background: var(--primary); color: white; }
 
     /* --- Hero Section --- */
@@ -78,157 +60,106 @@
     .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(60%); }
 
     .header-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      z-index: 2;
-      width: 90%;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      text-align: center; color: white; z-index: 2; width: 90%;
     }
+    .header-text h1 { font-family: 'Baloo 2', cursive; font-size: clamp(2.2rem, 10vw, 4.5rem); line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; }
 
-    .header-text h1 {
-      font-family: 'Baloo 2', cursive;
-      font-size: clamp(2.2rem, 10vw, 4.5rem);
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      letter-spacing: -1px;
-    }
-
-    .header-text p {
-      font-size: clamp(1rem, 4vw, 1.2rem);
-      font-weight: 300;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-
-    /* --- Search Bar with Expanding Effect (PRESERVED) --- */
+    /* --- Expanding Search Bar --- */
     .search-wrapper {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(15px);
-        padding: 8px;
-        border-radius: 100px;
-        display: inline-flex;
-        align-items: center;
-        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
+        padding: 8px; border-radius: 100px; display: inline-flex;
+        align-items: center; border: 1px solid rgba(255,255,255,0.2);
     }
-
     #pet-search {
-      padding: 14px 25px;
-      width: 300px;
-      border-radius: 50px;
-      border: none;
-      background: white;
-      font-size: 1rem;
-      outline: none;
-      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 14px 25px; width: 300px; border-radius: 50px; border: none;
+      background: white; font-size: 1rem; outline: none; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
-    @media (min-width: 601px) {
-        #pet-search:focus { width: 480px; }
-    }
+    @media (min-width: 601px) { #pet-search:focus { width: 480px; } }
 
     .btn-main {
-      padding: 14px 30px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-left: 10px;
+      padding: 14px 30px; background: var(--primary); color: white; border: none;
+      border-radius: 50px; font-weight: 600; cursor: pointer; margin-left: 10px;
       transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); }
 
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
 
-    /* --- Features --- */
-    .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    /* --- Features Section (OPTIMIZED FOR MOBILE) --- */
+    .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     .feature { padding: 3rem 2rem; border-radius: 30px; background: #f9f9f9; text-align: center; transition: 0.4s; }
     .feature:hover { background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
 
-    /* --- Pet Cards --- */
-    .pets { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); justify-content: center; }
+    /* --- Pet Cards (OPTIMIZED FOR MOBILE) --- */
+    .pets { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center; }
     .pet-card { background: white; border-radius: 28px; overflow: hidden; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); border: 1px solid #f0f0f0; }
     .pet-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
-    .pet-card .info { padding: 1.5rem; }
-    .pet-card .info h4 { font-size: 1.3rem; margin-bottom: 0.3rem; letter-spacing: -0.5px; }
-    .pet-card .info p { color: #718096; font-weight: 600; margin-bottom: 1.2rem; }
+    .pet-card .info { padding: 1.2rem; }
+    .pet-card .info h4 { font-size: 1.1rem; margin-bottom: 0.3rem; }
 
-    /* --- Buy Button (PRESERVED ANIMATIONS) --- */
+    /* --- Buttons and Hover states --- */
     .buy-btn {
-      width: 100%;
-      padding: 14px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: all 0.2s ease;
+      width: 100%; padding: 14px; background-color: var(--primary); color: white;
+      border: none; border-radius: 16px; cursor: pointer; font-weight: 700; transition: all 0.2s ease;
     }
     .buy-btn:hover { background-color: var(--primary-dark); }
-    .buy-btn:active {
-      background-color: var(--primary-light) !important;
-      color: var(--primary-dark);
-      transform: scale(0.96);
-    }
+    .buy-btn:active { background-color: var(--primary-light) !important; color: var(--primary-dark); transform: scale(0.96); }
 
-    /* --- Stats --- */
-    .stats { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); background: var(--dark); color: white; border-radius: 40px; padding: 4rem 2rem; text-align: center; }
+    .stats { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); background: var(--dark); color: white; border-radius: 40px; padding: 3rem 1.5rem; text-align: center; }
+    .stats div span { color: var(--primary); }
 
-    /* --- DETAIL VIEW LAYOUT (New) --- */
-    .back-nav { padding: 10px 20px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; color: #718096; margin-bottom: 20px; }
-    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; max-width: 1100px; margin: auto; padding: 0 20px; }
-    .detail-gallery img { width: 100%; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-    
-    .detail-info h2 { font-size: 2.2rem; margin-bottom: 10px; }
-    .detail-price { font-size: 1.6rem; color: var(--primary); font-weight: 800; margin-bottom: 20px; }
-    
-    .age-badge { display: inline-flex; align-items: center; gap: 8px; background: #f0f4f8; padding: 12px 20px; border-radius: 12px; font-weight: 600; margin-bottom: 30px; }
-    
-    .about-section { background: #f9f9f9; padding: 30px; border-radius: 24px; }
-    .about-section h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #a0aec0; margin-bottom: 15px; }
-    .bullet-point { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.95rem; }
+    /* --- Detail View --- */
+    .back-nav { padding: 10px 20px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; color: #718096; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin: auto; padding: 20px; }
+    .detail-gallery img { width: 100%; border-radius: 24px; }
+    .detail-info h2 { font-size: 2.2rem; }
+    .detail-price { font-size: 1.6rem; color: var(--primary); font-weight: 800; margin: 10px 0; }
+    .age-badge { display: inline-flex; align-items: center; gap: 8px; background: #f0f4f8; padding: 10px 15px; border-radius: 10px; font-weight: 600; margin-bottom: 20px; }
+    .about-section { background: #f9f9f9; padding: 25px; border-radius: 20px; }
+    .bullet-point { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.95rem; }
+    .wa-btn { background: var(--primary); color: white; text-decoration: none; padding: 18px; border-radius: 15px; text-align: center; font-weight: 700; display: block; margin-top: 20px; }
+    .contact-btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; }
 
-    .detail-actions { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 30px; }
-    .wa-btn { background: var(--primary); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
-    .contact-btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; }
-    
-    .wa-btn:active, .contact-btn:active { transform: scale(0.97); background-color: var(--primary-light); color: var(--primary-dark); }
-
-    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid #eee; color: #718096; font-size: 0.9rem; }
-
-    /* --- MOBILE STYLES (PRESERVED & ENHANCED) --- */
+    /* --- MOBILE PERFECT FIXES --- */
     @media (max-width: 600px) {
         nav { padding: 0.8rem 1.2rem; }
-        .header-text { width: 92%; }
-        .search-wrapper { flex-direction: column; background: none; backdrop-filter: none; border: none; gap: 12px; padding: 0; width: 100%; }
-        #pet-search { width: 100% !important; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .btn-main { width: 100%; margin-left: 0; padding: 16px; }
-        section { padding: 3.5rem 1.2rem; }
+        .header-text { width: 95%; }
         
-        /* Mobile Detail View */
-        .detail-grid { grid-template-columns: 1fr; gap: 20px; }
-        .detail-info h2 { font-size: 1.8rem; }
-        #detail-view { padding-bottom: 50px; }
+        /* Features SIDE BY SIDE on mobile */
+        .features { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .feature { padding: 1.5rem 1rem; border-radius: 20px; }
+        .feature h3 { font-size: 0.95rem; margin-bottom: 5px; }
+        .feature p { font-size: 0.75rem; line-height: 1.3; }
+        .feature div { font-size: 1.8rem !important; }
+
+        /* Pets 2 per row on mobile */
+        .pets { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .pet-card { border-radius: 18px; }
+        .pet-card .info { padding: 0.8rem; }
+        .pet-card .info h4 { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pet-card .info p { font-size: 0.8rem; margin-bottom: 0.6rem; }
+        .buy-btn { padding: 10px; font-size: 0.85rem; border-radius: 10px; }
+
+        /* Detail view fix */
+        .detail-grid { grid-template-columns: 1fr; gap: 20px; padding: 15px; }
+        .detail-info h2 { font-size: 1.6rem; }
+
+        .search-wrapper { flex-direction: column; background: none; border: none; gap: 10px; width: 100%; }
+        #pet-search { width: 100% !important; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .btn-main { width: 100%; margin-left: 0; }
+        section { padding: 3rem 1rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- Navigation -->
 <nav>
     <div class="logo" onclick="goHome()">AQUAMARINE</div>
-    <div>
-        <a href="#featured-pets" class="nav-btn" onclick="goHome()">Browse Inventory</a>
-    </div>
+    <a href="#featured-pets" class="nav-btn" onclick="goHome()">Inventory</a>
 </nav>
 
-<!-- Main Page Content -->
 <div id="main-content">
     <header>
       <div class="slideshow-container">
@@ -237,9 +168,9 @@
         <div class="slide"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide3.jpg"></div>
         <div class="header-text">
           <h1 class="reveal active">Pure Joy. <br>Pure Breed.</h1>
-          <p class="reveal active">Companions that redefine unconditional love.</p>
+          <p class="reveal active" style="margin-bottom:20px;">Companions that redefine unconditional love.</p>
           <div class="search-wrapper reveal active">
-              <input type="text" id="pet-search" placeholder="Search our collection..." />
+              <input type="text" id="pet-search" placeholder="Search collection..." />
               <button class="btn-main" onclick="document.getElementById('featured-pets').scrollIntoView({behavior:'smooth'})">Explore</button>
           </div>
         </div>
@@ -247,34 +178,39 @@
     </header>
 
     <section class="features">
-      <div class="feature reveal"><h3>🛡️ Lifetime Health</h3><p>Premium health guarantees for every companion.</p></div>
-      <div class="feature reveal"><h3>💎 Elite Lineage</h3><p>Sourced from globally recognized breeders.</p></div>
+      <div class="feature reveal">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">🛡️</div>
+        <h3>Lifetime Health</h3>
+        <p>Verified health guarantees for every companion.</p>
+      </div>
+      <div class="feature reveal">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">💎</div>
+        <h3>Elite Lineage</h3>
+        <p>Sourced from globally recognized breeders.</p>
+      </div>
     </section>
 
     <section id="featured-pets">
-      <h2 style="text-align:center; font-size: 2.2rem; margin-bottom:3.5rem; letter-spacing:-1px;">Available Pets</h2>
+      <h2 style="text-align:center; font-size: 1.8rem; margin-bottom:2.5rem;">Available Inventory</h2>
       <div class="pets reveal" id="pets-container"></div>
     </section>
 
     <section class="reveal">
         <div class="stats">
-            <div>10k<span>+</span><p>Owners</p></div>
-            <div>500<span>+</span><p>Partners</p></div>
-            <div>24<span>/7</span><p>Care</p></div>
+            <div>10k<span>+</span><p style="font-size:0.7rem; opacity:0.7">Owners</p></div>
+            <div>500<span>+</span><p style="font-size:0.7rem; opacity:0.7">Partners</p></div>
+            <div>24<span>/7</span><p style="font-size:0.7rem; opacity:0.7">Care</p></div>
         </div>
     </section>
 </div>
 
-<!-- Pet Detail View -->
 <div id="detail-view">
     <div class="back-nav" onclick="goHome()">← Back</div>
-    <div class="detail-grid" id="detail-content">
-        <!-- Content injected by JS -->
-    </div>
+    <div class="detail-grid" id="detail-content"></div>
 </div>
 
 <footer>
-  <p>&copy; 2026 Aquamarine. </p>
+  <p>&copy; 2024 Aquamarine. <a href="admin.html" style="color:var(--primary); text-decoration:none;">Admin</a></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -286,57 +222,35 @@
   let allPets = [];
   const myNumber = "94742934189";
 
-  // Navigation Logic
-  function goHome() {
-      document.body.classList.remove('showing-details');
-      window.scrollTo(0,0);
-  }
+  function goHome() { document.body.classList.remove('showing-details'); window.scrollTo(0,0); }
 
   function showPetDetails(petId) {
       const pet = allPets.find(p => p.id == petId);
       const detailContainer = document.getElementById('detail-content');
       
-      // Use the database values, or show a default if empty
-      const age = pet.age || "Breeding Age";
-      const desc = pet.description || "Premium quality breed with striking physical characteristics.";
-      const health = pet.health || "Verified & Healthy";
-      const temperament = pet.temperament || "Peaceful & Hardy";
-      const care = pet.care || "Thrives in stable water conditions";
-
       detailContainer.innerHTML = `
-        <div class="detail-gallery">
-            <img src="${pet.image_url}" alt="${pet.name}">
-        </div>
+        <div class="detail-gallery"><img src="${pet.image_url}"></div>
         <div class="detail-info">
             <h2>${pet.name}</h2>
             <p class="detail-price">Rs. ${pet.price}</p>
-            
-            <div class="age-badge">📅 Age: ${age}</div>
-            
+            <div class="age-badge">📅 Age: ${pet.age || 'Breeding Age'}</div>
             <div class="about-section">
                 <h3>About</h3>
-                <p style="margin-bottom:20px;">${desc}</p>
-                <div class="bullet-point">✅ <b>Health:</b> ${health}</div>
-                <div class="bullet-point">✅ <b>Temperament:</b> ${temperament}</div>
-                <div class="bullet-point">✅ <b>Care:</b> ${care}</div>
+                <p style="margin-bottom:15px; font-size:0.9rem;">${pet.description || 'Premium quality breed with striking features.'}</p>
+                <div class="bullet-point">✅ <b>Health:</b> ${pet.health || 'Verified'}</div>
+                <div class="bullet-point">✅ <b>Care:</b> ${pet.care || 'Easy'}</div>
             </div>
-
-            <div class="detail-actions">
-                <a href="https://wa.me/${myNumber}?text=Hi, I'm interested in the ${pet.name}" target="_blank" class="wa-btn">Inquire Now Via WhatsApp</a>
-                <button class="contact-btn" onclick="alert('Call us at: +${myNumber}')">Contact Us</button>
-            </div>
+            <a href="https://wa.me/${myNumber}?text=Interested in: ${pet.name}" target="_blank" class="wa-btn">Inquire via WhatsApp</a>
+            <button class="contact-btn" onclick="alert('Call: +${myNumber}')">Contact Us</button>
         </div>
       `;
-      
       document.body.classList.add('showing-details');
       window.scrollTo(0,0);
   }
 
-  // Supabase Loading
   async function loadPets() {
-    const { data, error } = await supabaseClient.from('pets').select('*');
-    if (error) return;
-    allPets = data;
+    const { data } = await supabaseClient.from('pets').select('*');
+    allPets = data || [];
     renderPets(allPets);
   }
 
@@ -345,12 +259,12 @@
     container.innerHTML = '';
     list.forEach(pet => {
       const card = document.createElement('div');
-      card.classList.add('pet-card');
+      card.className = 'pet-card';
       card.innerHTML = `
         <img src="${pet.image_url}" loading="lazy">
         <div class="info">
           <h4>${pet.name}</h4>
-          <p>Price: Rs. ${pet.price}</p>
+          <p style="color:var(--primary); font-weight:700;">Rs. ${pet.price}</p>
           <button class="buy-btn" onclick="showPetDetails('${pet.id}')">View Details</button>
         </div>
       `;
@@ -358,26 +272,26 @@
     });
   }
 
-  // --- Animations & Search (PRESERVED) ---
   function reveal() {
     document.querySelectorAll(".reveal").forEach(el => {
-      if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+      if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add("active");
     });
   }
   window.addEventListener("scroll", reveal);
 
-  let slideIndex = 0;
+  let slideIdx = 0;
   function showSlides() {
     const slides = document.querySelectorAll(".slide");
     slides.forEach(s => s.style.display = "none");
-    slideIndex = (slideIndex + 1) > slides.length ? 1 : slideIndex + 1;
-    if(slides[slideIndex-1]) slides[slideIndex-1].style.display = "block";
+    slideIdx++;
+    if(slideIdx > slides.length) slideIdx = 1;
+    if(slides[slideIdx-1]) slides[slideIdx-1].style.display = "block";
     setTimeout(showSlides, 4500);
   }
 
   document.getElementById('pet-search').addEventListener('input', (e) => {
-    const filter = e.target.value.toLowerCase();
-    renderPets(allPets.filter(p => p.name.toLowerCase().includes(filter)));
+    const val = e.target.value.toLowerCase();
+    renderPets(allPets.filter(p => p.name.toLowerCase().includes(val)));
   });
 
   loadPets();
