@@ -9,30 +9,18 @@
     :root { --primary: #38a169; --primary-dark: #2f855a; --bg: #f7fafc; --dark: #1a202c; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); padding: 20px; }
     .container { max-width: 900px; margin: auto; }
-    
     header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
     .btn-add { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-    .btn-add:hover { background: var(--primary-dark); transform: scale(1.02); }
-
-    /* Form Styles */
     #pet-form-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 40px; display: none; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .full-width { grid-column: span 2; }
     label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.85rem; color: #4a5568; }
-    input, textarea { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 5px; outline-color: var(--primary); font-size: 0.95rem; }
-    textarea { height: 100px; resize: vertical; }
-
-    /* Inventory List */
-    .inventory-card { background: white; display: flex; align-items: center; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #edf2f7; transition: 0.3s; }
-    .inventory-card:hover { transform: translateX(5px); border-color: var(--primary); }
+    input, textarea { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 5px; outline-color: var(--primary); }
+    .inventory-card { background: white; display: flex; align-items: center; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #edf2f7; }
     .inventory-card img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; margin-right: 20px; }
-    .info { flex-grow: 1; }
-    .info h4 { margin: 0; font-size: 1.1rem; }
-    .info p { color: #718096; font-size: 0.9rem; margin-top: 4px; }
     .actions { display: flex; gap: 10px; }
-    .btn-edit { background: #f0f4f8; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; color: #4a5568; }
+    .btn-edit { background: #f0f4f8; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
     .btn-del { background: #fff5f5; color: #c53030; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-
     @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
   </style>
 </head>
@@ -48,63 +36,32 @@
     <h2 id="form-title" style="margin-bottom: 20px;">Add New Pet</h2>
     <form id="pet-form">
       <input type="hidden" id="pet-id">
-      <input type="hidden" id="pet-img-url"> <!-- Stores existing URL when editing -->
-      
       <div class="form-grid">
         <div class="full-width">
-            <label>Upload Pet Image</label>
-            <input type="file" id="pet-file" accept="image/*">
-            <small style="color: #a0aec0;">Required for new pets. Leave blank when editing to keep current image.</small>
+            <label>Upload Pet Images (Select Multiple)</label>
+            <input type="file" id="pet-files" accept="image/*" multiple>
+            <small style="color: #a0aec0;">The first image will be the homepage cover.</small>
         </div>
-        <div>
-          <label>Pet Name</label>
-          <input type="text" id="pet-name" placeholder="e.g. 24k Full Gold Guppy" required>
-        </div>
-        <div>
-          <label>Price (Rs.)</label>
-          <input type="number" id="pet-price" placeholder="600" required>
-        </div>
-        <div>
-          <label>Age</label>
-          <input type="text" id="pet-age" placeholder="e.g. 3 Months / Breeding Age">
-        </div>
-        <div>
-            <label>Size</label>
-            <input type="text" id="pet-size" placeholder="e.g. 1-2 inches">
-        </div>
-        <div class="full-width">
-          <label>About Description (Paragraph)</label>
-          <textarea id="pet-desc" placeholder="Describe the history or features..."></textarea>
-        </div>
-        <div>
-          <label>Coloration Detail</label>
-          <input type="text" id="pet-color" placeholder="e.g. Uniform shimmering gold">
-        </div>
-        <div>
-          <label>Health Status</label>
-          <input type="text" id="pet-health" placeholder="e.g. Verified & Vaccinated">
-        </div>
-        <div>
-          <label>Temperament</label>
-          <input type="text" id="pet-temper" placeholder="e.g. Peaceful & Hardy">
-        </div>
-        <div>
-          <label>Care Requirements</label>
-          <input type="text" id="pet-care" placeholder="e.g. Thrives in stable water">
-        </div>
+        <div><label>Pet Name</label><input type="text" id="pet-name" required></div>
+        <div><label>Price (Rs.)</label><input type="number" id="pet-price" required></div>
+        <div><label>Age</label><input type="text" id="pet-age"></div>
+        <div><label>Size</label><input type="text" id="pet-size"></div>
+        <div class="full-width"><label>About Description</label><textarea id="pet-desc"></textarea></div>
+        <div><label>Coloration</label><input type="text" id="pet-color"></div>
+        <div><label>Health</label><input type="text" id="pet-health"></div>
+        <div><label>Temperament</label><input type="text" id="pet-temper"></div>
+        <div><label>Care</label><input type="text" id="pet-care"></div>
       </div>
       <div style="display: flex; gap: 10px; margin-top: 25px;">
         <button type="submit" id="submit-btn" class="btn-add" style="width: 100%;">Save to Inventory</button>
-        <button type="button" onclick="toggleForm()" style="background:#edf2f7; color: #4a5568; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight: 600;">Cancel</button>
+        <button type="button" onclick="toggleForm()" style="background:#edf2f7; border:none; padding:12px; border-radius:8px; cursor:pointer;">Cancel</button>
       </div>
     </form>
   </div>
 
   <div id="inventory-list">
     <h3>Current Inventory</h3>
-    <div id="pets-container" style="margin-top: 20px;">
-        <p id="loading-text">Loading inventory items...</p>
-    </div>
+    <div id="pets-container" style="margin-top: 20px;"><p>Loading...</p></div>
   </div>
 </div>
 
@@ -115,6 +72,7 @@
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let isEditing = false;
+  let currentPetImages = [];
 
   function toggleForm() {
     const f = document.getElementById('pet-form-container');
@@ -122,131 +80,85 @@
     if(f.style.display === 'none') {
         document.getElementById('pet-form').reset();
         document.getElementById('pet-id').value = '';
-        document.getElementById('pet-img-url').value = '';
-        document.getElementById('form-title').innerText = 'Add New Pet';
+        currentPetImages = [];
         isEditing = false;
     }
   }
 
   async function loadInventory() {
-    try {
-        const { data, error } = await supabaseClient.from('pets').select('*');
-        if (error) throw error;
-        const container = document.getElementById('pets-container');
-        container.innerHTML = '';
-        
-        data.forEach(pet => {
-          const div = document.createElement('div');
-          div.className = 'inventory-card';
-          div.innerHTML = `
-            <img src="${pet.image_url}" onerror="this.src='https://via.placeholder.com/80?text=No+Img'">
-            <div class="info">
-              <h4>${pet.name}</h4>
-              <p>Rs. ${pet.price} | Age: ${pet.age || 'N/A'}</p>
-            </div>
-            <div class="actions">
-              <button class="btn-edit" onclick="editPet('${pet.id}')">Edit</button>
-              <button class="btn-del" onclick="deletePet('${pet.id}')">Delete</button>
-            </div>
-          `;
-          container.appendChild(div);
-        });
-    } catch (err) {
-        document.getElementById('pets-container').innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
-    }
+    const { data } = await supabaseClient.from('pets').select('*');
+    const container = document.getElementById('pets-container');
+    container.innerHTML = '';
+    data.forEach(pet => {
+      const displayImg = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
+      const div = document.createElement('div');
+      div.className = 'inventory-card';
+      div.innerHTML = `<img src="${displayImg}"><div class="info"><h4>${pet.name}</h4><p>Rs. ${pet.price}</p></div><div class="actions"><button class="btn-edit" onclick="editPet('${pet.id}')">Edit</button><button class="btn-del" onclick="deletePet('${pet.id}')">Delete</button></div>`;
+      container.appendChild(div);
+    });
   }
 
-  // --- Image Upload Logic ---
-  async function uploadImage(file) {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `${fileName}`;
-
-    let { error: uploadError } = await supabaseClient.storage
-      .from('pet-images') // Make sure this bucket is PUBLIC in Supabase Storage
-      .upload(filePath, file);
-
-    if (uploadError) throw uploadError;
-
-    const { data } = supabaseClient.storage.from('pet-images').getPublicUrl(filePath);
-    return data.publicUrl;
+  async function uploadFiles(files) {
+    let urls = [];
+    for (let file of files) {
+        const fileName = `${Math.random()}.${file.name.split('.').pop()}`;
+        const { error } = await supabaseClient.storage.from('pet-images').upload(fileName, file);
+        if (!error) {
+            const { data } = supabaseClient.storage.from('pet-images').getPublicUrl(fileName);
+            urls.push(data.publicUrl);
+        }
+    }
+    return urls;
   }
 
   document.getElementById('pet-form').onsubmit = async (e) => {
     e.preventDefault();
-    const submitBtn = document.getElementById('submit-btn');
-    submitBtn.innerText = "Processing... Please wait.";
-    submitBtn.disabled = true;
+    const btn = document.getElementById('submit-btn');
+    btn.innerText = "Uploading..."; btn.disabled = true;
 
-    const id = document.getElementById('pet-id').value;
-    const fileInput = document.getElementById('pet-file');
-    let finalImageUrl = document.getElementById('pet-img-url').value;
+    const fileInput = document.getElementById('pet-files');
+    let newUrls = await uploadFiles(fileInput.files);
+    let finalImages = isEditing && fileInput.files.length === 0 ? currentPetImages : newUrls;
 
-    try {
-        // If a new file is selected, upload it
-        if (fileInput.files.length > 0) {
-            finalImageUrl = await uploadImage(fileInput.files[0]);
-        } else if (!isEditing) {
-            throw new Error("Please select an image for the new pet.");
-        }
+    const petData = {
+      name: document.getElementById('pet-name').value,
+      price: document.getElementById('pet-price').value,
+      images: finalImages, // Save as array
+      image_url: finalImages[0] || "", // Keep for compatibility
+      age: document.getElementById('pet-age').value,
+      description: document.getElementById('pet-desc').value,
+      health: document.getElementById('pet-health').value,
+      temperament: document.getElementById('pet-temper').value,
+      care: document.getElementById('pet-care').value,
+      size: document.getElementById('pet-size').value,
+      coloration: document.getElementById('pet-color').value
+    };
 
-        const petData = {
-          name: document.getElementById('pet-name').value,
-          price: document.getElementById('pet-price').value,
-          image_url: finalImageUrl,
-          age: document.getElementById('pet-age').value,
-          description: document.getElementById('pet-desc').value,
-          health: document.getElementById('pet-health').value,
-          temperament: document.getElementById('pet-temper').value,
-          care: document.getElementById('pet-care').value,
-          size: document.getElementById('pet-size').value,
-          coloration: document.getElementById('pet-color').value
-        };
+    if (isEditing) await supabaseClient.from('pets').update(petData).eq('id', document.getElementById('pet-id').value);
+    else await supabaseClient.from('pets').insert([petData]);
 
-        if (isEditing) {
-            await supabaseClient.from('pets').update(petData).eq('id', id);
-        } else {
-            await supabaseClient.from('pets').insert([petData]);
-        }
-
-        toggleForm();
-        loadInventory();
-    } catch (err) {
-        alert("Error: " + err.message);
-    } finally {
-        submitBtn.innerText = "Save to Inventory";
-        submitBtn.disabled = false;
-    }
+    btn.innerText = "Save to Inventory"; btn.disabled = false;
+    toggleForm(); loadInventory();
   };
 
   async function editPet(id) {
-    const { data, error } = await supabaseClient.from('pets').select('*').eq('id', id).single();
-    if (error) return;
-
+    const { data } = await supabaseClient.from('pets').select('*').eq('id', id).single();
     document.getElementById('pet-id').value = data.id;
-    document.getElementById('pet-img-url').value = data.image_url;
     document.getElementById('pet-name').value = data.name;
     document.getElementById('pet-price').value = data.price;
-    document.getElementById('pet-age').value = data.age || '';
-    document.getElementById('pet-desc').value = data.description || '';
-    document.getElementById('pet-health').value = data.health || '';
-    document.getElementById('pet-temper').value = data.temperament || '';
-    document.getElementById('pet-care').value = data.care || '';
-    document.getElementById('pet-size').value = data.size || '';
-    document.getElementById('pet-color').value = data.coloration || '';
-    
-    document.getElementById('form-title').innerText = 'Edit Pet Details';
+    document.getElementById('pet-age').value = data.age;
+    document.getElementById('pet-desc').value = data.description;
+    document.getElementById('pet-health').value = data.health;
+    document.getElementById('pet-temper').value = data.temperament;
+    document.getElementById('pet-care').value = data.care;
+    document.getElementById('pet-size').value = data.size;
+    document.getElementById('pet-color').value = data.coloration;
+    currentPetImages = data.images || [];
     isEditing = true;
     document.getElementById('pet-form-container').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  async function deletePet(id) {
-    if(confirm('Permanently delete this pet?')) {
-      await supabaseClient.from('pets').delete().eq('id', id);
-      loadInventory();
-    }
-  }
+  async function deletePet(id) { if(confirm('Delete?')) { await supabaseClient.from('pets').delete().eq('id', id); loadInventory(); } }
 
   loadInventory();
 </script>
