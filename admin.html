@@ -3,69 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aquamarine Admin - Manage Pets</title>
+  <title>Aquamarine Admin | Management</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #38a169; --bg: #f0fdfa; --dark: #1a202c; }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background-color: #f7fafc; color: #333; padding: 20px; }
+    :root { --primary: #38a169; --primary-dark: #2f855a; --bg: #f7fafc; --dark: #1a202c; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); padding: 20px; }
+    .container { max-width: 900px; margin: auto; }
     
-    .admin-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    h1 { color: var(--dark); margin-bottom: 25px; border-bottom: 2px solid var(--bg); padding-bottom: 10px; }
-    
-    /* Form Styles */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px; background: var(--bg); padding: 20px; border-radius: 10px; align-items: end; }
-    .input-group { display: flex; flex-direction: column; }
-    label { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #4a5568; }
-    input { padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; background: white; }
-    
-    .btn-add { background: var(--primary); color: white; border: none; padding: 11px 25px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
-    .btn-add:disabled { background: #a0aec0; cursor: not-allowed; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .btn-add { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+    .btn-add:hover { background: var(--primary-dark); transform: scale(1.02); }
 
-    /* Table Styles */
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th { text-align: left; background: #edf2f7; padding: 12px; font-size: 0.9rem; }
-    td { padding: 12px; border-bottom: 1px solid #edf2f7; }
-    .pet-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-    
-    .btn-delete { background: #feb2b2; color: #9b2c2c; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-    .nav-link { display: inline-block; margin-bottom: 20px; color: var(--primary); text-decoration: none; font-weight: 600; }
+    /* Form Styles */
+    #pet-form-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 40px; display: none; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .full-width { grid-column: span 2; }
+    label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.85rem; color: #4a5568; }
+    input, textarea { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 5px; outline-color: var(--primary); font-size: 0.95rem; }
+    textarea { height: 100px; resize: vertical; }
+
+    /* Inventory List */
+    .inventory-card { background: white; display: flex; align-items: center; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #edf2f7; transition: 0.3s; }
+    .inventory-card:hover { transform: translateX(5px); border-color: var(--primary); }
+    .inventory-card img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; margin-right: 20px; }
+    .info { flex-grow: 1; }
+    .info h4 { margin: 0; font-size: 1.1rem; }
+    .info p { color: #718096; font-size: 0.9rem; margin-top: 4px; }
+    .actions { display: flex; gap: 10px; }
+    .btn-edit { background: #f0f4f8; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; color: #4a5568; }
+    .btn-del { background: #fff5f5; color: #c53030; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
   </style>
 </head>
 <body>
 
-<div class="admin-container">
-  <a href="index.html" class="nav-link">← Back to Website</a>
-  <h1>Pet Inventory Management</h1>
+<div class="container">
+  <header>
+    <h1>Aquamarine Inventory</h1>
+    <button class="btn-add" onclick="toggleForm()">+ Add New Pet</button>
+  </header>
 
-  <div class="form-grid">
-    <div class="input-group">
-      <label>Pet Name</label>
-      <input type="text" id="newName" placeholder="e.g. Husky Puppy">
-    </div>
-    <div class="input-group">
-      <label>Price (Rs.)</label>
-      <input type="text" id="newPrice" placeholder="e.g. 5,000">
-    </div>
-    <div class="input-group">
-      <label>Upload Image</label>
-      <input type="file" id="imageFile" accept="image/*">
-    </div>
-    <button class="btn-add" id="submitBtn" onclick="addPet()">Add Pet</button>
+  <div id="pet-form-container">
+    <h2 id="form-title" style="margin-bottom: 20px;">Add New Pet</h2>
+    <form id="pet-form">
+      <input type="hidden" id="pet-id">
+      <input type="hidden" id="pet-img-url"> <!-- Stores existing URL when editing -->
+      
+      <div class="form-grid">
+        <div class="full-width">
+            <label>Upload Pet Image</label>
+            <input type="file" id="pet-file" accept="image/*">
+            <small style="color: #a0aec0;">Required for new pets. Leave blank when editing to keep current image.</small>
+        </div>
+        <div>
+          <label>Pet Name</label>
+          <input type="text" id="pet-name" placeholder="e.g. 24k Full Gold Guppy" required>
+        </div>
+        <div>
+          <label>Price (Rs.)</label>
+          <input type="number" id="pet-price" placeholder="600" required>
+        </div>
+        <div>
+          <label>Age</label>
+          <input type="text" id="pet-age" placeholder="e.g. 3 Months / Breeding Age">
+        </div>
+        <div>
+            <label>Size</label>
+            <input type="text" id="pet-size" placeholder="e.g. 1-2 inches">
+        </div>
+        <div class="full-width">
+          <label>About Description (Paragraph)</label>
+          <textarea id="pet-desc" placeholder="Describe the history or features..."></textarea>
+        </div>
+        <div>
+          <label>Coloration Detail</label>
+          <input type="text" id="pet-color" placeholder="e.g. Uniform shimmering gold">
+        </div>
+        <div>
+          <label>Health Status</label>
+          <input type="text" id="pet-health" placeholder="e.g. Verified & Vaccinated">
+        </div>
+        <div>
+          <label>Temperament</label>
+          <input type="text" id="pet-temper" placeholder="e.g. Peaceful & Hardy">
+        </div>
+        <div>
+          <label>Care Requirements</label>
+          <input type="text" id="pet-care" placeholder="e.g. Thrives in stable water">
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 25px;">
+        <button type="submit" id="submit-btn" class="btn-add" style="width: 100%;">Save to Inventory</button>
+        <button type="button" onclick="toggleForm()" style="background:#edf2f7; color: #4a5568; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight: 600;">Cancel</button>
+      </div>
+    </form>
   </div>
 
-  <h2 style="margin-top:30px">Existing Pets</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="admin-pets-table"></tbody>
-  </table>
+  <div id="inventory-list">
+    <h3>Current Inventory</h3>
+    <div id="pets-container" style="margin-top: 20px;">
+        <p id="loading-text">Loading inventory items...</p>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -74,87 +114,141 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJia3ptcXVwdnR2aHFjamF4bWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjgwMTYsImV4cCI6MjA4OTgwNDAxNn0.upfrcHG8B0qZM_ruy97UL1AA-ykpCmyQ_1db0B7vkjg';
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  async function loadAdminPets() {
-    const { data } = await supabaseClient.from('pets').select('*').order('id', { ascending: false });
-    const tableBody = document.getElementById('admin-pets-table');
-    tableBody.innerHTML = '';
-    data.forEach(pet => {
-      tableBody.innerHTML += `
-        <tr>
-          <td><img src="${pet.image_url}" class="pet-thumb"></td>
-          <td><strong>${pet.name}</strong></td>
-          <td>Rs. ${pet.price}</td>
-          <td><button class="btn-delete" onclick="deletePet(${pet.id})">Remove</button></td>
-        </tr>`;
-    });
+  let isEditing = false;
+
+  function toggleForm() {
+    const f = document.getElementById('pet-form-container');
+    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+    if(f.style.display === 'none') {
+        document.getElementById('pet-form').reset();
+        document.getElementById('pet-id').value = '';
+        document.getElementById('pet-img-url').value = '';
+        document.getElementById('form-title').innerText = 'Add New Pet';
+        isEditing = false;
+    }
   }
 
-  async function addPet() {
-    const name = document.getElementById('newName').value;
-    const price = document.getElementById('newPrice').value;
-    const fileInput = document.getElementById('imageFile');
-    const btn = document.getElementById('submitBtn');
-
-    if (!name || !price || fileInput.files.length === 0) {
-      alert("Please fill all fields and select an image");
-      return;
+  async function loadInventory() {
+    try {
+        const { data, error } = await supabaseClient.from('pets').select('*');
+        if (error) throw error;
+        const container = document.getElementById('pets-container');
+        container.innerHTML = '';
+        
+        data.forEach(pet => {
+          const div = document.createElement('div');
+          div.className = 'inventory-card';
+          div.innerHTML = `
+            <img src="${pet.image_url}" onerror="this.src='https://via.placeholder.com/80?text=No+Img'">
+            <div class="info">
+              <h4>${pet.name}</h4>
+              <p>Rs. ${pet.price} | Age: ${pet.age || 'N/A'}</p>
+            </div>
+            <div class="actions">
+              <button class="btn-edit" onclick="editPet('${pet.id}')">Edit</button>
+              <button class="btn-del" onclick="deletePet('${pet.id}')">Delete</button>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+    } catch (err) {
+        document.getElementById('pets-container').innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
     }
+  }
 
-    btn.disabled = true;
-    btn.innerText = "Uploading...";
-
-    const file = fileInput.files[0];
+  // --- Image Upload Logic ---
+  async function uploadImage(file) {
     const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`; // Unique name
+    const fileName = `${Math.random()}.${fileExt}`;
     const filePath = `${fileName}`;
 
-    // 1. Upload image to Supabase Storage "Website" bucket
-    const { data: uploadData, error: uploadError } = await supabaseClient
-      .storage
-      .from('Website')
+    let { error: uploadError } = await supabaseClient.storage
+      .from('pet-images') // Make sure this bucket is PUBLIC in Supabase Storage
       .upload(filePath, file);
 
-    if (uploadError) {
-      alert("Upload Error: " + uploadError.message);
-      btn.disabled = false;
-      btn.innerText = "Add Pet";
-      return;
+    if (uploadError) throw uploadError;
+
+    const { data } = supabaseClient.storage.from('pet-images').getPublicUrl(filePath);
+    return data.publicUrl;
+  }
+
+  document.getElementById('pet-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.innerText = "Processing... Please wait.";
+    submitBtn.disabled = true;
+
+    const id = document.getElementById('pet-id').value;
+    const fileInput = document.getElementById('pet-file');
+    let finalImageUrl = document.getElementById('pet-img-url').value;
+
+    try {
+        // If a new file is selected, upload it
+        if (fileInput.files.length > 0) {
+            finalImageUrl = await uploadImage(fileInput.files[0]);
+        } else if (!isEditing) {
+            throw new Error("Please select an image for the new pet.");
+        }
+
+        const petData = {
+          name: document.getElementById('pet-name').value,
+          price: document.getElementById('pet-price').value,
+          image_url: finalImageUrl,
+          age: document.getElementById('pet-age').value,
+          description: document.getElementById('pet-desc').value,
+          health: document.getElementById('pet-health').value,
+          temperament: document.getElementById('pet-temper').value,
+          care: document.getElementById('pet-care').value,
+          size: document.getElementById('pet-size').value,
+          coloration: document.getElementById('pet-color').value
+        };
+
+        if (isEditing) {
+            await supabaseClient.from('pets').update(petData).eq('id', id);
+        } else {
+            await supabaseClient.from('pets').insert([petData]);
+        }
+
+        toggleForm();
+        loadInventory();
+    } catch (err) {
+        alert("Error: " + err.message);
+    } finally {
+        submitBtn.innerText = "Save to Inventory";
+        submitBtn.disabled = false;
     }
+  };
 
-    // 2. Get Public URL
-    const { data: urlData } = supabaseClient
-      .storage
-      .from('Website')
-      .getPublicUrl(filePath);
+  async function editPet(id) {
+    const { data, error } = await supabaseClient.from('pets').select('*').eq('id', id).single();
+    if (error) return;
 
-    const publicUrl = urlData.publicUrl;
-
-    // 3. Save to Database
-    const { error: dbError } = await supabaseClient
-      .from('pets')
-      .insert([{ name, price, image_url: publicUrl }]);
-
-    if (dbError) {
-      alert("DB Error: " + dbError.message);
-    } else {
-      document.getElementById('newName').value = '';
-      document.getElementById('newPrice').value = '';
-      fileInput.value = '';
-      loadAdminPets();
-    }
-
-    btn.disabled = false;
-    btn.innerText = "Add Pet";
+    document.getElementById('pet-id').value = data.id;
+    document.getElementById('pet-img-url').value = data.image_url;
+    document.getElementById('pet-name').value = data.name;
+    document.getElementById('pet-price').value = data.price;
+    document.getElementById('pet-age').value = data.age || '';
+    document.getElementById('pet-desc').value = data.description || '';
+    document.getElementById('pet-health').value = data.health || '';
+    document.getElementById('pet-temper').value = data.temperament || '';
+    document.getElementById('pet-care').value = data.care || '';
+    document.getElementById('pet-size').value = data.size || '';
+    document.getElementById('pet-color').value = data.coloration || '';
+    
+    document.getElementById('form-title').innerText = 'Edit Pet Details';
+    isEditing = true;
+    document.getElementById('pet-form-container').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   async function deletePet(id) {
-    if (confirm("Delete this pet?")) {
+    if(confirm('Permanently delete this pet?')) {
       await supabaseClient.from('pets').delete().eq('id', id);
-      loadAdminPets();
+      loadInventory();
     }
   }
 
-  loadAdminPets();
+  loadInventory();
 </script>
 </body>
 </html>
