@@ -43,8 +43,7 @@
         z-index: 9999;
     }
     .spinner {
-        width: 45px;
-        height: 45px;
+        width: 45px; height: 45px;
         border: 5px solid var(--primary-light);
         border-top: 5px solid var(--primary);
         border-radius: 50%;
@@ -71,7 +70,6 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     .logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; color: var(--primary); font-weight: 800; cursor: pointer; }
-    
     .nav-btn {
       text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.85rem;
       background: rgba(0,0,0,0.05); padding: 8px 16px; border-radius: 50px; transition: 0.3s;
@@ -120,18 +118,17 @@
 
     .wa-btn {
         background: var(--primary); color: white; border: none; padding: 18px; 
-        border-radius: 15px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none;
+        border-radius: 15px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; display: block;
     }
     .wa-btn:active { background-color: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.96); }
 
-    .contact-btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
+    .contact-btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .contact-btn:active { background-color: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.96); }
 
     /* --- Sections --- */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
     .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     .feature { padding: 3rem 2rem; border-radius: 30px; background: #f9f9f9; text-align: center; transition: 0.4s; }
-    .feature:hover { background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
 
     /* --- Pet Grid --- */
     .pets { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center; }
@@ -254,7 +251,6 @@
 
   function goHome() { document.body.classList.remove('showing-details'); window.scrollTo(0,0); }
 
-  // Function to switch button text to Phone Number
   function revealPhone(btn) {
       btn.innerText = "Call: +" + myNumber;
       btn.style.backgroundColor = "var(--primary-light)";
@@ -263,11 +259,14 @@
 
   function showPetDetails(petId) {
       const loader = document.getElementById('loader');
-      loader.style.display = 'flex'; // Start Buffering
+      loader.style.display = 'flex';
 
       setTimeout(() => {
           const pet = allPets.find(p => p.id == petId);
           const detailContainer = document.getElementById('detail-content');
+          
+          // Formatting the WhatsApp Message exactly as requested
+          const waMsg = encodeURIComponent(`Hello I’m interested in buying:\n\nPet: ${pet.name}\nPrice: Rs. ${pet.price}`);
           
           detailContainer.innerHTML = `
             <div class="detail-gallery"><img src="${pet.image_url}" alt="${pet.name}"></div>
@@ -282,13 +281,13 @@
                     <div class="bullet-point">✅ <b>Care:</b> ${pet.care || 'Thrives in stable conditions'}</div>
                 </div>
                 <div class="detail-actions">
-                    <a href="https://wa.me/${myNumber}?text=Hi, I'm interested in the ${pet.name}" target="_blank" class="wa-btn">Inquire Now Via WhatsApp</a>
+                    <a href="https://wa.me/${myNumber}?text=${waMsg}" target="_blank" class="wa-btn">Inquire Now Via WhatsApp</a>
                     <button class="contact-btn" onclick="revealPhone(this)">Contact Us</button>
                 </div>
             </div>
           `;
           
-          loader.style.display = 'none'; // End Buffering
+          loader.style.display = 'none';
           document.body.classList.add('showing-details');
           window.scrollTo(0,0);
       }, 800);
