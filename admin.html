@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquamarine Admin - Manage Pets</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #38a169; --bg: #f0fdfa; --dark: #1a202c; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: #f7fafc; color: #333; padding: 20px; }
+    
+    .admin-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    h1 { color: var(--dark); margin-bottom: 25px; border-bottom: 2px solid var(--bg); padding-bottom: 10px; }
+    
+    /* Form Styles */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px; background: var(--bg); padding: 20px; border-radius: 10px; align-items: end; }
+    .input-group { display: flex; flex-direction: column; }
+    label { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #4a5568; }
+    input { padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; background: white; }
+    
+    .btn-add { background: var(--primary); color: white; border: none; padding: 11px 25px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+    .btn-add:disabled { background: #a0aec0; cursor: not-allowed; }
+
+    /* Table Styles */
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { text-align: left; background: #edf2f7; padding: 12px; font-size: 0.9rem; }
+    td { padding: 12px; border-bottom: 1px solid #edf2f7; }
+    .pet-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+    
+    .btn-delete { background: #feb2b2; color: #9b2c2c; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .nav-link { display: inline-block; margin-bottom: 20px; color: var(--primary); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="admin-container">
+  <a href="index.html" class="nav-link">← Back to Website</a>
+  <h1>Pet Inventory Management</h1>
+
+  <div class="form-grid">
+    <div class="input-group">
+      <label>Pet Name</label>
+      <input type="text" id="newName" placeholder="e.g. Husky Puppy">
+    </div>
+    <div class="input-group">
+      <label>Price (Rs.)</label>
+      <input type="text" id="newPrice" placeholder="e.g. 5,000">
+    </div>
+    <div class="input-group">
+      <label>Upload Image</label>
+      <input type="file" id="imageFile" accept="image/*">
+    </div>
+    <button class="btn-add" id="submitBtn" onclick="addPet()">Add Pet</button>
+  </div>
+
+  <h2 style="margin-top:30px">Existing Pets</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="admin-pets-table"></tbody>
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://bbkzmqupvtvhqcjaxmcw.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJia3ptcXVwdnR2aHFjamF4bWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjgwMTYsImV4cCI6MjA4OTgwNDAxNn0.upfrcHG8B0qZM_ruy97UL1AA-ykpCmyQ_1db0B7vkjg';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function loadAdminPets() {
+    const { data } = await supabaseClient.from('pets').select('*').order('id', { ascending: false });
+    const tableBody = document.getElementById('admin-pets-table');
+    tableBody.innerHTML = '';
+    data.forEach(pet => {
+      tableBody.innerHTML += `
+        <tr>
+          <td><img src="${pet.image_url}" class="pet-thumb"></td>
+          <td><strong>${pet.name}</strong></td>
+          <td>Rs. ${pet.price}</td>
+          <td><button class="btn-delete" onclick="deletePet(${pet.id})">Remove</button></td>
+        </tr>`;
+    });
+  }
+
+  async function addPet() {
+    const name = document.getElementById('newName').value;
+    const price = document.getElementById('newPrice').value;
+    const fileInput = document.getElementById('imageFile');
+    const btn = document.getElementById('submitBtn');
+
+    if (!name || !price || fileInput.files.length === 0) {
+      alert("Please fill all fields and select an image");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Uploading...";
+
+    const file = fileInput.files[0];
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`; // Unique name
+    const filePath = `${fileName}`;
+
+    // 1. Upload image to Supabase Storage "Website" bucket
+    const { data: uploadData, error: uploadError } = await supabaseClient
+      .storage
+      .from('Website')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      alert("Upload Error: " + uploadError.message);
+      btn.disabled = false;
+      btn.innerText = "Add Pet";
+      return;
+    }
+
+    // 2. Get Public URL
+    const { data: urlData } = supabaseClient
+      .storage
+      .from('Website')
+      .getPublicUrl(filePath);
+
+    const publicUrl = urlData.publicUrl;
+
+    // 3. Save to Database
+    const { error: dbError } = await supabaseClient
+      .from('pets')
+      .insert([{ name, price, image_url: publicUrl }]);
+
+    if (dbError) {
+      alert("DB Error: " + dbError.message);
+    } else {
+      document.getElementById('newName').value = '';
+      document.getElementById('newPrice').value = '';
+      fileInput.value = '';
+      loadAdminPets();
+    }
+
+    btn.disabled = false;
+    btn.innerText = "Add Pet";
+  }
+
+  async function deletePet(id) {
+    if (confirm("Delete this pet?")) {
+      await supabaseClient.from('pets').delete().eq('id', id);
+      loadAdminPets();
+    }
+  }
+
+  loadAdminPets();
+</script>
+</body>
+</html>

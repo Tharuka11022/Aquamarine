@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquamarine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Baloo+2&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { line-height: 1.6; color: #333; }
+    html { scroll-behavior: smooth; }
+
+    /* Header Slideshow */
+    header { position: relative; height: 450px; overflow: hidden; }
+    .slideshow-container { position: relative; width: 100%; height: 100%; }
+    .slide { display: none; position: absolute; width: 100%; height: 100%; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(70%); transition: transform 0.5s; }
+
+    .header-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      z-index: 2;
+    }
+
+    .header-text h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    }
+
+    .header-text p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    #pet-search {
+      padding: 0.8rem 1.5rem;
+      width: 450px;
+      max-width: 95%;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(145deg, #e0f7f4, #ffffff);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #pet-search::placeholder { color: #4fd1c5; font-weight: 500; }
+    #pet-search:focus { outline: none; box-shadow: 0 4px 15px rgba(56, 161, 105, 0.5); transform: scale(1.02); background: #ffffff; }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      background: #fff;
+      color: #38a169;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #38a169;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    section { padding: 4rem 2rem; max-width: 1200px; margin: auto; }
+
+    /* Features Section with Icons */
+    .features {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      text-align: center;
+    }
+    .feature {
+      background: #f0fdfa;
+      padding: 2rem;
+      border-radius: 12px;
+    }
+    .feature h3 { margin: 1rem 0; }
+    .feature .icon-circle {
+      font-size: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 1rem;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .pets { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .pet-card { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: box-shadow 0.3s ease, transform 0.3s ease; background: white; }
+    .pet-card img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.3s ease; }
+    .pet-card:hover img { transform: scale(1.05); }
+    .pet-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.2); transform: translateY(-5px); }
+
+    .pet-card .info { padding: 1rem; }
+    .pet-card .info h4 { margin-bottom: 0.5rem; }
+
+    .buy-btn {
+      padding: 0.5rem 1.5rem;
+      background-color: #38a169;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      margin-top: 0.5rem;
+    }
+    .buy-btn:hover { background-color: #2f855a; }
+
+    .services { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .service-card { background: #e6fffa; padding: 2rem; border-radius: 12px; text-align: center; }
+
+    .stats { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); text-align: center; background: #f0fdfa; border-radius: 12px; padding: 2rem; }
+    .stats div { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+    footer { background: #1a202c; color: #fff; padding: 3rem 2rem; text-align: center; }
+    footer a { color: #4fd1c5; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media(max-width: 768px){ .header-text h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="slideshow-container">
+    <div class="slide fade"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide1.jpg" alt="Slide 1"></div>
+    <div class="slide fade"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide2.jpg" alt="Slide 2"></div>
+    <div class="slide fade"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide3.jpg" alt="Slide 3"></div>
+
+    <div class="header-text">
+      <h1>Paws, Claws & Feather</h1>
+      <p>Discover a world of lovable companions. Healthy, happy, and ready to join your family.</p>
+      <input type="text" id="pet-search" placeholder="Search pets..." />
+      <button class="btn">Explore Pets</button>
+    </div>
+  </div>
+</header>
+
+<!-- Features Section with Icons -->
+<section class="features">
+  <div class="feature">
+    <div class="icon-circle" style="background:#FF6B6B;">🔥</div>
+    <h3>Health Guaranteed</h3>
+    <p>All pets come with a health guarantee for peace of mind.</p>
+  </div>
+  <div class="feature">
+    <div class="icon-circle" style="background:#38A169;">✅</div>
+    <h3>Verified Breeders</h3>
+    <p>We partner only with trusted breeders to ensure quality pets.</p>
+  </div>
+  <div class="feature">
+    <div class="icon-circle" style="background:#4FD1C5;">🕒</div>
+    <h3>24/7 Support</h3>
+    <p>Our team is here to help you anytime with your pet needs.</p>
+  </div>
+</section>
+
+<!-- Featured Pets Section -->
+<section id="featured-pets">
+  <h2 style="text-align:center; margin-bottom:2rem;">Featured Pets</h2>
+  <div class="pets" id="pets-container"></div>
+</section>
+
+<section class="services">
+  <div class="service-card"><h3>Safe Pet Delivery</h3><p>Stress-free transport to your home.</p></div>
+  <div class="service-card"><h3>Health Guarantee</h3><p>30-day health coverage for all pets.</p></div>
+  <div class="service-card"><h3>Adoption Guidance</h3><p>Personalized advice for your family.</p></div>
+  <div class="service-card"><h3>24/7 Support</h3><p>Always here to help you with your pets.</p></div>
+</section>
+
+<section class="stats">
+  <div>10k+</div><p>Happy Customers</p>
+  <div>5k+</div><p>Pets Delivered</p>
+  <div>500+</div><p>5-Star Reviews</p>
+</section>
+
+<footer>
+  <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // ✅ Initialize Supabase
+  const SUPABASE_URL = 'https://bbkzmqupvtvhqcjaxmcw.supabase.co'; // 🔴 REPLACE THIS
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJia3ptcXVwdnR2aHFjamF4bWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjgwMTYsImV4cCI6MjA4OTgwNDAxNn0.upfrcHG8B0qZM_ruy97UL1AA-ykpCmyQ_1db0B7vkjg'; // 🔴 REPLACE THIS
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Slideshow
+  let slideIndex = 0;
+  const slides = document.querySelectorAll(".slide");
+  function showSlides() {
+    slides.forEach(slide => slide.style.display = "none");
+    slideIndex++;
+    if(slideIndex > slides.length) { slideIndex = 1 }
+    slides[slideIndex - 1].style.display = "block";
+    setTimeout(showSlides, 5000);
+  }
+  showSlides();
+
+  // Scroll button
+  const exploreBtn = document.querySelector('.btn');
+  const featuredPets = document.getElementById('featured-pets');
+  exploreBtn.addEventListener('click', () => {
+    featuredPets.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  const petsContainer = document.getElementById('pets-container');
+
+  // ✅ Render pets
+  function renderPets(list) {
+    petsContainer.innerHTML = '';
+    list.forEach(pet => {
+      const card = document.createElement('div');
+      card.classList.add('pet-card');
+      card.innerHTML = `
+        <img src="${pet.image_url}" alt="${pet.name}">
+        <div class="info">
+          <h4>${pet.name}</h4>
+          <p>Price: Rs.${pet.price}</p>
+          <button class="buy-btn" onclick="buyPet('${pet.name}', '${pet.price}')">Buy Now</button>
+        </div>
+      `;
+      petsContainer.appendChild(card);
+    });
+  }
+
+  // ✅ Fetch pets from Supabase
+  let allPets = [];
+
+  async function loadPets() {
+    const { data, error } = await supabaseClient
+      .from('pets')
+      .select('*');
+
+    if (error) {
+      console.error('Error:', error);
+      return;
+    }
+
+    allPets = data;
+    renderPets(allPets);
+  }
+
+  loadPets();
+
+  // ✅ Search (works with DB data)
+  const searchInput = document.getElementById('pet-search');
+  searchInput.addEventListener('input', () => {
+    const filter = searchInput.value.toLowerCase();
+    const filteredPets = allPets.filter(pet =>
+      pet.name.toLowerCase().includes(filter)
+    );
+    renderPets(filteredPets);
+  });
+function buyPet(name, price) {
+  const phone = "94742934189"; // 🔴 YOUR NUMBER (Sri Lanka format, no +)
+
+  const message = `Hello I’m interested in buying:\n\n Pet: ${name}\n Price: Rs.${price}`;
+  
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  
+  window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
