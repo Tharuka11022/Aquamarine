@@ -72,9 +72,51 @@
     .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
     .btn-main:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    /* Features Section Restored */
+    /* Features Section */
     .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
     .feature { padding: 3rem 2rem; border-radius: 30px; background: #f9f9f9; text-align: center; transition: 0.3s; }
+
+    /* Liquid Glass Filter Tab */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .glass-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 6px;
+      border-radius: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      gap: 5px;
+      width: 600px;
+      max-width: 95vw;
+    }
+    .tab-item {
+      flex: 1;
+      padding: 12px 25px;
+      border-radius: 100px;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.4s var(--easing);
+      white-space: nowrap;
+    }
+    .tab-item.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transform: scale(1.02);
+    }
+    .tab-item:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.4);
+      color: var(--dark);
+    }
 
     /* Suggestions */
     #search-suggestions {
@@ -86,10 +128,20 @@
     .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
     .suggestion-item:hover { background: rgba(0,0,0,0.05); }
 
-    /* Pet Grid */
+    /* Pet Grid + Animations */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
-    .pets { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center; }
-    .pet-card { background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; }
+    .pets { 
+        display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center;
+        transition: opacity 0.3s var(--easing), transform 0.3s var(--easing);
+    }
+    .pet-card { 
+        background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; 
+        animation: petPop 0.5s var(--easing) backwards;
+    }
+    @keyframes petPop {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
     .pet-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
     .pet-card .info { padding: 1.5rem; }
@@ -133,6 +185,7 @@
         .search-wrapper { width: 100%; flex-direction: column; border-radius: 20px; }
         #pet-search { width: 100% !important; }
         .btn-main { margin-left: 0; width: 100%; margin-top: 10px; }
+        .tab-item { padding: 10px 10px; font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -164,7 +217,6 @@
       </div>
     </header>
 
-    <!-- RESTORED FEATURES SECTION -->
     <section class="features">
       <div class="feature reveal">
           <div style="font-size:2.5rem;">🛡️</div>
@@ -179,7 +231,16 @@
     </section>
 
     <section id="featured-pets">
-      <h2 style="text-align:center; font-size: 2rem; margin-bottom:3rem;">Available Inventory</h2>
+      <h2 style="text-align:center; font-size: 2rem; margin-bottom:2rem;">Available Inventory</h2>
+      
+      <div class="filter-container reveal">
+        <div class="glass-tabs">
+          <button class="tab-item active" onclick="filterPets('all', this)">All Pets</button>
+          <button class="tab-item" onclick="filterPets('fish', this)">Fish</button>
+          <button class="tab-item" onclick="filterPets('birds', this)">Birds</button>
+        </div>
+      </div>
+
       <div class="pets reveal" id="pets-container"></div>
     </section>
 </div>
@@ -209,7 +270,6 @@
           const pet = allPets.find(p => p.id == petId);
           const detailContainer = document.getElementById('detail-content');
           const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
-          
           const waMsg = encodeURIComponent(`Hello I’m interested in buying:\n\nPet: ${pet.name}\nPrice: Rs. ${pet.price}`);
           
           detailContainer.innerHTML = `
@@ -269,13 +329,43 @@
     renderPets(allPets);
   }
 
+  /* UPDATED FILTER LOGIC WITH ANIMATION */
+  function filterPets(targetCategory, el) {
+    const container = document.getElementById('pets-container');
+    
+    // Step 1: Fade out container
+    container.style.opacity = '0';
+    container.style.transform = 'translateY(10px)';
+
+    setTimeout(() => {
+        // Step 2: Switch data
+        document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
+        el.classList.add('active');
+
+        if (targetCategory === 'all') {
+          renderPets(allPets);
+        } else {
+          const filtered = allPets.filter(p => p.category && p.category.toLowerCase() === targetCategory);
+          renderPets(filtered);
+        }
+
+        // Step 3: Fade back in (Pet cards will Pop-in via CSS animation)
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+    }, 250); 
+  }
+
   function renderPets(list) {
     const container = document.getElementById('pets-container');
     container.innerHTML = '';
-    list.forEach(pet => {
+    if (list.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 50px; color:#a0aec0;">No pets found in this category.</p>';
+        return;
+    }
+    list.forEach((pet, index) => {
       const thumb = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
       container.innerHTML += `
-        <div class="pet-card">
+        <div class="pet-card" style="animation-delay: ${index * 0.05}s">
             <img src="${thumb}">
             <div class="info">
                 <h4>${pet.name}</h4>
