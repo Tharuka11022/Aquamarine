@@ -267,8 +267,8 @@
 
         /* FIX: Ensure Discover button isn't cut off on mobile */
         .creative-scroll {
-            bottom: 80px; /* Lift it higher to avoid browser UI clipping */
-            transform: translateX(-50%) scale(0.85); /* Slightly smaller for mobile frame */
+            bottom: 80px; 
+            transform: translateX(-50%) scale(0.85); 
         }
     }
   </style>
@@ -336,7 +336,7 @@
       <div class="pets reveal" id="pets-container"></div>
     </section>
 
-    <!-- RESTORED COMPANY FOOTER -->
+    <!-- COMPANY FOOTER -->
     <footer>
         <div class="footer-container">
             <div class="footer-col">
@@ -382,7 +382,6 @@
     </footer>
 </div>
 
-<!-- RESTORED DETAIL VIEW CONTAINER -->
 <div id="detail-view">
     <div style="padding: 10px 20px; cursor: pointer; color: #718096;" onclick="goHome()">← Back</div>
     <div class="detail-grid" id="detail-content"></div>
@@ -502,10 +501,14 @@
       const thumb = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
       container.innerHTML += `
         <div class="pet-card" style="animation-delay: ${index * 0.05}s">
-            <img src="${thumb}">
+            <!-- CLICKABLE IMAGE BLOCK -->
+            <img src="${thumb}" onclick="showPetDetails('${pet.id}')" style="cursor:pointer;">
             <div class="info">
-                <h4>${pet.name}</h4>
-                <p style="color:var(--primary); font-weight:700; margin-bottom:15px;">Rs. ${pet.price}</p>
+                <!-- CLICKABLE INFO BLOCK -->
+                <div onclick="showPetDetails('${pet.id}')" style="cursor:pointer;">
+                    <h4>${pet.name}</h4>
+                    <p style="color:var(--primary); font-weight:700; margin-bottom:15px;">Rs. ${pet.price}</p>
+                </div>
                 <button class="buy-btn" onclick="showPetDetails('${pet.id}')">Buy Now</button>
             </div>
         </div>`;
