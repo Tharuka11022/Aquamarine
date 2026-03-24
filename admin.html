@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Aquamarine Admin | Management</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -21,56 +21,81 @@
         display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
     }
     .login-box {
-        background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
         width: 100%; max-width: 400px; text-align: center;
     }
 
     .container { max-width: 1000px; margin: auto; padding: 40px 20px; display: none; }
     
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-    h1 { font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; gap: 10px; }
+    h1 { font-size: 28px; font-weight: 700; letter-spacing: -1px; margin: 0; }
 
-    .btn { padding: 10px 20px; border-radius: 20px; font-weight: 500; cursor: pointer; border: none; transition: 0.2s; font-size: 14px; }
+    .btn { 
+        padding: 12px 20px; border-radius: 20px; font-weight: 500; cursor: pointer; 
+        border: none; transition: 0.2s; font-size: 14px; white-space: nowrap;
+    }
     .btn-add { background: var(--primary); color: white; }
     .btn-add:hover { opacity: 0.9; }
     
     #pet-form-container { 
-        background: var(--card); padding: 40px; border-radius: 24px; 
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 40px; display: none; 
+        background: var(--card); padding: 30px; border-radius: 24px; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; display: none; 
     }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     .full-width { grid-column: span 2; }
-    label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #86868b; text-transform: uppercase; }
+    label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 6px; color: #86868b; text-transform: uppercase; }
+    
+    /* Input height and font size set to 16px to prevent iOS auto-zoom */
     input, textarea, select { 
         width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; 
-        font-size: 16px; outline: none; transition: 0.2s; background: white;
+        font-size: 16px; outline: none; transition: 0.2s; background: white; -webkit-appearance: none;
     }
     input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); }
 
-    .inventory-grid { display: grid; gap: 15px; }
+    .inventory-grid { display: grid; gap: 12px; }
     .inventory-card { 
-        background: var(--card); padding: 15px; border-radius: 18px; 
+        background: var(--card); padding: 12px; border-radius: 18px; 
         display: flex; align-items: center; justify-content: space-between;
         border: 1px solid rgba(0,0,0,0.05);
     }
-    .pet-preview { display: flex; align-items: center; gap: 20px; }
-    .pet-preview img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; background: #eee; }
-    .pet-preview h4 { margin: 0; font-size: 17px; }
-    .pet-preview p { margin: 4px 0 0; color: #86868b; font-size: 14px; }
+    .pet-preview { display: flex; align-items: center; gap: 15px; overflow: hidden; }
+    .pet-preview img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; background: #eee; flex-shrink: 0; }
+    .pet-preview h4 { margin: 0; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pet-preview p { margin: 2px 0 0; color: #86868b; font-size: 13px; }
     
-    .badge { font-size: 10px; background: #eee; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; margin-left: 5px; }
+    .badge { font-size: 9px; background: #eee; padding: 2px 6px; border-radius: 8px; text-transform: uppercase; vertical-align: middle; }
 
-    .actions { display: flex; gap: 10px; }
-    .btn-edit { background: #f5f5f7; color: var(--text); }
-    .btn-del { background: #fff1f1; color: #ff3b30; }
+    .actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .btn-edit { background: #f5f5f7; color: var(--text); padding: 8px 15px; }
+    .btn-del { background: #fff1f1; color: #ff3b30; padding: 8px 15px; }
 
     #loading-overlay { 
         position: fixed; inset: 0; background: rgba(255,255,255,0.7); 
         backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 3000;
     }
+
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 600px) {
+        body { padding: 0; }
+        .container { padding: 20px 15px; }
+        header { flex-direction: column; align-items: flex-start; }
+        header div { width: 100%; display: flex; gap: 10px; margin-top: 15px; }
+        header div .btn { flex: 1; text-align: center; }
+        
+        #pet-form-container { padding: 20px 15px; border-radius: 0; margin-left: -15px; margin-right: -15px; width: calc(100% + 30px); }
+        .form-grid { grid-template-columns: 1fr; }
+        .full-width { grid-column: span 1; }
+        
+        .inventory-card { flex-direction: column; align-items: flex-start; gap: 15px; }
+        .pet-preview { width: 100%; }
+        .actions { width: 100%; justify-content: flex-end; border-top: 1px solid #f5f5f7; pt: 10px; padding-top: 10px;}
+        .actions button { flex: 1; }
+    }
   </style>
 </head>
 <body>
+
+<div id="loading-overlay">Updating Inventory...</div>
 
 <!-- PASSWORD GATE -->
 <div id="login-gate">
@@ -80,8 +105,6 @@
         <button class="btn btn-add" style="width:100%;" onclick="checkAuth()">Login</button>
     </div>
 </div>
-
-<div id="loading-overlay">Updating Inventory...</div>
 
 <div class="container" id="admin-main">
   <header>
@@ -93,16 +116,16 @@
   </header>
 
   <div id="pet-form-container">
-    <h2 id="form-title" style="margin-top:0;">Add New Pet</h2>
+    <h2 id="form-title" style="margin-top:0; font-size: 20px;">Add New Pet</h2>
     <form id="pet-form">
       <input type="hidden" id="pet-id">
       <div class="form-grid">
         <div class="full-width">
             <label>Images (Can select multiple)</label>
-            <input type="file" id="pet-files" accept="image/*" multiple>
+            <input type="file" id="pet-files" accept="image/*" multiple style="padding: 8px;">
         </div>
-        <div><label>Pet Name</label><input type="text" id="pet-name" required></div>
-        <div><label>Price (Rs.)</label><input type="number" id="pet-price" required></div>
+        <div><label>Pet Name</label><input type="text" id="pet-name" required placeholder="Ex: Blue Betta"></div>
+        <div><label>Price (Rs.)</label><input type="number" id="pet-price" required placeholder="0.00"></div>
         
         <div class="full-width">
             <label>Category</label>
@@ -114,11 +137,11 @@
             </select>
         </div>
 
-        <div><label>Age</label><input type="text" id="pet-age"></div>
-        <div><label>Size</label><input type="text" id="pet-size"></div>
-        <div class="full-width"><label>Description</label><textarea id="pet-desc" rows="3"></textarea></div>
-        <div><label>Coloration</label><input type="text" id="pet-color"></div>
-        <div><label>Health Status</label><input type="text" id="pet-health"></div>
+        <div><label>Age</label><input type="text" id="pet-age" placeholder="Ex: 6 Months"></div>
+        <div><label>Size</label><input type="text" id="pet-size" placeholder="Ex: Large"></div>
+        <div class="full-width"><label>Description</label><textarea id="pet-desc" rows="3" placeholder="Describe the pet..."></textarea></div>
+        <div><label>Coloration</label><input type="text" id="pet-color" placeholder="Ex: Red/White"></div>
+        <div><label>Health Status</label><input type="text" id="pet-health" placeholder="Ex: Excellent"></div>
       </div>
       <div style="display: flex; gap: 10px; margin-top: 30px;">
         <button type="submit" id="submit-btn" class="btn btn-add" style="flex: 2;">Save Pet</button>
@@ -143,10 +166,9 @@
   let isEditing = false;
   let currentPetImages = [];
 
-  // Authentication Logic
   function checkAuth() {
       const pass = document.getElementById('admin-pass').value;
-      if(pass === 'Senulya_12435') { // CHANGE YOUR PASSWORD HERE
+      if(pass === 'Senulya_12435') {
           document.getElementById('login-gate').style.display = 'none';
           document.getElementById('admin-main').style.display = 'block';
           loadInventory();
@@ -157,7 +179,9 @@
 
   function toggleForm() {
     const f = document.getElementById('pet-form-container');
-    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+    const isVisible = f.style.display === 'block';
+    f.style.display = isVisible ? 'none' : 'block';
+    if(!isVisible) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function prepareNewPet() {
@@ -176,7 +200,6 @@
     
     data.forEach(pet => {
       const displayImg = (pet.images && pet.images.length > 0) ? pet.images[0] : (pet.image_url || '');
-      
       const div = document.createElement('div');
       div.className = 'inventory-card';
       div.innerHTML = `
@@ -213,7 +236,7 @@
     currentPetImages = data.images || (data.image_url ? [data.image_url] : []);
     
     isEditing = true;
-    document.getElementById('form-title').innerText = "Edit " + (data.name || 'Pet');
+    document.getElementById('form-title').innerText = "Edit Pet";
     document.getElementById('pet-form-container').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
