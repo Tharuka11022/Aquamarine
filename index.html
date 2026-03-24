@@ -118,16 +118,6 @@
       color: var(--dark);
     }
 
-    /* Suggestions */
-    #search-suggestions {
-        position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
-        border-radius: 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--easing);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 100; opacity: 0;
-    }
-    #search-suggestions.active { max-height: 400px; opacity: 1; padding: 10px 0; margin-top: 10px; }
-    .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
-    .suggestion-item:hover { background: rgba(0,0,0,0.05); }
-
     /* Pet Grid + Animations */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
     .pets { 
@@ -175,6 +165,11 @@
     }
     .contact-btn:hover { background: #000; transform: translateY(-2px); }
     .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
+
+    /* Footer / Admin Link */
+    footer { padding: 4rem 1.5rem; text-align: center; background: #f9f9f9; border-top: 1px solid #eee; }
+    .admin-link { color: #a0aec0; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s; }
+    .admin-link:hover { color: var(--primary); }
 
     @media (max-width: 600px) {
         .features { grid-template-columns: 1fr 1fr; gap: 10px; padding: 2rem 10px; }
@@ -243,6 +238,11 @@
 
       <div class="pets reveal" id="pets-container"></div>
     </section>
+
+    <footer>
+        <p style="color: #a0aec0; font-size: 0.8rem; margin-bottom: 0.5rem;">© 2024 Aquamarine Pets</p>
+        <a href="admin.html" class="admin-link">Manage Inventory</a>
+    </footer>
 </div>
 
 <div id="detail-view">
@@ -329,16 +329,12 @@
     renderPets(allPets);
   }
 
-  /* UPDATED FILTER LOGIC WITH ANIMATION */
   function filterPets(targetCategory, el) {
     const container = document.getElementById('pets-container');
-    
-    // Step 1: Fade out container
     container.style.opacity = '0';
     container.style.transform = 'translateY(10px)';
 
     setTimeout(() => {
-        // Step 2: Switch data
         document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
         el.classList.add('active');
 
@@ -349,7 +345,6 @@
           renderPets(filtered);
         }
 
-        // Step 3: Fade back in (Pet cards will Pop-in via CSS animation)
         container.style.opacity = '1';
         container.style.transform = 'translateY(0)';
     }, 250); 
