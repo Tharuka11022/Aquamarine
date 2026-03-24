@@ -13,18 +13,27 @@
       --text: #1d1d1f;
       --border: #d2d2d7;
     }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 40px 20px; }
-    .container { max-width: 1000px; margin: auto; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+    
+    /* Login Gate */
+    #login-gate {
+        position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
+    }
+    .login-box {
+        background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        width: 100%; max-width: 400px; text-align: center;
+    }
+
+    .container { max-width: 1000px; margin: auto; padding: 40px 20px; display: none; }
     
     header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
     h1 { font-size: 32px; font-weight: 700; letter-spacing: -1px; }
 
-    /* Button Styling */
     .btn { padding: 10px 20px; border-radius: 20px; font-weight: 500; cursor: pointer; border: none; transition: 0.2s; font-size: 14px; }
     .btn-add { background: var(--primary); color: white; }
     .btn-add:hover { opacity: 0.9; }
     
-    /* Form Styling */
     #pet-form-container { 
         background: var(--card); padding: 40px; border-radius: 24px; 
         box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 40px; display: none; 
@@ -38,7 +47,6 @@
     }
     input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); }
 
-    /* Inventory List */
     .inventory-grid { display: grid; gap: 15px; }
     .inventory-card { 
         background: var(--card); padding: 15px; border-radius: 18px; 
@@ -58,18 +66,30 @@
 
     #loading-overlay { 
         position: fixed; inset: 0; background: rgba(255,255,255,0.7); 
-        backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000;
+        backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 3000;
     }
   </style>
 </head>
 <body>
 
+<!-- PASSWORD GATE -->
+<div id="login-gate">
+    <div class="login-box">
+        <h2 style="margin-bottom:20px;">Staff Login</h2>
+        <input type="password" id="admin-pass" placeholder="Enter Password" style="margin-bottom:20px; text-align:center;">
+        <button class="btn btn-add" style="width:100%;" onclick="checkAuth()">Login</button>
+    </div>
+</div>
+
 <div id="loading-overlay">Updating Inventory...</div>
 
-<div class="container">
+<div class="container" id="admin-main">
   <header>
     <h1>Inventory</h1>
-    <button class="btn btn-add" onclick="prepareNewPet()">+ Add Pet</button>
+    <div>
+        <button class="btn btn-edit" onclick="location.href='index.html'">View Site</button>
+        <button class="btn btn-add" onclick="prepareNewPet()">+ Add Pet</button>
+    </div>
   </header>
 
   <div id="pet-form-container">
@@ -84,7 +104,6 @@
         <div><label>Pet Name</label><input type="text" id="pet-name" required></div>
         <div><label>Price (Rs.)</label><input type="number" id="pet-price" required></div>
         
-        <!-- NEW CATEGORY SELECTOR -->
         <div class="full-width">
             <label>Category</label>
             <select id="pet-category" required>
@@ -123,6 +142,18 @@
 
   let isEditing = false;
   let currentPetImages = [];
+
+  // Authentication Logic
+  function checkAuth() {
+      const pass = document.getElementById('admin-pass').value;
+      if(pass === 'Senulya_12435') { // CHANGE YOUR PASSWORD HERE
+          document.getElementById('login-gate').style.display = 'none';
+          document.getElementById('admin-main').style.display = 'block';
+          loadInventory();
+      } else {
+          alert('Invalid Password');
+      }
+  }
 
   function toggleForm() {
     const f = document.getElementById('pet-form-container');
@@ -172,7 +203,7 @@
     document.getElementById('pet-id').value = data.id;
     document.getElementById('pet-name').value = data.name || '';
     document.getElementById('pet-price').value = data.price || '';
-    document.getElementById('pet-category').value = data.category || ''; // Sets the category dropdown
+    document.getElementById('pet-category').value = data.category || ''; 
     document.getElementById('pet-age').value = data.age || '';
     document.getElementById('pet-desc').value = data.description || '';
     document.getElementById('pet-health').value = data.health || '';
@@ -215,7 +246,7 @@
     const petData = {
       name: document.getElementById('pet-name').value,
       price: document.getElementById('pet-price').value,
-      category: document.getElementById('pet-category').value, // SAVES THE CATEGORY
+      category: document.getElementById('pet-category').value,
       images: finalImages,
       image_url: finalImages[0] || "",
       age: document.getElementById('pet-age').value,
@@ -243,8 +274,6 @@
           loadInventory(); 
       } 
   }
-
-  loadInventory();
 </script>
 </body>
 </html>
