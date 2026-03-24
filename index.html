@@ -219,7 +219,7 @@
     .contact-btn:hover { background: #000; transform: translateY(-2px); }
     .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    /* --- RESTORED FOOTER STYLES --- */
+    /* --- FOOTER STYLES --- */
     footer { background: var(--footer-bg); color: #fff; padding: 60px 20px 30px; }
     .footer-container { max-width: 1250px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
     
@@ -264,6 +264,12 @@
         
         .footer-container { grid-template-columns: 1fr; text-align: left; }
         .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+
+        /* FIX: Ensure Discover button isn't cut off on mobile */
+        .creative-scroll {
+            bottom: 80px; /* Lift it higher to avoid browser UI clipping */
+            transform: translateX(-50%) scale(0.85); /* Slightly smaller for mobile frame */
+        }
     }
   </style>
 </head>
@@ -376,6 +382,7 @@
     </footer>
 </div>
 
+<!-- RESTORED DETAIL VIEW CONTAINER -->
 <div id="detail-view">
     <div style="padding: 10px 20px; cursor: pointer; color: #718096;" onclick="goHome()">← Back</div>
     <div class="detail-grid" id="detail-content"></div>
