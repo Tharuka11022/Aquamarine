@@ -72,6 +72,10 @@
     .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
     .btn-main:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
+    /* Features Section Restored */
+    .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
+    .feature { padding: 3rem 2rem; border-radius: 30px; background: #f9f9f9; text-align: center; transition: 0.3s; }
+
     /* Suggestions */
     #search-suggestions {
         position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
@@ -121,6 +125,10 @@
     .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
     @media (max-width: 600px) {
+        .features { grid-template-columns: 1fr 1fr; gap: 10px; padding: 2rem 10px; }
+        .feature { padding: 1.5rem 10px; border-radius: 20px; }
+        .feature h3 { font-size: 0.9rem; }
+        .feature p { font-size: 0.7rem; }
         .detail-grid { grid-template-columns: 1fr; }
         .search-wrapper { width: 100%; flex-direction: column; border-radius: 20px; }
         #pet-search { width: 100% !important; }
@@ -156,6 +164,20 @@
       </div>
     </header>
 
+    <!-- RESTORED FEATURES SECTION -->
+    <section class="features">
+      <div class="feature reveal">
+          <div style="font-size:2.5rem;">🛡️</div>
+          <h3>Lifetime Health</h3>
+          <p>Verified health guarantees.</p>
+      </div>
+      <div class="feature reveal">
+          <div style="font-size:2.5rem;">💎</div>
+          <h3>Elite Lineage</h3>
+          <p>Globally recognized breeders.</p>
+      </div>
+    </section>
+
     <section id="featured-pets">
       <h2 style="text-align:center; font-size: 2rem; margin-bottom:3rem;">Available Inventory</h2>
       <div class="pets reveal" id="pets-container"></div>
@@ -188,7 +210,6 @@
           const detailContainer = document.getElementById('detail-content');
           const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
           
-          // FORMATTED WHATSAPP MESSAGE
           const waMsg = encodeURIComponent(`Hello I’m interested in buying:\n\nPet: ${pet.name}\nPrice: Rs. ${pet.price}`);
           
           detailContainer.innerHTML = `
