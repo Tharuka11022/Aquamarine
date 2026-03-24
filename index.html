@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Aquamarine | Premium Pets</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
-  <!-- Added Font Awesome for Social Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root { 
@@ -45,6 +44,7 @@
         transition: all 0.3s var(--easing);
     }
     .nav-btn:hover { background: rgba(0,0,0,0.1); transform: translateY(-1px); }
+    /* BUTTON CLICK EFFECT */
     .nav-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
     /* Header */
@@ -57,20 +57,9 @@
     
     /* TRUE CENTERED CREATIVE SCROLL INDICATOR */
     .creative-scroll {
-        position: absolute; 
-        bottom: 40px; 
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        width: fit-content; 
-        z-index: 20; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center;
-        cursor: pointer; 
-        transition: 0.5s;
-        text-align: center;
+        position: absolute; bottom: 40px; left: 0; right: 0; margin: auto; width: fit-content;
+        z-index: 20; display: flex; flex-direction: column; align-items: center;
+        cursor: pointer; transition: 0.5s; text-align: center;
     }
     .ripple-circle {
         width: 60px; height: 60px; border-radius: 50%;
@@ -98,8 +87,7 @@
     .search-wrapper { 
         background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 8px; border-radius: 100px; 
         display: inline-flex; align-items: center; position: relative; border: 1px solid rgba(255,255,255,0.2);
-        transition: all 0.5s var(--easing);
-        z-index: 101; 
+        transition: all 0.5s var(--easing); z-index: 101; 
     }
     #pet-search { 
         padding: 14px 25px; width: 300px; border-radius: 50px; border: none; outline: none; background: transparent; 
@@ -113,6 +101,7 @@
         font-weight: 600; cursor: pointer; margin-left: 10px; transition: all 0.3s var(--easing);
     }
     .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    /* BUTTON CLICK EFFECT */
     .btn-main:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
     /* Features Section */
@@ -120,48 +109,18 @@
     .feature { padding: 3rem 2rem; border-radius: 30px; background: #f9f9f9; text-align: center; transition: 0.3s; }
 
     /* Liquid Glass Filter Tab */
-    .filter-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 3rem;
-    }
+    .filter-container { display: flex; justify-content: center; margin-bottom: 3rem; }
     .glass-tabs {
-      display: flex;
-      background: rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 6px;
-      border-radius: 100px;
-      border: 1px solid rgba(0, 0, 0, 0.03);
-      gap: 5px;
-      width: 600px;
-      max-width: 95vw;
+      display: flex; background: rgba(0, 0, 0, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: 6px; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.03); gap: 5px; width: 600px; max-width: 95vw;
     }
     .tab-item {
-      flex: 1;
-      padding: 12px 25px;
-      border-radius: 100px;
-      border: none;
-      background: transparent;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #718096;
-      cursor: pointer;
-      transition: all 0.4s var(--easing);
-      white-space: nowrap;
+      flex: 1; padding: 12px 25px; border-radius: 100px; border: none; background: transparent;
+      font-weight: 600; font-size: 0.9rem; color: #718096; cursor: pointer; transition: all 0.4s var(--easing); white-space: nowrap;
     }
-    .tab-item.active {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      transform: scale(1.02);
-    }
-    .tab-item:hover:not(.active) {
-      background: rgba(255, 255, 255, 0.4);
-      color: var(--dark);
-    }
+    .tab-item.active { background: white; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.08); transform: scale(1.02); }
 
-    /* Search Suggestions Dropdown FIX */
+    /* Search Suggestions */
     #search-suggestions {
         position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
         border-radius: 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--easing);
@@ -169,7 +128,6 @@
     }
     #search-suggestions.active { max-height: 400px; opacity: 1; padding: 10px 0; margin-top: 10px; }
     .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
-    .suggestion-item:hover { background: rgba(0,0,0,0.05); }
 
     /* Pet Grid + Animations */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
@@ -181,20 +139,18 @@
         background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; 
         animation: petPop 0.5s var(--easing) backwards;
     }
-    @keyframes petPop {
-        from { opacity: 0; transform: scale(0.9) translateY(20px); }
-        to { opacity: 1; transform: scale(1) translateY(0); }
-    }
+    @keyframes petPop { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .pet-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
     .pet-card .info { padding: 1.5rem; }
     
-    /* Buy Button (Grid) */
+    /* Buy Now Button Styles */
     .buy-btn { 
         width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 16px; 
-        cursor: pointer; font-weight: 700; transition: all 0.3s var(--easing);
+        cursor: pointer; font-weight: 700; transition: all 0.3s var(--easing); 
     }
     .buy-btn:hover { background: var(--primary-dark); transform: scale(1.02); }
+    /* BUTTON CLICK EFFECT */
     .buy-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
     /* Detail View Styles */
@@ -203,23 +159,23 @@
     .about-section { background: #f9f9f9; padding: 30px; border-radius: 24px; margin-bottom: 20px;}
     .detail-actions { display: grid; gap: 15px; }
     
-    /* WhatsApp Button (Detail) */
     .wa-btn { 
         background: var(--primary); color: white; padding: 18px; border-radius: 15px; font-weight: 700; 
         text-align: center; text-decoration: none; transition: all 0.3s var(--easing); 
     }
-    .wa-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(56, 161, 105, 0.2); }
+    .wa-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    /* BUTTON CLICK EFFECT */
     .wa-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
-    
-    /* Contact Button (Detail) */
+
     .contact-btn { 
         background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; 
         font-weight: 700; cursor: pointer; transition: all 0.3s var(--easing); 
     }
     .contact-btn:hover { background: #000; transform: translateY(-2px); }
+    /* BUTTON CLICK EFFECT */
     .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    /* --- FOOTER STYLES --- */
+    /* FOOTER STYLES */
     footer { background: var(--footer-bg); color: #fff; padding: 60px 20px 30px; }
     .footer-container { max-width: 1250px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
     
@@ -253,9 +209,6 @@
 
     @media (max-width: 600px) {
         .features { grid-template-columns: 1fr 1fr; gap: 10px; padding: 2rem 10px; }
-        .feature { padding: 1.5rem 10px; border-radius: 20px; }
-        .feature h3 { font-size: 0.9rem; }
-        .feature p { font-size: 0.7rem; }
         .detail-grid { grid-template-columns: 1fr; }
         .search-wrapper { width: 100%; flex-direction: column; border-radius: 20px; }
         #pet-search { width: 100% !important; }
@@ -369,8 +322,8 @@
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@aquamarine234234234?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.youtube.com/@Aquamarine-pets"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
@@ -383,7 +336,7 @@
 </div>
 
 <div id="detail-view">
-    <div style="padding: 10px 20px; cursor: pointer; color: #718096;" onclick="goHome()">← Back</div>
+    <div style="padding: 10px 20px; cursor: pointer; color: #718096;" onclick="history.back()">← Back</div>
     <div class="detail-grid" id="detail-content"></div>
 </div>
 
@@ -396,13 +349,30 @@
   let allPets = [];
   const myNumber = "94742934189";
 
-  function goHome() { document.body.classList.remove('showing-details'); window.scrollTo(0,0); }
+  function goHome() { 
+      document.body.classList.remove('showing-details'); 
+      const inv = document.getElementById('featured-pets');
+      if(inv) {
+          const offset = inv.offsetTop - 100;
+          window.scrollTo({ top: offset, behavior: 'instant' });
+      }
+  }
 
-  function showPetDetails(petId) {
+  window.onpopstate = function(event) {
+      if (!event.state || event.state.view !== 'details') {
+          goHome();
+      }
+  };
+
+  function showPetDetails(petId, pushState = true) {
       document.getElementById('search-suggestions').classList.remove('active');
       const loader = document.getElementById('loader');
       loader.style.display = 'flex';
       
+      if (pushState) {
+          history.pushState({view: 'details'}, "Aquamarine | " + petId, "#pet-" + petId);
+      }
+
       setTimeout(() => {
           const pet = allPets.find(p => p.id == petId);
           const detailContainer = document.getElementById('detail-content');
@@ -501,10 +471,8 @@
       const thumb = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
       container.innerHTML += `
         <div class="pet-card" style="animation-delay: ${index * 0.05}s">
-            <!-- CLICKABLE IMAGE BLOCK -->
             <img src="${thumb}" onclick="showPetDetails('${pet.id}')" style="cursor:pointer;">
             <div class="info">
-                <!-- CLICKABLE INFO BLOCK -->
                 <div onclick="showPetDetails('${pet.id}')" style="cursor:pointer;">
                     <h4>${pet.name}</h4>
                     <p style="color:var(--primary); font-weight:700; margin-bottom:15px;">Rs. ${pet.price}</p>
