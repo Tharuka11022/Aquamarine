@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Aquamarine | Premium Pets</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Added Font Awesome for Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root { 
         --primary: #38a169; 
@@ -12,6 +14,7 @@
         --primary-light: #c6f6d5; 
         --glass: rgba(255, 255, 255, 0.75); 
         --dark: #1a202c; 
+        --footer-bg: #111111;
         --easing: cubic-bezier(0.4, 0, 0.2, 1);
     }
     
@@ -57,6 +60,7 @@
         background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 8px; border-radius: 100px; 
         display: inline-flex; align-items: center; position: relative; border: 1px solid rgba(255,255,255,0.2);
         transition: all 0.5s var(--easing);
+        z-index: 101; /* High z-index for dropdown visibility */
     }
     #pet-search { 
         padding: 14px 25px; width: 300px; border-radius: 50px; border: none; outline: none; background: transparent; 
@@ -118,6 +122,16 @@
       color: var(--dark);
     }
 
+    /* Search Suggestions */
+    #search-suggestions {
+        position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
+        border-radius: 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--easing);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 200; opacity: 0;
+    }
+    #search-suggestions.active { max-height: 400px; opacity: 1; padding: 10px 0; margin-top: 10px; }
+    .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
+    .suggestion-item:hover { background: rgba(0,0,0,0.05); }
+
     /* Pet Grid + Animations */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
     .pets { 
@@ -166,10 +180,37 @@
     .contact-btn:hover { background: #000; transform: translateY(-2px); }
     .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    /* Footer / Admin Link */
-    footer { padding: 4rem 1.5rem; text-align: center; background: #f9f9f9; border-top: 1px solid #eee; }
-    .admin-link { color: #a0aec0; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s; }
+    /* --- FOOTER STYLES --- */
+    footer { background: var(--footer-bg); color: #fff; padding: 60px 20px 30px; }
+    .footer-container { max-width: 1250px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+    
+    .footer-col h3 { font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; font-weight: 700; color: #fff; }
+    .footer-col p { color: #cbd5e0; font-size: 0.9rem; margin-bottom: 12px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a { color: #cbd5e0; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+    .footer-col ul li a:hover { color: var(--primary); }
+
+    .footer-logo { font-family: 'Baloo 2', cursive; font-size: 1.8rem; color: var(--primary); font-weight: 800; margin-bottom: 20px; }
+    
+    .contact-info b { display: block; color: #718096; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 4px; }
+    
+    .social-links { display: flex; gap: 15px; margin-top: 10px; }
+    .social-links a { 
+        width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); 
+        display: flex; align-items: center; justify-content: center; color: #fff; 
+        text-decoration: none; transition: all 0.3s; 
+    }
+    .social-links a:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); }
+
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; padding-top: 30px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-bottom p { font-size: 0.8rem; color: #4a5568; }
+    .admin-link { color: #4a5568; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: color 0.3s; }
     .admin-link:hover { color: var(--primary); }
+
+    @media (max-width: 992px) {
+        .footer-container { grid-template-columns: 1fr 1fr; gap: 30px; }
+    }
 
     @media (max-width: 600px) {
         .features { grid-template-columns: 1fr 1fr; gap: 10px; padding: 2rem 10px; }
@@ -181,6 +222,9 @@
         #pet-search { width: 100% !important; }
         .btn-main { margin-left: 0; width: 100%; margin-top: 10px; }
         .tab-item { padding: 10px 10px; font-size: 0.8rem; }
+        
+        .footer-container { grid-template-columns: 1fr; text-align: left; }
+        .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
     }
   </style>
 </head>
@@ -239,9 +283,49 @@
       <div class="pets reveal" id="pets-container"></div>
     </section>
 
+    <!-- COMPANY FOOTER -->
     <footer>
-        <p style="color: #a0aec0; font-size: 0.8rem; margin-bottom: 0.5rem;">© 2024 Aquamarine Pets</p>
-        <a href="admin.html" class="admin-link">Manage Inventory</a>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">AQUAMARINE</div>
+                <p>Redefining unconditional love through elite lineage and verified health guarantees for premium companions.</p>
+            </div>
+            
+            <div class="footer-col contact-info">
+                <h3>Get In Touch</h3>
+                <p><b>Address:</b> 93/C, Uthuwankanda Road, Thalawathugoda</p>
+                <p><b>Phone:</b> 074 293 41 89</p>
+                <p><b>Email:</b> aquamarine@gmail.com</p>
+                <p><b>Working Hours:</b> 24 Hours Service in & Days</p>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Pages</h3>
+                <ul>
+                    <li><a href="#" onclick="goHome()">Home</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2024 Aquamarine Pets. All rights reserved.</p>
+            <a href="admin.html" class="admin-link">Staff Login</a>
+        </div>
     </footer>
 </div>
 
@@ -305,12 +389,15 @@
 
   searchInput.addEventListener('input', (e) => {
       const val = e.target.value.toLowerCase();
-      if (val.length < 1) { suggestionsBox.classList.remove('active'); return; }
+      if (val.length < 1) { 
+          suggestionsBox.classList.remove('active'); 
+          return; 
+      }
       const matches = allPets.filter(p => p.name.toLowerCase().includes(val)).slice(0, 5);
       if (matches.length > 0) {
           suggestionsBox.innerHTML = matches.map(pet => `
               <div class="suggestion-item" onclick="showPetDetails('${pet.id}')">
-                  <img src="${pet.images ? pet.images[0] : pet.image_url}" style="width:45px; height:45px; border-radius:12px; object-fit:cover;">
+                  <img src="${pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url}" style="width:45px; height:45px; border-radius:12px; object-fit:cover;">
                   <div><div style="font-weight:700;">${pet.name}</div><div style="color:var(--primary); font-size:0.8rem;">Rs. ${pet.price}</div></div>
               </div>
           `).join('');
