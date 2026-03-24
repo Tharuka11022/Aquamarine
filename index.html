@@ -6,7 +6,15 @@
   <title>Aquamarine | Premium Pets</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #38a169; --primary-dark: #2f855a; --primary-light: #c6f6d5; --glass: rgba(255, 255, 255, 0.75); --dark: #1a202c; }
+    :root { 
+        --primary: #38a169; 
+        --primary-dark: #2f855a; 
+        --primary-light: #c6f6d5; 
+        --glass: rgba(255, 255, 255, 0.75); 
+        --dark: #1a202c; 
+        --easing: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
     body { line-height: 1.6; color: var(--dark); background-color: #ffffff; overflow-x: hidden; }
     html { scroll-behavior: smooth; }
@@ -16,66 +24,107 @@
     body.showing-details #main-content { display: none; }
     body.showing-details #detail-view { display: block; }
 
-    /* Buffering Loader */
+    /* Loader */
     #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 9999; }
     .spinner { width: 45px; height: 45px; border: 5px solid var(--primary-light); border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--easing); }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
+    /* Nav */
     nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: var(--glass); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
     .logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; color: var(--primary); font-weight: 800; cursor: pointer; }
-    .nav-btn { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.85rem; background: rgba(0,0,0,0.05); padding: 8px 16px; border-radius: 50px; }
+    
+    .nav-btn { 
+        text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.85rem; 
+        background: rgba(0,0,0,0.05); padding: 8px 16px; border-radius: 50px; 
+        transition: all 0.3s var(--easing);
+    }
+    .nav-btn:hover { background: rgba(0,0,0,0.1); transform: translateY(-1px); }
+    .nav-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    header { position: relative; height: 100vh; overflow: hidden; }
-    .slide { display: none; position: absolute; width: 100%; height: 100%; }
+    /* Header */
+    header { position: relative; height: 100vh; overflow: hidden; background: #000; }
+    .slideshow-container { position: relative; width: 100%; height: 100%; }
+    .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.5s ease-in-out; z-index: 1; }
+    .slide.active { opacity: 1; z-index: 2; }
     .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(60%); }
-    .header-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; width: 90%; }
-    .search-wrapper { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 8px; border-radius: 100px; display: inline-flex; align-items: center; }
-    #pet-search { padding: 14px 25px; width: 300px; border-radius: 50px; border: none; transition: width 0.4s; outline: none; }
+    .header-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; width: 90%; z-index: 10; }
+    
+    /* Search Bar Animation */
+    .search-wrapper { 
+        background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 8px; border-radius: 100px; 
+        display: inline-flex; align-items: center; position: relative; border: 1px solid rgba(255,255,255,0.2);
+        transition: all 0.5s var(--easing);
+    }
+    #pet-search { 
+        padding: 14px 25px; width: 300px; border-radius: 50px; border: none; outline: none; background: transparent; 
+        color: white; font-size: 1rem; transition: width 0.5s var(--easing);
+    }
     @media (min-width: 601px) { #pet-search:focus { width: 480px; } }
-    .btn-main { padding: 14px 30px; background: var(--primary); color: white; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; margin-left: 10px; }
-    .btn-main:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.96); }
 
+    /* Explore Button */
+    .btn-main { 
+        padding: 14px 30px; background: var(--primary); color: white; border: none; border-radius: 50px; 
+        font-weight: 600; cursor: pointer; margin-left: 10px; transition: all 0.3s var(--easing);
+    }
+    .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    .btn-main:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
+
+    /* Suggestions */
+    #search-suggestions {
+        position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
+        border-radius: 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--easing);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 100; opacity: 0;
+    }
+    #search-suggestions.active { max-height: 400px; opacity: 1; padding: 10px 0; margin-top: 10px; }
+    .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
+    .suggestion-item:hover { background: rgba(0,0,0,0.05); }
+
+    /* Pet Grid */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
-    .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .feature { padding: 3rem 2rem; border-radius: 30px; background: #f9f9f9; text-align: center; }
-
     .pets { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center; }
-    .pet-card { background: white; border-radius: 28px; overflow: hidden; transition: 0.5s; border: 1px solid #f0f0f0; }
+    .pet-card { background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; }
+    .pet-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
     .pet-card .info { padding: 1.5rem; }
-    .buy-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 16px; cursor: pointer; font-weight: 700; }
-    .buy-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.96); }
+    
+    /* Buy Button (Grid) */
+    .buy-btn { 
+        width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 16px; 
+        cursor: pointer; font-weight: 700; transition: all 0.3s var(--easing);
+    }
+    .buy-btn:hover { background: var(--primary-dark); transform: scale(1.02); }
+    .buy-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    /* Detail Gallery */
+    /* Detail View Styles */
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin: auto; padding: 0 20px; }
     .detail-gallery img { width: 100%; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-    .thumbs { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px; }
-    .thumbs img { width: 70px; height: 70px; border-radius: 10px; cursor: pointer; object-fit: cover; border: 2px solid transparent; }
-    .thumbs img:hover { border-color: var(--primary); }
+    .about-section { background: #f9f9f9; padding: 30px; border-radius: 24px; margin-bottom: 20px;}
+    .detail-actions { display: grid; gap: 15px; }
     
-    .detail-info h2 { font-size: 2.2rem; }
-    .detail-price { font-size: 1.6rem; color: var(--primary); font-weight: 800; margin: 15px 0; }
-    .about-section { background: #f9f9f9; padding: 30px; border-radius: 24px; }
-    .detail-actions { display: grid; gap: 15px; margin-top: 30px; }
-    .wa-btn { background: var(--primary); color: white; padding: 18px; border-radius: 15px; font-weight: 700; text-align: center; text-decoration: none; }
-    .wa-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.96); }
-    .contact-btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; }
-    .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.96); }
+    /* WhatsApp Button (Detail) */
+    .wa-btn { 
+        background: var(--primary); color: white; padding: 18px; border-radius: 15px; font-weight: 700; 
+        text-align: center; text-decoration: none; transition: all 0.3s var(--easing); 
+    }
+    .wa-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(56, 161, 105, 0.2); }
+    .wa-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
+    
+    /* Contact Button (Detail) */
+    .contact-btn { 
+        background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; 
+        font-weight: 700; cursor: pointer; transition: all 0.3s var(--easing); 
+    }
+    .contact-btn:hover { background: #000; transform: translateY(-2px); }
+    .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
     @media (max-width: 600px) {
-        .features { grid-template-columns: 1fr 1fr; gap: 10px; }
-        .feature { padding: 1.5rem 10px; border-radius: 20px; }
-        .feature h3 { font-size: 0.9rem; }
-        .feature p { font-size: 0.7rem; }
-        .pets { grid-template-columns: 1fr 1fr; gap: 10px; }
-        .pet-card .info h4 { font-size: 0.95rem; }
         .detail-grid { grid-template-columns: 1fr; }
-        .search-wrapper { flex-direction: column; background: none; border: none; width: 100%; }
+        .search-wrapper { width: 100%; flex-direction: column; border-radius: 20px; }
         #pet-search { width: 100% !important; }
-        .btn-main { width: 100%; margin-left: 0; }
+        .btn-main { margin-left: 0; width: 100%; margin-top: 10px; }
     }
   </style>
 </head>
@@ -91,32 +140,21 @@
 <div id="main-content">
     <header>
       <div class="slideshow-container">
-        <div class="slide"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide1.jpg"></div>
+        <div class="slide active"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide1.jpg"></div>
         <div class="slide"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide2.jpg"></div>
         <div class="slide"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide3.jpg"></div>
+        
         <div class="header-text">
-          <h1>Pure Joy. <br>Pure Breed.</h1>
-          <p>Companions that redefine unconditional love.</p>
-          <div class="search-wrapper">
-              <input type="text" id="pet-search" placeholder="Search our collection..." />
+          <h1 class="reveal">Pure Joy. <br>Pure Breed.</h1>
+          <p class="reveal">Companions that redefine unconditional love.</p>
+          <div class="search-wrapper reveal">
+              <input type="text" id="pet-search" placeholder="Search our collection..." autocomplete="off" />
               <button class="btn-main" onclick="document.getElementById('featured-pets').scrollIntoView({behavior:'smooth'})">Explore</button>
+              <div id="search-suggestions"></div>
           </div>
         </div>
       </div>
     </header>
-
-    <section class="features">
-      <div class="feature reveal">
-          <div style="font-size:2.5rem;">🛡️</div>
-          <h3>Lifetime Health</h3>
-          <p>Verified health guarantees.</p>
-      </div>
-      <div class="feature reveal">
-          <div style="font-size:2.5rem;">💎</div>
-          <h3>Elite Lineage</h3>
-          <p>Globally recognized breeders.</p>
-      </div>
-    </section>
 
     <section id="featured-pets">
       <h2 style="text-align:center; font-size: 2rem; margin-bottom:3rem;">Available Inventory</h2>
@@ -140,49 +178,69 @@
 
   function goHome() { document.body.classList.remove('showing-details'); window.scrollTo(0,0); }
 
-  function revealPhone(btn) {
-      btn.innerText = "Call: +" + myNumber;
-      btn.style.backgroundColor = "var(--primary-light)";
-      btn.style.color = "var(--primary-dark)";
-  }
-
   function showPetDetails(petId) {
+      document.getElementById('search-suggestions').classList.remove('active');
       const loader = document.getElementById('loader');
       loader.style.display = 'flex';
+      
       setTimeout(() => {
           const pet = allPets.find(p => p.id == petId);
           const detailContainer = document.getElementById('detail-content');
           const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
           
+          // FORMATTED WHATSAPP MESSAGE
           const waMsg = encodeURIComponent(`Hello I’m interested in buying:\n\nPet: ${pet.name}\nPrice: Rs. ${pet.price}`);
           
           detailContainer.innerHTML = `
             <div class="detail-gallery">
                 <img id="main-img" src="${imgs[0]}">
-                <div class="thumbs">
-                    ${imgs.map(u => `<img src="${u}" onclick="document.getElementById('main-img').src='${u}'">`).join('')}
+                <div class="thumbs" style="display:flex; gap:10px; margin-top:15px;">
+                    ${imgs.map(u => `<img src="${u}" style="width:70px; height:70px; border-radius:10px; cursor:pointer; object-fit:cover;" onclick="document.getElementById('main-img').src='${u}'">`).join('')}
                 </div>
             </div>
             <div class="detail-info">
                 <h2>${pet.name}</h2>
-                <p class="detail-price">Rs. ${pet.price}</p>
+                <p style="font-size: 1.6rem; color: var(--primary); font-weight: 800; margin: 15px 0;">Rs. ${pet.price}</p>
                 <div class="about-section">
                     <h3>About</h3>
                     <p style="margin-bottom:15px;">${pet.description || 'Premium quality breed.'}</p>
                     <p>✅ <b>Size:</b> ${pet.size || 'N/A'}</p>
-                    <p>✅ <b>Health:</b> ${pet.health || 'Verified'}</p>
+                    <p>✅ <b>Health:</b> Verified</p>
                 </div>
                 <div class="detail-actions">
-                    <a href="https://wa.me/${myNumber}?text=${waMsg}" target="_blank" class="wa-btn">Inquire via WhatsApp</a>
-                    <button class="contact-btn" onclick="revealPhone(this)">Contact Us</button>
+                    <a href="https://wa.me/${myNumber}?text=${waMsg}" target="_blank" class="wa-btn">Buy Now</a>
+                    <button class="contact-btn" onclick="this.innerText='Call: +${myNumber}'; this.style.background='var(--primary-light)'; this.style.color='var(--primary-dark)';">Contact Us</button>
                 </div>
             </div>
           `;
           loader.style.display = 'none';
           document.body.classList.add('showing-details');
           window.scrollTo(0,0);
-      }, 800);
+      }, 500);
   }
+
+  const searchInput = document.getElementById('pet-search');
+  const suggestionsBox = document.getElementById('search-suggestions');
+
+  searchInput.addEventListener('input', (e) => {
+      const val = e.target.value.toLowerCase();
+      if (val.length < 1) { suggestionsBox.classList.remove('active'); return; }
+      const matches = allPets.filter(p => p.name.toLowerCase().includes(val)).slice(0, 5);
+      if (matches.length > 0) {
+          suggestionsBox.innerHTML = matches.map(pet => `
+              <div class="suggestion-item" onclick="showPetDetails('${pet.id}')">
+                  <img src="${pet.images ? pet.images[0] : pet.image_url}" style="width:45px; height:45px; border-radius:12px; object-fit:cover;">
+                  <div><div style="font-weight:700;">${pet.name}</div><div style="color:var(--primary); font-size:0.8rem;">Rs. ${pet.price}</div></div>
+              </div>
+          `).join('');
+          suggestionsBox.classList.add('active');
+      } else {
+          suggestionsBox.innerHTML = `<div class="suggestion-item">No results found</div>`;
+          suggestionsBox.classList.add('active');
+      }
+  });
+
+  document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrapper')) suggestionsBox.classList.remove('active'); });
 
   async function loadPets() {
     const { data } = await supabaseClient.from('pets').select('*');
@@ -194,11 +252,16 @@
     const container = document.getElementById('pets-container');
     container.innerHTML = '';
     list.forEach(pet => {
-      const card = document.createElement('div');
-      card.className = 'pet-card';
       const thumb = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
-      card.innerHTML = `<img src="${thumb}"><div class="info"><h4>${pet.name}</h4><p style="color:var(--primary); font-weight:700;">Rs. ${pet.price}</p><button class="buy-btn" onclick="showPetDetails('${pet.id}')">View Details</button></div>`;
-      container.appendChild(card);
+      container.innerHTML += `
+        <div class="pet-card">
+            <img src="${thumb}">
+            <div class="info">
+                <h4>${pet.name}</h4>
+                <p style="color:var(--primary); font-weight:700; margin-bottom:15px;">Rs. ${pet.price}</p>
+                <button class="buy-btn" onclick="showPetDetails('${pet.id}')">Buy Now</button>
+            </div>
+        </div>`;
     });
   }
 
@@ -208,14 +271,17 @@
     });
   }
   window.addEventListener("scroll", reveal);
+
   let sIdx = 0;
   function showSlides() {
     const slides = document.querySelectorAll(".slide");
-    slides.forEach(s => s.style.display = "none");
+    if(slides.length === 0) return;
+    slides.forEach(s => s.classList.remove("active"));
     sIdx++; if(sIdx > slides.length) sIdx = 1;
-    if(slides[sIdx-1]) slides[sIdx-1].style.display = "block";
-    setTimeout(showSlides, 4500);
+    slides[sIdx-1].classList.add("active");
+    setTimeout(showSlides, 5000);
   }
+
   loadPets(); showSlides(); reveal();
 </script>
 </body>
