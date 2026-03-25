@@ -13,7 +13,7 @@
         --primary-light: #c6f6d5; 
         --glass: rgba(255, 255, 255, 0.75); 
         --dark: #1a202c; 
-        --footer-bg: #111111;
+        --footer-bg: #0a0a0a;
         --easing: cubic-bezier(0.4, 0, 0.2, 1);
     }
     
@@ -36,7 +36,7 @@
 
     /* Nav */
     nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: var(--glass); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; color: var(--primary); font-weight: 800; cursor: pointer; }
+    .logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; color: var(--primary); font-weight: 800; cursor: pointer; text-transform: uppercase; }
     
     .nav-btn { 
         text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.85rem; 
@@ -44,16 +44,15 @@
         transition: all 0.3s var(--easing);
     }
     .nav-btn:hover { background: rgba(0,0,0,0.1); transform: translateY(-1px); }
-    /* BUTTON CLICK EFFECT */
     .nav-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
     /* Header */
-    header { position: relative; height: 100vh; overflow: hidden; background: #000; width: 100%; }
-    .slideshow-container { position: relative; width: 100%; height: 100%; }
+    header { position: relative; height: 100vh; background: #000; width: 100%; }
+    .slideshow-container { position: relative; width: 100%; height: 100%; overflow: hidden; }
     .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.5s ease-in-out; z-index: 1; }
     .slide.active { opacity: 1; z-index: 2; }
     .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(60%); }
-    .header-text { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; width: 90%; z-index: 10; }
+    .header-text { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; width: 90%; z-index: 100; }
     
     /* TRUE CENTERED CREATIVE SCROLL INDICATOR */
     .creative-scroll {
@@ -73,36 +72,29 @@
         margin-top: 15px; font-size: 0.65rem; color: white; text-transform: uppercase;
         letter-spacing: 5px; font-weight: 700; opacity: 0.7;
     }
-    @keyframes breath {
-        0%, 100% { transform: scale(1); background: rgba(255,255,255,0.1); }
-        50% { transform: scale(1.1); background: rgba(255,255,255,0.2); }
-    }
-    @keyframes pulseArrow {
-        0% { transform: translateY(-5px); opacity: 0; }
-        50% { opacity: 1; }
-        100% { transform: translateY(5px); opacity: 0; }
-    }
+    @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    @keyframes pulseArrow { 0% { transform: translateY(-5px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(5px); opacity: 0; } }
 
-    /* Search Bar Animation */
+    /* Search Bar */
     .search-wrapper { 
         background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 8px; border-radius: 100px; 
         display: inline-flex; align-items: center; position: relative; border: 1px solid rgba(255,255,255,0.2);
         transition: all 0.5s var(--easing); z-index: 101; 
     }
-    #pet-search { 
-        padding: 14px 25px; width: 300px; border-radius: 50px; border: none; outline: none; background: transparent; 
-        color: white; font-size: 1rem; transition: width 0.5s var(--easing);
-    }
+    #pet-search { padding: 14px 25px; width: 300px; border-radius: 50px; border: none; outline: none; background: transparent; color: white; font-size: 1rem; transition: width 0.5s var(--easing); }
     @media (min-width: 601px) { #pet-search:focus { width: 480px; } }
-
-    /* Explore Button */
-    .btn-main { 
-        padding: 14px 30px; background: var(--primary); color: white; border: none; border-radius: 50px; 
-        font-weight: 600; cursor: pointer; margin-left: 10px; transition: all 0.3s var(--easing);
-    }
-    .btn-main:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-    /* BUTTON CLICK EFFECT */
+    .btn-main { padding: 14px 30px; background: var(--primary); color: white; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; margin-left: 10px; transition: all 0.3s var(--easing); }
     .btn-main:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
+
+    /* Search Suggestions Dropdown Fix */
+    #search-suggestions {
+        position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
+        border-radius: 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--easing);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 500; opacity: 0;
+    }
+    #search-suggestions.active { max-height: 400px; opacity: 1; padding: 10px 0; margin-top: 10px; }
+    .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
+    .suggestion-item:hover { background: rgba(0,0,0,0.05); }
 
     /* Features Section */
     .features { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
@@ -110,103 +102,59 @@
 
     /* Liquid Glass Filter Tab */
     .filter-container { display: flex; justify-content: center; margin-bottom: 3rem; }
-    .glass-tabs {
-      display: flex; background: rgba(0, 0, 0, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding: 6px; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.03); gap: 5px; width: 600px; max-width: 95vw;
-    }
-    .tab-item {
-      flex: 1; padding: 12px 25px; border-radius: 100px; border: none; background: transparent;
-      font-weight: 600; font-size: 0.9rem; color: #718096; cursor: pointer; transition: all 0.4s var(--easing); white-space: nowrap;
-    }
+    .glass-tabs { display: flex; background: rgba(0, 0, 0, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 6px; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.03); gap: 5px; width: 600px; max-width: 95vw; }
+    .tab-item { flex: 1; padding: 12px 25px; border-radius: 100px; border: none; background: transparent; font-weight: 600; font-size: 0.9rem; color: #718096; cursor: pointer; transition: all 0.4s var(--easing); white-space: nowrap; }
     .tab-item.active { background: white; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.08); transform: scale(1.02); }
-
-    /* Search Suggestions */
-    #search-suggestions {
-        position: absolute; top: 110%; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px);
-        border-radius: 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--easing);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 200; opacity: 0;
-    }
-    #search-suggestions.active { max-height: 400px; opacity: 1; padding: 10px 0; margin-top: 10px; }
-    .suggestion-item { padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: background 0.2s; text-align: left; color: var(--dark); }
 
     /* Pet Grid + Animations */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
-    .pets { 
-        display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center;
-        transition: opacity 0.3s var(--easing), transform 0.3s var(--easing);
-    }
-    .pet-card { 
-        background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; 
-        animation: petPop 0.5s var(--easing) backwards;
-    }
+    .pets { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center; transition: opacity 0.3s var(--easing), transform 0.3s var(--easing); }
+    .pet-card { background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; animation: petPop 0.5s var(--easing) backwards; }
     @keyframes petPop { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .pet-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
     .pet-card .info { padding: 1.5rem; }
-    
-    /* Buy Now Button Styles */
-    .buy-btn { 
-        width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 16px; 
-        cursor: pointer; font-weight: 700; transition: all 0.3s var(--easing); 
-    }
-    .buy-btn:hover { background: var(--primary-dark); transform: scale(1.02); }
-    /* BUTTON CLICK EFFECT */
+    .buy-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 16px; cursor: pointer; font-weight: 700; transition: all 0.3s var(--easing); }
     .buy-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
+
+    /* --- CREATIVE HUD FOOTER --- */
+    footer { background: var(--footer-bg); color: #fff; padding: 80px 20px 40px; position: relative; overflow: hidden; }
+    .footer-wrapper { max-width: 1250px; margin: auto; display: flex; gap: 60px; justify-content: space-between; align-items: flex-start; }
+    
+    .footer-identity { flex: 1.2; }
+    .giant-logo { font-family: 'Baloo 2', cursive; font-size: 3.5rem; color: var(--primary); font-weight: 800; line-height: 1; margin-bottom: 20px; letter-spacing: -2px; text-transform: uppercase; }
+    .identity-text { font-size: 1.1rem; color: #718096; max-width: 400px; margin-bottom: 30px; }
+    
+    .social-rings { display: flex; gap: 15px; }
+    .social-rings a { 
+        width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
+        display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem;
+        transition: 0.4s var(--easing); background: rgba(255,255,255,0.02);
+    }
+    .social-rings a:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-5px) rotate(8deg); }
+
+    .footer-hud { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .hud-tile { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 24px; transition: 0.3s; }
+    .hud-tile:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); }
+    .hud-tile h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); margin-bottom: 12px; }
+    .hud-tile p, .hud-tile a { color: #cbd5e0; font-size: 0.95rem; text-decoration: none; line-height: 1.5; display: block; margin-bottom: 5px; }
+
+    .bottom-bar { max-width: 1250px; margin: 60px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .bottom-bar p { color: #4a5568; font-size: 0.8rem; }
+    .staff-btn { color: #4a5568; text-decoration: none; font-size: 0.8rem; font-weight: 700; transition: 0.3s; }
+    .staff-btn:hover { color: var(--primary); }
 
     /* Detail View Styles */
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin: auto; padding: 0 20px; }
     .detail-gallery img { width: 100%; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
     .about-section { background: #f9f9f9; padding: 30px; border-radius: 24px; margin-bottom: 20px;}
     .detail-actions { display: grid; gap: 15px; }
-    
-    .wa-btn { 
-        background: var(--primary); color: white; padding: 18px; border-radius: 15px; font-weight: 700; 
-        text-align: center; text-decoration: none; transition: all 0.3s var(--easing); 
-    }
-    .wa-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
-    /* BUTTON CLICK EFFECT */
+    .wa-btn { background: var(--primary); color: white; padding: 18px; border-radius: 15px; font-weight: 700; text-align: center; text-decoration: none; transition: 0.3s; }
     .wa-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
-
-    .contact-btn { 
-        background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; 
-        font-weight: 700; cursor: pointer; transition: all 0.3s var(--easing); 
-    }
-    .contact-btn:hover { background: #000; transform: translateY(-2px); }
-    /* BUTTON CLICK EFFECT */
+    .contact-btn { background: var(--dark); color: white; border: none; padding: 18px; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; }
     .contact-btn:active { background: var(--primary-light) !important; color: var(--primary-dark) !important; transform: scale(0.95); }
 
-    /* FOOTER STYLES */
-    footer { background: var(--footer-bg); color: #fff; padding: 60px 20px 30px; }
-    .footer-container { max-width: 1250px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
-    
-    .footer-col h3 { font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; font-weight: 700; color: #fff; }
-    .footer-col p { color: #cbd5e0; font-size: 0.9rem; margin-bottom: 12px; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 12px; }
-    .footer-col ul li a { color: #cbd5e0; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
-    .footer-col ul li a:hover { color: var(--primary); }
-
-    .footer-logo { font-family: 'Baloo 2', cursive; font-size: 1.8rem; color: var(--primary); font-weight: 800; margin-bottom: 20px; }
-    
-    .contact-info b { display: block; color: #718096; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 4px; }
-    
-    .social-links { display: flex; gap: 15px; margin-top: 10px; }
-    .social-links a { 
-        width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); 
-        display: flex; align-items: center; justify-content: center; color: #fff; 
-        text-decoration: none; transition: all 0.3s; 
-    }
-    .social-links a:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); }
-
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; padding-top: 30px; display: flex; justify-content: space-between; align-items: center; }
-    .footer-bottom p { font-size: 0.8rem; color: #4a5568; }
-    .admin-link { color: #4a5568; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: color 0.3s; }
-    .admin-link:hover { color: var(--primary); }
-
-    @media (max-width: 992px) {
-        .footer-container { grid-template-columns: 1fr 1fr; gap: 30px; }
-    }
-
+    /* --- MOBILE OPTIMIZATIONS --- */
     @media (max-width: 600px) {
         .features { grid-template-columns: 1fr 1fr; gap: 10px; padding: 2rem 10px; }
         .detail-grid { grid-template-columns: 1fr; }
@@ -215,14 +163,20 @@
         .btn-main { margin-left: 0; width: 100%; margin-top: 10px; }
         .tab-item { padding: 10px 10px; font-size: 0.8rem; }
         
-        .footer-container { grid-template-columns: 1fr; text-align: left; }
-        .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+        .creative-scroll { bottom: 80px; transform: translateX(-50%) scale(0.85); }
 
-        /* FIX: Ensure Discover button isn't cut off on mobile */
-        .creative-scroll {
-            bottom: 80px; 
-            transform: translateX(-50%) scale(0.85); 
-        }
+        /* Footer Mobile HUD Optimization */
+        footer { padding: 60px 15px 30px; }
+        .footer-wrapper { flex-direction: column; text-align: center; gap: 50px; }
+        .footer-identity { display: flex; flex-direction: column; align-items: center; }
+        .giant-logo { font-size: 2.8rem; margin-bottom: 15px; }
+        .identity-text { margin-left: auto; margin-right: auto; font-size: 1rem; margin-bottom: 25px; }
+        .social-rings { justify-content: center; }
+        
+        .footer-hud { grid-template-columns: 1fr; width: 100%; gap: 15px; }
+        .hud-tile { padding: 20px; text-align: left; }
+        
+        .bottom-bar { flex-direction: column; gap: 20px; text-align: center; margin-top: 40px; }
     }
   </style>
 </head>
@@ -252,12 +206,8 @@
           </div>
         </div>
       </div>
-
-      <!-- CENTERED CREATIVE SCROLL INDICATOR -->
       <div class="creative-scroll reveal" id="scroll-hint" onclick="document.getElementById('featured-pets').scrollIntoView({behavior:'smooth'})">
-          <div class="ripple-circle">
-              <i class="fa-solid fa-chevron-down"></i>
-          </div>
+          <div class="ripple-circle"><i class="fa-solid fa-chevron-down"></i></div>
           <span>Discover</span>
       </div>
     </header>
@@ -277,7 +227,6 @@
 
     <section id="featured-pets">
       <h2 style="text-align:center; font-size: 2rem; margin-bottom:2rem;">Available Inventory</h2>
-      
       <div class="filter-container reveal">
         <div class="glass-tabs">
           <button class="tab-item active" onclick="filterPets('all', this)">All Pets</button>
@@ -285,52 +234,46 @@
           <button class="tab-item" onclick="filterPets('birds', this)">Birds</button>
         </div>
       </div>
-
       <div class="pets reveal" id="pets-container"></div>
     </section>
 
-    <!-- COMPANY FOOTER -->
     <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <div class="footer-logo">AQUAMARINE</div>
-                <p>Redefining unconditional love through elite lineage and verified health guarantees for premium companions.</p>
-            </div>
-            
-            <div class="footer-col contact-info">
-                <h3>Get In Touch</h3>
-                <p><b>Address:</b> 93/C, Uthuwankanda Road, Thalawathugoda</p>
-                <p><b>Phone:</b> 074 293 41 89</p>
-                <p><b>Email:</b> aquamarine@gmail.com</p>
-                <p><b>Working Hours:</b> 24 Hours Service in & Days</p>
-            </div>
-            
-            <div class="footer-col">
-                <h3>Pages</h3>
-                <ul>
-                    <li><a href="#" onclick="goHome()">Home</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h3>Follow Us</h3>
-                <div class="social-links">
+        <div class="footer-wrapper">
+            <div class="footer-identity">
+                <div class="giant-logo">AQUAMARINE</div>
+                <p class="identity-text">Redefining companionship through elite lineage and verified health guarantees for premium companions.</p>
+                <div class="social-rings">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-tiktok"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
+            <div class="footer-hud">
+                <div class="hud-tile">
+                    <h4>Location</h4>
+                    <p>93/C, Uthuwankanda Road,<br>Thalawathugoda, SL.</p>
+                </div>
+                <div class="hud-tile">
+                    <h4>Direct</h4>
+                    <p><b>P:</b> 074 293 41 89</p>
+                    <p><b>E:</b> aquamarine@gmail.com</p>
+                </div>
+                <div class="hud-tile">
+                    <h4>Explore</h4>
+                    <a href="#" onclick="goHome()">Inventory</a>
+                    <a href="#">Our Blog</a>
+                </div>
+                <div class="hud-tile">
+                    <h4>Legal</h4>
+                    <a href="#">Health Warranty</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
         </div>
-        
-        <div class="footer-bottom">
-            <p>© 2024 Aquamarine Pets. All rights reserved.</p>
-            <a href="admin.html" class="admin-link">Staff Login</a>
+        <div class="bottom-bar">
+            <p>© 2024 Aquamarine Pets. Design Excellence.</p>
+            <a href="admin.html" class="staff-btn">Staff Portal</a>
         </div>
     </footer>
 </div>
@@ -359,19 +302,14 @@
   }
 
   window.onpopstate = function(event) {
-      if (!event.state || event.state.view !== 'details') {
-          goHome();
-      }
+      if (!event.state || event.state.view !== 'details') goHome();
   };
 
   function showPetDetails(petId, pushState = true) {
       document.getElementById('search-suggestions').classList.remove('active');
       const loader = document.getElementById('loader');
       loader.style.display = 'flex';
-      
-      if (pushState) {
-          history.pushState({view: 'details'}, "Aquamarine | " + petId, "#pet-" + petId);
-      }
+      if (pushState) history.pushState({view: 'details'}, "Aquamarine | " + petId, "#pet-" + petId);
 
       setTimeout(() => {
           const pet = allPets.find(p => p.id == petId);
@@ -399,8 +337,7 @@
                     <a href="https://wa.me/${myNumber}?text=${waMsg}" target="_blank" class="wa-btn">Inquire via Whatsapp</a>
                     <button class="contact-btn" onclick="this.innerText='Call: +${myNumber}'; this.style.background='var(--primary-light)'; this.style.color='var(--primary-dark)';">Contact Us</button>
                 </div>
-            </div>
-          `;
+            </div>`;
           loader.style.display = 'none';
           document.body.classList.add('showing-details');
           window.scrollTo(0,0);
@@ -412,18 +349,17 @@
 
   searchInput.addEventListener('input', (e) => {
       const val = e.target.value.toLowerCase();
-      if (val.length < 1) { 
-          suggestionsBox.classList.remove('active'); 
-          return; 
-      }
+      if (val.length < 1) { suggestionsBox.classList.remove('active'); return; }
       const matches = allPets.filter(p => p.name.toLowerCase().includes(val)).slice(0, 5);
       if (matches.length > 0) {
-          suggestionsBox.innerHTML = matches.map(pet => `
-              <div class="suggestion-item" onclick="showPetDetails('${pet.id}')">
-                  <img src="${pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url}" style="width:45px; height:45px; border-radius:12px; object-fit:cover;">
-                  <div><div style="font-weight:700;">${pet.name}</div><div style="color:var(--primary); font-size:0.8rem;">Rs. ${pet.price}</div></div>
-              </div>
-          `).join('');
+          suggestionsBox.innerHTML = matches.map(pet => {
+              const thumb = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
+              return `
+                <div class="suggestion-item" onclick="showPetDetails('${pet.id}')">
+                    <img src="${thumb}" style="width:45px; height:45px; border-radius:12px; object-fit:cover;">
+                    <div><div style="font-weight:700;">${pet.name}</div><div style="color:var(--primary); font-size:0.8rem;">Rs. ${pet.price}</div></div>
+                </div>`;
+          }).join('');
           suggestionsBox.classList.add('active');
       } else {
           suggestionsBox.innerHTML = `<div class="suggestion-item">No results found</div>`;
@@ -443,18 +379,11 @@
     const container = document.getElementById('pets-container');
     container.style.opacity = '0';
     container.style.transform = 'translateY(10px)';
-
     setTimeout(() => {
         document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
         el.classList.add('active');
-
-        if (targetCategory === 'all') {
-          renderPets(allPets);
-        } else {
-          const filtered = allPets.filter(p => p.category && p.category.toLowerCase() === targetCategory);
-          renderPets(filtered);
-        }
-
+        if (targetCategory === 'all') renderPets(allPets);
+        else renderPets(allPets.filter(p => p.category && p.category.toLowerCase() === targetCategory));
         container.style.opacity = '1';
         container.style.transform = 'translateY(0)';
     }, 250); 
@@ -464,7 +393,7 @@
     const container = document.getElementById('pets-container');
     container.innerHTML = '';
     if (list.length === 0) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 50px; color:#a0aec0;">No pets found in this category.</p>';
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 50px; color:#a0aec0;">No pets found.</p>';
         return;
     }
     list.forEach((pet, index) => {
@@ -487,8 +416,6 @@
     document.querySelectorAll(".reveal").forEach(el => {
       if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
     });
-    
-    // Auto-hide creative scroll hint when user scrolls
     const hint = document.getElementById('scroll-hint');
     if (window.scrollY > 150) hint.style.opacity = '0';
     else hint.style.opacity = '1';
