@@ -109,7 +109,20 @@
     /* Pet Grid + Animations */
     section { padding: 5rem 1.5rem; max-width: 1250px; margin: auto; }
     .pets { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); justify-content: center; transition: opacity 0.3s var(--easing), transform 0.3s var(--easing); }
-    .pet-card { background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; animation: petPop 0.5s var(--easing) backwards; }
+    .pet-card { position: relative; background: white; border-radius: 28px; overflow: hidden; transition: all 0.4s var(--easing); border: 1px solid #f0f0f0; animation: petPop 0.5s var(--easing) backwards; }
+    
+    /* EYE CATCHING UNIT TAG */
+    .unit-tag {
+        position: absolute; top: 15px; right: 15px; 
+        background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px);
+        padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 800;
+        color: var(--primary); z-index: 10; display: flex; align-items: center; gap: 6px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5);
+        text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .unit-tag i { font-size: 0.8rem; }
+    .unit-tag.pair { color: #ec4899; } /* Pink color for pairs */
+
     @keyframes petPop { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .pet-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
@@ -315,7 +328,11 @@
           const pet = allPets.find(p => p.id == petId);
           const detailContainer = document.getElementById('detail-content');
           const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
-          const waMsg = encodeURIComponent(`Hello I’m interested in buying:\n\nPet: ${pet.name}\nPrice: Rs. ${pet.price}`);
+          
+          // Clean the unit value (strip any quotes)
+          const cleanUnit = (pet.unit || 'Single').replace(/['"]+/g, '');
+          const unitLabel = cleanUnit === 'Pair' ? '(Pair)' : '(Single)';
+          const waMsg = encodeURIComponent(`Hello I’m interested in buying:\n\nPet: ${pet.name} ${unitLabel}\nPrice: Rs. ${pet.price}`);
           
           detailContainer.innerHTML = `
             <div class="detail-gallery">
@@ -326,7 +343,10 @@
             </div>
             <div class="detail-info">
                 <h2>${pet.name}</h2>
-                <p style="font-size: 1.6rem; color: var(--primary); font-weight: 800; margin: 15px 0;">Rs. ${pet.price}</p>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <p style="font-size: 1.6rem; color: var(--primary); font-weight: 800; margin: 15px 0;">Rs. ${pet.price}</p>
+                    <span style="background:var(--primary-light); color:var(--primary-dark); padding:4px 12px; border-radius:50px; font-weight:700; font-size:0.8rem;">${cleanUnit}</span>
+                </div>
                 <div class="about-section">
                     <h3>About</h3>
                     <p style="margin-bottom:15px;">${pet.description || 'Premium quality breed.'}</p>
@@ -398,8 +418,15 @@
     }
     list.forEach((pet, index) => {
       const thumb = pet.images && pet.images.length > 0 ? pet.images[0] : pet.image_url;
+      
+      // Clean the unit value (strip any quotes)
+      const unit = (pet.unit || 'Single').replace(/['"]+/g, '');
+      const unitIcon = unit === 'Pair' ? 'fa-user-group' : 'fa-user';
+      const unitClass = unit === 'Pair' ? 'pair' : '';
+
       container.innerHTML += `
         <div class="pet-card" style="animation-delay: ${index * 0.05}s">
+            <div class="unit-tag ${unitClass}"><i class="fa-solid ${unitIcon}"></i> ${unit}</div>
             <img src="${thumb}" onclick="showPetDetails('${pet.id}')" style="cursor:pointer;">
             <div class="info">
                 <div onclick="showPetDetails('${pet.id}')" style="cursor:pointer;">
