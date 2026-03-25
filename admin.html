@@ -45,7 +45,6 @@
     .full-width { grid-column: span 2; }
     label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 6px; color: #86868b; text-transform: uppercase; }
     
-    /* Input height and font size set to 16px to prevent iOS auto-zoom */
     input, textarea, select { 
         width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; 
         font-size: 16px; outline: none; transition: 0.2s; background: white; -webkit-appearance: none;
@@ -74,22 +73,14 @@
         backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 3000;
     }
 
-    /* MOBILE OPTIMIZATIONS */
     @media (max-width: 600px) {
-        body { padding: 0; }
         .container { padding: 20px 15px; }
         header { flex-direction: column; align-items: flex-start; }
         header div { width: 100%; display: flex; gap: 10px; margin-top: 15px; }
-        header div .btn { flex: 1; text-align: center; }
-        
         #pet-form-container { padding: 20px 15px; border-radius: 0; margin-left: -15px; margin-right: -15px; width: calc(100% + 30px); }
         .form-grid { grid-template-columns: 1fr; }
-        .full-width { grid-column: span 1; }
-        
         .inventory-card { flex-direction: column; align-items: flex-start; gap: 15px; }
-        .pet-preview { width: 100%; }
-        .actions { width: 100%; justify-content: flex-end; border-top: 1px solid #f5f5f7; pt: 10px; padding-top: 10px;}
-        .actions button { flex: 1; }
+        .actions { width: 100%; justify-content: flex-end; border-top: 1px solid #f5f5f7; padding-top: 10px;}
     }
   </style>
 </head>
@@ -127,13 +118,21 @@
         <div><label>Pet Name</label><input type="text" id="pet-name" required placeholder="Ex: Blue Betta"></div>
         <div><label>Price (Rs.)</label><input type="number" id="pet-price" required placeholder="0.00"></div>
         
-        <div class="full-width">
+        <div>
             <label>Category</label>
             <select id="pet-category" required>
                 <option value="" disabled selected>Select a category</option>
                 <option value="fish">Fish</option>
                 <option value="birds">Birds</option>
                 <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Sale Unit (Single/Pair)</label>
+            <select id="pet-unit" required>
+                <option value="Single">Single</option>
+                <option value="Pair">Pair</option>
             </select>
         </div>
 
@@ -200,13 +199,16 @@
     
     data.forEach(pet => {
       const displayImg = (pet.images && pet.images.length > 0) ? pet.images[0] : (pet.image_url || '');
+      // Clean unit display
+      const cleanUnit = (pet.unit || 'Single').replace(/['"]+/g, '');
+      
       const div = document.createElement('div');
       div.className = 'inventory-card';
       div.innerHTML = `
         <div class="pet-preview">
             <img src="${displayImg}" onerror="this.src='https://via.placeholder.com/60?text=No+Img'">
             <div>
-                <h4>${pet.name || 'Unnamed'} <span class="badge">${pet.category || 'N/A'}</span></h4>
+                <h4>${pet.name || 'Unnamed'} <span class="badge">${pet.category || 'N/A'}</span> <span class="badge" style="background:#e0f2fe">${cleanUnit}</span></h4>
                 <p>Rs. ${pet.price || 0}</p>
             </div>
         </div>
@@ -227,6 +229,8 @@
     document.getElementById('pet-name').value = data.name || '';
     document.getElementById('pet-price').value = data.price || '';
     document.getElementById('pet-category').value = data.category || ''; 
+    // Clean unit data when loading into the dropdown
+    document.getElementById('pet-unit').value = (data.unit || 'Single').replace(/['"]+/g, ''); 
     document.getElementById('pet-age').value = data.age || '';
     document.getElementById('pet-desc').value = data.description || '';
     document.getElementById('pet-health').value = data.health || '';
@@ -270,6 +274,7 @@
       name: document.getElementById('pet-name').value,
       price: document.getElementById('pet-price').value,
       category: document.getElementById('pet-category').value,
+      unit: document.getElementById('pet-unit').value, 
       images: finalImages,
       image_url: finalImages[0] || "",
       age: document.getElementById('pet-age').value,
