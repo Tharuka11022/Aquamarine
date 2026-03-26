@@ -243,11 +243,10 @@
             background: rgba(255,255,255,0.2);
         }
 
-        /* MOBILE CAROUSEL FOR FEATURES */
         .carousel-nav {
             display: flex;
             position: absolute;
-            top: 42%; /* Centered vertically to cards */
+            top: 42%;
             transform: translateY(-50%);
             width: 100%;
             justify-content: space-between;
@@ -278,14 +277,14 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            align-items: stretch !important; /* Forces uniform height */
+            align-items: stretch !important; 
         }
         .features-grid::-webkit-scrollbar { display: none; }
         .feature-card {
             flex: 0 0 82% !important;
             scroll-snap-align: center;
             padding: 2.5rem 1.5rem !important;
-            min-height: 140px; /* Ensures all blocks are identical size */
+            min-height: 140px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -320,7 +319,6 @@
 
 <div id="loader"><div class="spinner"></div></div>
 
-<!-- NAVIGATION -->
 <nav id="navbar">
     <div class="logo" onclick="goHome()">AQUAMARINE</div>
     <div class="nav-links">
@@ -330,7 +328,6 @@
     </div>
 </nav>
 
-<!-- GIFT SYSTEM -->
 <div class="gift-fab-container" id="gift-system">
     <div class="gift-dismiss" onclick="dismissGift(event)" title="Dismiss">✕</div>
     <div class="gift-reveal-card">
@@ -344,7 +341,6 @@
     </div>
 </div>
 
-<!-- COUPON MODAL -->
 <div id="coupon-modal">
     <div class="coupon-content">
         <div style="background:var(--primary); padding:50px 20px; color:white;">
@@ -612,6 +608,9 @@
       if (pushState) history.pushState({view: 'details'}, pet.name, "#pet-" + petId);
       const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
       
+      const cleanUnit = (pet.unit || 'Premium').replace(/['"]/g, '');
+      const waMessage = `Hello I’m interested in buying:%0A%0APet: ${pet.name} (${cleanUnit})%0APrice: Rs. ${pet.price}`;
+
       document.getElementById('detail-content').innerHTML = `
         <div class="mobile-detail-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:60px;">
             <div>
@@ -634,8 +633,8 @@
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Life Support</span>
                     </div>
                 </div>
-                <button onclick="window.open('https://wa.me/${myNumber}?text=Hi, I am interested in ${pet.name}')" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3);">
-                    <i class="fab fa-whatsapp" style="font-size:1.6rem;"></i> INQUIRE ON WHATSAPP
+                <button onclick="window.open('https://wa.me/${myNumber}?text=${waMessage}')" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3);">
+                    <i class="fab fa-whatsapp" style="font-size:1.6rem;"></i> Order ON WHATSAPP
                 </button>
             </div>
         </div>`;
