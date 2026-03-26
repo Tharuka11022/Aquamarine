@@ -15,91 +15,90 @@
       --success: #34c759;
     }
     body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-    
-    /* Login Gate */
-    #login-gate {
-        position: i-fixed; inset: 0; background: var(--bg); z-index: 2000;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
-    }
-    .login-box {
-        background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-        width: 100%; max-width: 400px; text-align: center;
-    }
+code
+Code
+/* Login Gate */
+#login-gate {
+    position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
+}
+.login-box {
+    background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    width: 100%; max-width: 400px; text-align: center;
+}
 
-    .container { max-width: 1000px; margin: auto; padding: 40px 20px; display: none; }
-    
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; gap: 10px; }
-    h1 { font-size: 28px; font-weight: 700; letter-spacing: -1px; margin: 0; }
+.container { max-width: 1000px; margin: auto; padding: 40px 20px; display: none; }
 
-    .btn { 
-        padding: 12px 20px; border-radius: 20px; font-weight: 500; cursor: pointer; 
-        border: none; transition: 0.2s; font-size: 14px; white-space: nowrap;
-    }
-    .btn-add { background: var(--primary); color: white; }
-    .btn-add:hover { opacity: 0.9; }
-    
-    #pet-form-container { 
-        background: var(--card); padding: 30px; border-radius: 24px; 
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; display: none; 
-    }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .full-width { grid-column: span 2; }
-    label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 6px; color: #86868b; text-transform: uppercase; }
-    
-    input, textarea, select { 
-        width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; 
-        font-size: 16px; outline: none; transition: 0.2s; background: white; -webkit-appearance: none;
-    }
-    input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; gap: 10px; }
+h1 { font-size: 28px; font-weight: 700; letter-spacing: -1px; margin: 0; }
 
-    .inventory-grid { display: grid; gap: 12px; }
-    .inventory-card { 
-        background: var(--card); padding: 12px; border-radius: 18px; 
-        display: flex; align-items: center; justify-content: space-between;
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-    .pet-preview { display: flex; align-items: center; gap: 15px; overflow: hidden; }
-    .pet-preview img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; background: #eee; flex-shrink: 0; }
-    .pet-preview h4 { margin: 0; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pet-preview p { margin: 2px 0 0; color: #86868b; font-size: 13px; }
-    
-    .badge { font-size: 9px; background: #eee; padding: 2px 6px; border-radius: 8px; text-transform: uppercase; vertical-align: middle; }
+.btn { 
+    padding: 12px 20px; border-radius: 20px; font-weight: 500; cursor: pointer; 
+    border: none; transition: 0.2s; font-size: 14px; white-space: nowrap;
+}
+.btn-add { background: var(--primary); color: white; }
+.btn-add:hover { opacity: 0.9; }
 
-    .actions { display: flex; gap: 8px; flex-shrink: 0; }
-    .btn-edit { background: #f5f5f7; color: var(--text); padding: 8px 15px; }
-    .btn-del { background: #fff1f1; color: #ff3b30; padding: 8px 15px; }
+#pet-form-container { 
+    background: var(--card); padding: 30px; border-radius: 24px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; display: none; 
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.full-width { grid-column: span 2; }
+label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 6px; color: #86868b; text-transform: uppercase; }
 
-    /* Community Section Styles */
-    .view-tabs { display: flex; gap: 10px; margin-bottom: 25px; background: #eee; padding: 5px; border-radius: 15px; width: fit-content; }
-    .tab-btn { padding: 8px 20px; border-radius: 12px; cursor: pointer; border: none; font-weight: 600; font-size: 13px; background: transparent; color: #86868b; transition: 0.3s; }
-    .tab-btn.active { background: white; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+input, textarea, select { 
+    width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; 
+    font-size: 16px; outline: none; transition: 0.2s; background: white; -webkit-appearance: none;
+}
+input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); }
 
-    .subscriber-list { background: white; border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
-    .sub-item { padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f5f5f7; }
-    .sub-item:last-child { border-bottom: none; }
-    .sub-info h5 { margin: 0; font-size: 15px; font-weight: 600; }
-    .sub-info span { font-size: 12px; color: #86868b; }
+.inventory-grid { display: grid; gap: 12px; }
+.inventory-card { 
+    background: var(--card); padding: 12px; border-radius: 18px; 
+    display: flex; align-items: center; justify-content: space-between;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+.pet-preview { display: flex; align-items: center; gap: 15px; overflow: hidden; }
+.pet-preview img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; background: #eee; flex-shrink: 0; }
+.pet-preview h4 { margin: 0; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pet-preview p { margin: 2px 0 0; color: #86868b; font-size: 13px; }
 
-    #loading-overlay { 
-        position: fixed; inset: 0; background: rgba(255,255,255,0.7); 
-        backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 3000;
-    }
+.badge { font-size: 9px; background: #eee; padding: 2px 6px; border-radius: 8px; text-transform: uppercase; vertical-align: middle; }
 
-    @media (max-width: 600px) {
-        .container { padding: 20px 15px; }
-        header { flex-direction: column; align-items: flex-start; }
-        header div { width: 100%; display: flex; gap: 10px; margin-top: 15px; }
-        #pet-form-container { padding: 20px 15px; border-radius: 0; margin-left: -15px; margin-right: -15px; width: calc(100% + 30px); }
-        .form-grid { grid-template-columns: 1fr; }
-        .inventory-card { flex-direction: column; align-items: flex-start; gap: 15px; }
-        .actions { width: 100%; justify-content: flex-end; border-top: 1px solid #f5f5f7; padding-top: 10px;}
-    }
+.actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-edit { background: #f5f5f7; color: var(--text); padding: 8px 15px; }
+.btn-del { background: #fff1f1; color: #ff3b30; padding: 8px 15px; }
+
+/* Community Section Styles */
+.view-tabs { display: flex; gap: 10px; margin-bottom: 25px; background: #eee; padding: 5px; border-radius: 15px; width: fit-content; }
+.tab-btn { padding: 8px 20px; border-radius: 12px; cursor: pointer; border: none; font-weight: 600; font-size: 13px; background: transparent; color: #86868b; transition: 0.3s; }
+.tab-btn.active { background: white; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+.subscriber-list { background: white; border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+.sub-item { padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f5f5f7; }
+.sub-item:last-child { border-bottom: none; }
+.sub-info h5 { margin: 0; font-size: 15px; font-weight: 600; }
+.sub-info span { font-size: 12px; color: #86868b; }
+
+#loading-overlay { 
+    position: fixed; inset: 0; background: rgba(255,255,255,0.7); 
+    backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 3000;
+}
+
+@media (max-width: 600px) {
+    .container { padding: 20px 15px; }
+    header { flex-direction: column; align-items: flex-start; }
+    header div { width: 100%; display: flex; gap: 10px; margin-top: 15px; }
+    #pet-form-container { padding: 20px 15px; border-radius: 0; margin-left: -15px; margin-right: -15px; width: calc(100% + 30px); }
+    .form-grid { grid-template-columns: 1fr; }
+    .inventory-card { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .actions { width: 100%; justify-content: flex-end; border-top: 1px solid #f5f5f7; padding-top: 10px;}
+}
   </style>
 </head>
 <body>
-
 <div id="loading-overlay">Updating Inventory...</div>
-
 <!-- PASSWORD GATE -->
 <div id="login-gate">
     <div class="login-box">
@@ -108,7 +107,6 @@
         <button class="btn btn-add" style="width:100%;" onclick="checkAuth()">Login</button>
     </div>
 </div>
-
 <div class="container" id="admin-main">
   <header>
     <h1 id="page-title">Inventory</h1>
@@ -117,12 +115,10 @@
         <button id="add-pet-btn" class="btn btn-add" onclick="prepareNewPet()">+ Add Pet</button>
     </div>
   </header>
-
   <div class="view-tabs">
       <button class="tab-btn active" onclick="switchView('inventory')">Inventory</button>
       <button class="tab-btn" onclick="switchView('community')">Community Members</button>
   </div>
-
   <div id="inventory-view">
     <div id="pet-form-container">
         <h2 id="form-title" style="margin-top:0; font-size: 20px;">Add New Pet</h2>
@@ -135,53 +131,51 @@
             </div>
             <div><label>Pet Name</label><input type="text" id="pet-name" required placeholder="Ex: Blue Betta"></div>
             <div><label>Price (Rs.)</label><input type="number" id="pet-price" required placeholder="0.00"></div>
-            
-            <div>
-                <label>Category</label>
-                <select id="pet-category" required>
-                    <option value="" disabled selected>Select a category</option>
-                    <option value="fish">Fish</option>
-                    <option value="birds">Birds</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-    
-            <div>
-                <label>Sale Unit (Single/Pair)</label>
-                <select id="pet-unit" required>
-                    <option value="Single">Single</option>
-                    <option value="Pair">Pair</option>
-                </select>
-            </div>
-    
-            <div><label>Age</label><input type="text" id="pet-age" placeholder="Ex: 6 Months"></div>
-            <div><label>Size</label><input type="text" id="pet-size" placeholder="Ex: Large"></div>
-            <div class="full-width"><label>Description</label><textarea id="pet-desc" rows="3" placeholder="Describe the pet..."></textarea></div>
-            <div><label>Coloration</label><input type="text" id="pet-color" placeholder="Ex: Red/White"></div>
-            <div><label>Health Status</label><input type="text" id="pet-health" placeholder="Ex: Excellent"></div>
-          </div>
-          <div style="display: flex; gap: 10px; margin-top: 30px;">
-            <button type="submit" id="submit-btn" class="btn btn-add" style="flex: 2;">Save Pet</button>
-            <button type="button" onclick="toggleForm()" class="btn btn-edit" style="flex: 1;">Cancel</button>
-          </div>
-        </form>
-    </div>
-    
-    <div id="inventory-list">
-        <div class="inventory-grid" id="pets-container">
-            <!-- Pets load here -->
+code
+Code
+<div>
+            <label>Category</label>
+            <select id="pet-category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="fish">Fish</option>
+                <option value="birds">Birds</option>
+                <option value="other">Other</option>
+            </select>
         </div>
-    </div>
-  </div>
 
+        <div>
+            <label>Sale Unit (Single/Pair)</label>
+            <select id="pet-unit" required>
+                <option value="Single">Single</option>
+                <option value="Pair">Pair</option>
+            </select>
+        </div>
+
+        <div><label>Age</label><input type="text" id="pet-age" placeholder="Ex: 6 Months"></div>
+        <div><label>Size</label><input type="text" id="pet-size" placeholder="Ex: Large"></div>
+        <div class="full-width"><label>Description</label><textarea id="pet-desc" rows="3" placeholder="Describe the pet..."></textarea></div>
+        <div><label>Coloration</label><input type="text" id="pet-color" placeholder="Ex: Red/White"></div>
+        <div><label>Health Status</label><input type="text" id="pet-health" placeholder="Ex: Excellent"></div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 30px;">
+        <button type="submit" id="submit-btn" class="btn btn-add" style="flex: 2;">Save Pet</button>
+        <button type="button" onclick="toggleForm()" class="btn btn-edit" style="flex: 1;">Cancel</button>
+      </div>
+    </form>
+</div>
+
+<div id="inventory-list">
+    <div class="inventory-grid" id="pets-container">
+        <!-- Pets load here -->
+    </div>
+</div>
+  </div>
   <div id="community-view" style="display: none;">
       <div class="subscriber-list" id="subscribers-container">
           <!-- Subscribers load here -->
       </div>
   </div>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = 'https://bbkzmqupvtvhqcjaxmcw.supabase.co';
@@ -261,12 +255,8 @@
 
   async function deleteSubscriber(id) {
       if(confirm('Remove this email from the community list?')) {
-          const { error } = await supabaseClient.from('subscribers').delete().eq('id', id);
-          if (error) {
-              alert("Error deleting: Make sure you added the DELETE policy in Supabase.");
-          } else {
-              loadSubscribers();
-          }
+          await supabaseClient.from('subscribers').delete().eq('id', id);
+          loadSubscribers();
       }
   }
 
@@ -321,4 +311,79 @@
     document.getElementById('pet-id').value = data.id;
     document.getElementById('pet-name').value = data.name || '';
     document.getElementById('pet-price').value = data.price || '';
-    document.getElementById(
+    document.getElementById('pet-category').value = data.category || ''; 
+    document.getElementById('pet-unit').value = (data.unit || 'Single').replace(/['"]+/g, ''); 
+    document.getElementById('pet-age').value = data.age || '';
+    document.getElementById('pet-desc').value = data.description || '';
+    document.getElementById('pet-health').value = data.health || '';
+    document.getElementById('pet-size').value = data.size || '';
+    document.getElementById('pet-color').value = data.coloration || '';
+    
+    currentPetImages = data.images || (data.image_url ? [data.image_url] : []);
+    
+    isEditing = true;
+    document.getElementById('form-title').innerText = "Edit Pet";
+    document.getElementById('pet-form-container').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function uploadFiles(files) {
+    let urls = [];
+    for (let file of files) {
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${file.name.split('.').pop()}`;
+        const { error } = await supabaseClient.storage.from('pet-images').upload(fileName, file);
+        if (!error) {
+            const { data } = supabaseClient.storage.from('pet-images').getPublicUrl(fileName);
+            urls.push(data.publicUrl);
+        }
+    }
+    return urls;
+  }
+
+  document.getElementById('pet-form').onsubmit = async (e) => {
+    e.preventDefault();
+    document.getElementById('loading-overlay').style.display = 'flex';
+
+    const fileInput = document.getElementById('pet-files');
+    let finalImages = currentPetImages;
+
+    if (fileInput.files.length > 0) {
+        const newUrls = await uploadFiles(fileInput.files);
+        finalImages = newUrls; 
+    }
+
+    const petData = {
+      name: document.getElementById('pet-name').value,
+      price: document.getElementById('pet-price').value,
+      category: document.getElementById('pet-category').value,
+      unit: document.getElementById('pet-unit').value, 
+      images: finalImages,
+      image_url: finalImages[0] || "",
+      age: document.getElementById('pet-age').value,
+      description: document.getElementById('pet-desc').value,
+      health: document.getElementById('pet-health').value,
+      size: document.getElementById('pet-size').value,
+      coloration: document.getElementById('pet-color').value
+    };
+
+    if (isEditing) {
+        await supabaseClient.from('pets').update(petData).eq('id', document.getElementById('pet-id').value);
+    } else {
+        await supabaseClient.from('pets').insert([petData]);
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    prepareNewPet();
+    toggleForm();
+    loadInventory();
+  };
+
+  async function deletePet(id) { 
+      if(confirm('Delete this pet permanently?')) { 
+          await supabaseClient.from('pets').delete().eq('id', id); 
+          loadInventory(); 
+      } 
+  }
+</script>
+</body>
+</html>
