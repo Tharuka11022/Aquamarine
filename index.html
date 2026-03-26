@@ -1,5 +1,3 @@
---- START OF FILE Paste March 26, 2026 - 9:15PM ---
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,25 +14,71 @@
         --primary: #38a169; 
         --primary-dark: #2f855a; 
         --primary-light: #c6f6d5; 
-        --glass: rgba(255, 255, 255, 0.8); 
-        --dark: #1a202c; 
-        --light-bg: #f8fafc;
-        --footer-bg: #0a0a0a;
         --easing: cubic-bezier(0.4, 0, 0.2, 1);
+        --dark: #1a202c;
+        
+        /* Light Mode Variables */
+        --bg-body: #ffffff;
+        --bg-card: #ffffff;
+        --bg-section: #f8fafc;
+        --bg-nav: rgba(255, 255, 255, 0.8);
+        --text-main: #1a202c;
+        --text-muted: #64748b;
+        --border-color: #f1f5f9;
+        --glass-border: rgba(0,0,0,0.05);
+        --footer-bg: #0a0a0a;
+        --input-bg: #ffffff;
+    }
+
+    /* Dark Mode Variables */
+    body.dark-mode {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-section: #1e293b;
+        --bg-nav: rgba(15, 23, 42, 0.8);
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border-color: #334155;
+        --glass-border: rgba(255,255,255,0.1);
+        --input-bg: #1e293b;
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { line-height: 1.6; color: var(--dark); background-color: #ffffff; overflow-x: hidden; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; transition: background-color 0.4s ease, border-color 0.4s ease, color 0.2s ease; }
+    body { line-height: 1.6; color: var(--text-main); background-color: var(--bg-body); overflow-x: hidden; }
     html { scroll-behavior: smooth; }
+
+    /* Theme Toggle Button */
+    .theme-toggle-wrapper {
+        margin-left: 15px;
+        display: flex;
+        align-items: center;
+    }
+    #theme-toggle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        color: var(--primary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+    body.dark-mode #theme-toggle { color: #f6e05e; }
 
     /* Layout States */
     #main-content { display: block; }
-    #detail-view { display: none; min-height: 100vh; background: #fff; padding-top: 80px; }
+    #detail-view { display: none; min-height: 100vh; background: var(--bg-body); padding-top: 80px; }
     body.showing-details #main-content { display: none; }
     body.showing-details #detail-view { display: block; }
 
     /* Loader */
-    #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; display: flex; justify-content: center; align-items: center; z-index: 9999; }
+    #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); display: flex; justify-content: center; align-items: center; z-index: 9999; }
     .spinner { width: 50px; height: 50px; border: 5px solid var(--primary-light); border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -42,12 +86,12 @@
     .reveal.active { opacity: 1; transform: translateY(0); }
 
     /* Navigation */
-    nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: var(--bg-nav); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
     nav.scrolled { padding: 0.5rem 5%; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
     .logo { font-family: 'Baloo 2', cursive; font-size: 1.6rem; color: var(--primary); font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: -1px; }
     
-    .nav-links { display: flex; gap: 20px; align-items: center; }
-    .nav-btn { text-decoration: none; color: var(--dark); font-weight: 700; font-size: 0.85rem; padding: 10px 20px; border-radius: 50px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 10px; align-items: center; }
+    .nav-btn { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; padding: 10px 20px; border-radius: 50px; transition: 0.3s; }
     .nav-btn.primary { background: var(--primary); color: white; }
     .nav-btn.primary:hover { background: var(--primary-dark); transform: scale(1.05); }
 
@@ -77,7 +121,7 @@
 
     #search-suggestions {
         position: absolute; top: calc(100% + 15px); left: 0; right: 0; 
-        background: white; border-radius: 20px; overflow: hidden;
+        background: var(--bg-card); border-radius: 20px; overflow: hidden;
         box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: none; z-index: 100;
         animation: slideDown 0.3s ease;
     }
@@ -86,10 +130,10 @@
     
     .suggestion-item { 
         padding: 12px 20px; display: flex; align-items: center; gap: 15px; 
-        cursor: pointer; transition: 0.2s; border-bottom: 1px solid #f1f5f9;
-        text-align: left; color: var(--dark);
+        cursor: pointer; transition: 0.2s; border-bottom: 1px solid var(--border-color);
+        text-align: left; color: var(--text-main);
     }
-    .suggestion-item:hover { background: #f8fafc; padding-left: 25px; }
+    .suggestion-item:hover { background: var(--bg-section); padding-left: 25px; }
     .suggestion-item img { width: 45px; height: 45px; border-radius: 10px; object-fit: cover; }
 
     /* Gift System */
@@ -112,9 +156,9 @@
     .gift-fab-container:hover .gift-dismiss { opacity: 1; }
 
     .gift-reveal-card {
-        position: absolute; bottom: 65px; right: 0; width: 260px; background: white;
+        position: absolute; bottom: 65px; right: 0; width: 260px; background: var(--bg-card);
         padding: 25px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        display: none; text-align: center; border: 1px solid #eee;
+        display: none; text-align: center; border: 1px solid var(--border-color);
     }
 
     .gift-reveal-card button:hover {
@@ -130,21 +174,23 @@
     /* Sections Shared */
     section { padding: 6rem 5%; max-width: 1300px; margin: auto; }
     .section-header { text-align: center; margin-bottom: 4rem; }
-    .section-header h2 { font-family: 'Baloo 2'; font-size: 2.8rem; color: var(--dark); margin-bottom: 10px; }
-    .section-header p { color: #64748b; font-size: 1.1rem; }
+    .section-header h2 { font-family: 'Baloo 2'; font-size: 2.8rem; color: var(--text-main); margin-bottom: 10px; }
+    .section-header p { color: var(--text-muted); font-size: 1.1rem; }
 
     /* Feature Grid & Carousel Wrapper */
     .features-carousel-wrapper { position: relative; width: 100%; }
     .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-    .feature-card { padding: 3rem 2rem; background: var(--light-bg); border-radius: 30px; text-align: center; transition: 0.3s; }
-    .feature-card:hover { transform: translateY(-10px); background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+    .feature-card { padding: 3rem 2rem; background: var(--bg-section); border-radius: 30px; text-align: center; transition: 0.3s; border: 1px solid transparent; }
+    .feature-card:hover { transform: translateY(-10px); background: var(--bg-card); border-color: var(--border-color); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .feature-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; display: block; }
+    .feature-card h3 { color: var(--text-main); }
+    .feature-card p { color: var(--text-muted); }
     
     .carousel-nav { display: none; } /* Hidden on Desktop */
 
     /* Steps Section */
     .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-top: 2rem; }
-    .step-item { position: relative; text-align: center; }
+    .step-item { position: relative; text-align: center; color: var(--text-main); }
     .step-number { width: 50px; height: 50px; background: var(--primary-light); color: var(--primary-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 1.5rem; font-size: 1.2rem; }
     
     /* Stats Bar (Desktop) */
@@ -154,22 +200,24 @@
 
     /* Inventory & Tabs */
     .filter-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 3rem; }
-    .tab-btn { padding: 12px 30px; border-radius: 50px; border: 1px solid #e2e8f0; background: white; cursor: pointer; font-weight: 600; transition: 0.3s; color: #64748b; }
+    .tab-btn { padding: 12px 30px; border-radius: 50px; border: 1px solid var(--border-color); background: var(--bg-card); cursor: pointer; font-weight: 600; transition: 0.3s; color: var(--text-muted); }
     .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 10px 20px rgba(56,161,105,0.2); }
 
     .pets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-    .pet-card { background: white; border-radius: 24px; overflow: hidden; border: 1px solid #f1f5f9; transition: 0.4s var(--easing); cursor: pointer; position: relative; }
+    .pet-card { background: var(--bg-card); border-radius: 24px; overflow: hidden; border: 1px solid var(--border-color); transition: 0.4s var(--easing); cursor: pointer; position: relative; }
     .pet-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
     .pet-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; transition: 0.5s; }
     .pet-card:hover img { transform: scale(1.05); }
+    .pet-card h4 { color: var(--text-main); }
     .pet-tag { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; color: var(--primary); z-index: 5; }
 
     /* Map Section Styles */
-    .map-wrapper { position: relative; border-radius: 40px; overflow: hidden; height: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; }
-    .map-info-card { position: absolute; top: 40px; left: 40px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 35px; border-radius: 30px; max-width: 350px; z-index: 10; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid white; }
-    .map-info-card h4 { font-family: 'Baloo 2'; font-size: 1.8rem; color: var(--dark); margin-bottom: 15px; }
-    .map-info-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; }
+    .map-wrapper { position: relative; border-radius: 40px; overflow: hidden; height: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid var(--border-color); }
+    .map-info-card { position: absolute; top: 40px; left: 40px; background: var(--bg-nav); backdrop-filter: blur(10px); padding: 35px; border-radius: 30px; max-width: 350px; z-index: 10; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid var(--border-color); }
+    .map-info-card h4 { font-family: 'Baloo 2'; font-size: 1.8rem; color: var(--text-main); margin-bottom: 15px; }
+    .map-info-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; }
     .map-info-card i { color: var(--primary); margin-top: 4px; }
+    
     .directions-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--dark); color: white; padding: 15px; border-radius: 15px; text-decoration: none; font-weight: 700; transition: 0.3s; }
     .directions-btn:hover { background: var(--primary); transform: translateY(-3px); }
 
@@ -185,9 +233,9 @@
         display: inline-block;
         margin-top: 20px;
         padding: 6px 15px;
-        border: 1px solid #1e293b;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
-        color: #64748b;
+        color: var(--text-muted);
         text-decoration: none;
         font-size: 0.7rem;
         font-weight: 600;
@@ -199,7 +247,7 @@
 
     /* Modal Styling (Coupon) */
     #coupon-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
-    .coupon-content { background: white; width: 100%; max-width: 450px; border-radius: 35px; overflow: hidden; position: relative; text-align: center; animation: modalIn 0.5s var(--easing); }
+    .coupon-content { background: var(--bg-card); width: 100%; max-width: 450px; border-radius: 35px; overflow: hidden; position: relative; text-align: center; animation: modalIn 0.5s var(--easing); }
     @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } }
 
     /* Footer */
@@ -213,14 +261,17 @@
     @media (max-width: 900px) {
         .footer-grid { grid-template-columns: 1fr 1fr; }
         .stats-bar { border-radius: 0; width: 100%; }
-        .map-info-card { position: static; max-width: 100%; border-radius: 25px; margin-bottom: 20px; background: #f8fafc; }
+        .map-info-card { position: static; max-width: 100%; border-radius: 25px; margin-bottom: 20px; background: var(--bg-section); }
         .map-wrapper { height: auto; border-radius: 25px; display: flex; flex-direction: column; }
         .map-wrapper iframe { height: 350px; }
     }
     @media (max-width: 600px) {
         section { padding: 3.5rem 6%; }
         .footer-grid { grid-template-columns: 1fr; gap: 35px; }
-        .nav-links { display: none; }
+        
+        .nav-links .nav-btn { display: none; }
+        .theme-toggle-wrapper { margin-left: 0; }
+        
         .header-text h1 { font-size: 2.3rem; margin-bottom: 0.5rem; }
         .header-text p { font-size: 1rem !important; }
         .section-header { margin-bottom: 2.5rem; }
@@ -271,7 +322,7 @@
         .carousel-arrow {
             width: 35px;
             height: 35px;
-            background: white;
+            background: var(--bg-card);
             border: none;
             border-radius: 50%;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -323,8 +374,8 @@
 
         .mobile-detail-grid { gap: 25px !important; }
         .mobile-main-img { border-radius: 24px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; }
-        .mobile-profile-card { background: #fff !important; padding: 25px !important; border-radius: 28px !important; border: 1px solid #f1f5f9 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.02) !important; }
-        .mobile-feature-pill { background: #f8fafc; padding: 10px 14px; border-radius: 14px; border: 1px solid #f1f5f9; display: flex; align-items: center; gap: 8px; color: var(--dark); }
+        .mobile-profile-card { background: var(--bg-card) !important; padding: 25px !important; border-radius: 28px !important; border: 1px solid var(--border-color) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.02) !important; }
+        .mobile-feature-pill { background: var(--bg-section); padding: 10px 14px; border-radius: 14px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; color: var(--text-main); }
         .mobile-feature-pill i { color: var(--primary); font-size: 0.7rem; }
 
         /* Community Mobile Optimization */
@@ -349,6 +400,11 @@
         <a href="#featured-pets" class="nav-btn">Inventory</a>
         <a href="#the-journey" class="nav-btn">Process</a>
         <a href="#featured-pets" class="nav-btn primary">Shop Now</a>
+        <div class="theme-toggle-wrapper">
+            <button id="theme-toggle" onclick="toggleTheme()" title="Switch Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -357,7 +413,7 @@
     <div class="gift-reveal-card">
         <span style="color:var(--primary); font-weight:800; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">New Member Gift</span>
         <h4 style="font-size: 2rem; font-family:'Baloo 2'; margin: 5px 0;">25% OFF</h4>
-        <p style="font-size: 0.85rem; color:#64748b; margin-bottom: 15px;">On your first premium companion purchase.</p>
+        <p style="font-size: 0.85rem; color:var(--text-muted); margin-bottom: 15px;">On your first premium companion purchase.</p>
         <button onclick="openCoupon()" style="width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:15px; font-weight:700; cursor:pointer; transition:0.3s;">CLAIM COUPON</button>
     </div>
     <div class="gift-btn">
@@ -372,7 +428,7 @@
             <h2 style="font-size:4rem; font-family:'Baloo 2'; line-height:1;">25% OFF</h2>
         </div>
         <div style="padding:40px 30px;">
-            <div id="coupon-code" style="border:2px dashed #cbd5e0; padding:15px; font-family:monospace; font-size:1.5rem; font-weight:800; background:#f8fafc; border-radius:15px; margin-bottom:20px;">AQUA-PREM-25</div>
+            <div id="coupon-code" style="border:2px dashed #cbd5e0; padding:15px; font-family:monospace; font-size:1.5rem; font-weight:800; background:var(--bg-section); color:var(--text-main); border-radius:15px; margin-bottom:20px;">AQUA-PREM-25</div>
             <button onclick="sendCouponToWA()" style="width:100%; padding:20px; background:#25D366; color:white; border:none; border-radius:18px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; font-size:1rem;">
                 <i class="fab fa-whatsapp" style="font-size:1.5rem;"></i> CLAIM ON WHATSAPP
             </button>
@@ -466,7 +522,7 @@
         <div class="pets-grid reveal" id="pets-container"></div>
     </section>
 
-    <section id="the-journey" style="background:#f8fafc; border-radius: 60px; margin-bottom: 5rem;">
+    <section id="the-journey" style="background:var(--bg-section); border-radius: 60px; margin-bottom: 5rem;">
         <div class="section-header reveal">
             <h2>How to Begin</h2>
             <p>Your journey to a lifetime of companionship in four simple steps.</p>
@@ -475,22 +531,22 @@
             <div class="step-item">
                 <div class="step-number">1</div>
                 <h4>Browse & Choose</h4>
-                <p style="font-size:0.9rem; color:#64748b;">Explore our live inventory of premium breeds.</p>
+                <p style="font-size:0.9rem; color:var(--text-muted);">Explore our live inventory of premium breeds.</p>
             </div>
             <div class="step-item">
                 <div class="step-number">2</div>
                 <h4>Consultation</h4>
-                <p style="font-size:0.9rem; color:#64748b;">Chat with our experts via WhatsApp for pet history.</p>
+                <p style="font-size:0.9rem; color:var(--text-muted);">Chat with our experts via WhatsApp for pet history.</p>
             </div>
             <div class="step-item">
                 <div class="step-number">3</div>
                 <h4>Health Check</h4>
-                <p style="font-size:0.9rem; color:#64748b;">Final veterinary clearance is performed for your specific pet.</p>
+                <p style="font-size:0.9rem; color:var(--text-muted);">Final veterinary clearance is performed for your specific pet.</p>
             </div>
             <div class="step-item">
                 <div class="step-number">4</div>
                 <h4>Home Arrival</h4>
-                <p style="font-size:0.9rem; color:#64748b;">Secure, comfortable delivery to your doorstep.</p>
+                <p style="font-size:0.9rem; color:var(--text-muted);">Secure, comfortable delivery to your doorstep.</p>
             </div>
         </div>
     </section>
@@ -521,11 +577,10 @@
                 <p><i class="fa-solid fa-location-dot"></i> 93C, Uthuwankanda Road<br>Thalawathugoda</p>
                 <p><i class="fa-solid fa-clock"></i> Open Daily: 12:00 AM - 12:00 PM</p>
                 <p><i class="fa-solid fa-phone"></i> +94 74 293 4189</p>
-                <a href="https://maps.google.com" target="_blank" class="directions-btn">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=6.8739858,79.9423288" target="_blank" class="directions-btn">
                     <i class="fa-solid fa-diamond-turn-right"></i> GET DIRECTIONS
                 </a>
             </div>
-            <!-- Replace the src below with your actual Google Maps Embed Link -->
             <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.1386514115884!2d79.9423288!3d6.873985800000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25199e567fd11%3A0x30e03986d9871911!2sAquamarine%20%7C%20Premium%20Pets!5e0!3m2!1sen!2slk!4v1774539208770!5m2!1sen!2slk" 
                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -592,8 +647,8 @@
       showSlides();
       handleGiftVisibility();
       initFeaturesCarousel();
+      applySavedTheme(); 
       
-      // Search logic initialization
       const sInput = document.getElementById('pet-search');
       const sSug = document.getElementById('search-suggestions');
       
@@ -607,7 +662,7 @@
                     <div class="suggestion-item" onclick="showPetDetails('${p.id}')">
                         <img src="${p.image_url}">
                         <div>
-                            <p style="font-weight:700; margin:0; color: #1a202c;">${p.name}</p>
+                            <p style="font-weight:700; margin:0;">${p.name}</p>
                             <p style="font-size:0.8rem; color:#38a169; margin:0;">Rs. ${p.price}</p>
                         </div>
                     </div>`).join('');
@@ -623,6 +678,32 @@
           });
       }
   });
+
+  function toggleTheme() {
+      const body = document.body;
+      const icon = document.querySelector('#theme-toggle i');
+      
+      if (body.classList.contains('dark-mode')) {
+          body.classList.remove('dark-mode');
+          icon.className = 'fa-solid fa-moon';
+          localStorage.setItem('aquaTheme', 'light');
+      } else {
+          body.classList.add('dark-mode');
+          icon.className = 'fa-solid fa-sun';
+          localStorage.setItem('aquaTheme', 'dark');
+      }
+  }
+
+  function applySavedTheme() {
+      const saved = localStorage.getItem('aquaTheme');
+      const body = document.body;
+      const icon = document.querySelector('#theme-toggle i');
+      
+      if (saved === 'dark') {
+          body.classList.add('dark-mode');
+          icon.className = 'fa-solid fa-sun';
+      }
+  }
 
   async function joinCommunity(e) {
       e.preventDefault();
@@ -672,8 +753,10 @@
           const grid = document.getElementById('features-grid');
           const pedigree = document.getElementById('pedigree-card');
           setTimeout(() => {
-              const centerPoint = pedigree.offsetLeft - (grid.offsetWidth / 2) + (pedigree.offsetWidth / 2);
-              grid.scrollLeft = centerPoint;
+              if(pedigree && grid) {
+                const centerPoint = pedigree.offsetLeft - (grid.offsetWidth / 2) + (pedigree.offsetWidth / 2);
+                grid.scrollLeft = centerPoint;
+              }
           }, 150);
       }
   }
@@ -725,16 +808,16 @@
             <div>
                 <img id="main-img" class="mobile-main-img" src="${imgs[0]}" style="width:100%; border-radius:30px; box-shadow:0 30px 60px rgba(0,0,0,0.1);">
                 <div style="display:flex; gap:15px; margin-top:20px; overflow-x:auto; padding-bottom:10px;">
-                    ${imgs.map(u => `<img src="${u}" style="width:80px; height:80px; border-radius:15px; cursor:pointer; object-fit:cover; border:2px solid #f1f5f9;" onclick="document.getElementById('main-img').src='${u}'">`).join('')}
+                    ${imgs.map(u => `<img src="${u}" style="width:80px; height:80px; border-radius:15px; cursor:pointer; object-fit:cover; border:2px solid var(--border-color);" onclick="document.getElementById('main-img').src='${u}'">`).join('')}
                 </div>
             </div>
             <div>
                 <span style="color:var(--primary); font-weight:800; font-size:0.8rem; text-transform:uppercase; letter-spacing:2px;">${pet.category || 'Premium Selection'}</span>
                 <h1 style="font-size:3.5rem; font-family:'Baloo 2'; line-height:1; margin: 10px 0;">${pet.name}</h1>
                 <p class="mobile-detail-price" style="font-size:2.5rem; color:var(--primary); font-weight:900; margin-bottom: 30px;">Rs. ${pet.price}</p>
-                <div class="mobile-profile-card" style="background:#f8fafc; padding:30px; border-radius:25px; margin-bottom:30px;">
+                <div class="mobile-profile-card" style="background:var(--bg-section); padding:30px; border-radius:25px; margin-bottom:30px;">
                     <h4 style="margin-bottom:10px;"><i class="fa-solid fa-circle-info"></i> Companion Profile</h4>
-                    <p style="color:#64748b; line-height:1.8; margin-bottom:20px;">${pet.description || 'This premium specimen has been vetted for temperament and health. It comes with our standard health guarantee and a pedigree certificate.'}</p>
+                    <p style="color:var(--text-muted); line-height:1.8; margin-bottom:20px;">${pet.description || 'This premium specimen has been vetted for temperament and health. It comes with our standard health guarantee and a pedigree certificate.'}</p>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Vet Checked</span>
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Pure Breed</span>
