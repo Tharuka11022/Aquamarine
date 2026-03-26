@@ -213,11 +213,9 @@
         .section-header h2 { font-size: 1.9rem; }
         .section-header p { font-size: 0.95rem; }
         
-        /* Category sideway fix */
         .filter-tabs { flex-wrap: nowrap; gap: 5px; justify-content: center; }
         .tab-btn { padding: 10px 10px; font-size: 0.72rem; flex: 1; min-width: 0; white-space: nowrap; }
         
-        /* Centered Premium Stats Bar for Mobile */
         .stats-bar { 
             padding: 2.2rem 0.5rem; 
             display: flex; 
@@ -249,7 +247,7 @@
         .carousel-nav {
             display: flex;
             position: absolute;
-            top: 50%;
+            top: 42%; /* Centered vertically to cards */
             transform: translateY(-50%);
             width: 100%;
             justify-content: space-between;
@@ -280,14 +278,19 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            align-items: flex-start !important; /* Fix for tall blocks issue */
+            align-items: stretch !important; /* Forces uniform height */
         }
         .features-grid::-webkit-scrollbar { display: none; }
         .feature-card {
             flex: 0 0 82% !important;
             scroll-snap-align: center;
             padding: 2.5rem 1.5rem !important;
+            min-height: 140px; /* Ensures all blocks are identical size */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
+        .feature-card p { display: none !important; }
 
         .gift-fab-container { bottom: 20px; right: 20px; }
         .gift-btn { width: 55px; height: 55px; font-size: 1.2rem; }
@@ -298,7 +301,6 @@
         .steps-container { gap: 1.5rem; }
         #detail-view { padding-top: 70px; }
 
-        /* Exactly 2 pets per row on mobile */
         .pets-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
         .pet-card { border-radius: 16px; }
         .pet-card div { padding: 12px !important; }
@@ -306,7 +308,6 @@
         .pet-card p { font-size: 0.9rem !important; }
         .pet-tag { top: 8px; left: 8px; padding: 3px 10px; font-size: 0.6rem; }
 
-        /* Mobile Detail Enhancements */
         .mobile-detail-grid { gap: 25px !important; }
         .mobile-main-img { border-radius: 24px !important; box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; }
         .mobile-profile-card { background: #fff !important; padding: 25px !important; border-radius: 28px !important; border: 1px solid #f1f5f9 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.02) !important; }
@@ -361,7 +362,6 @@
 </div>
 
 <div id="main-content">
-    <!-- HERO HEADER -->
     <header>
       <div class="slideshow-container">
         <div class="slide active"><img src="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/slide1.jpg"></div>
@@ -382,7 +382,6 @@
       </div>
     </header>
 
-    <!-- STATS SECTION -->
     <section style="padding: 0 5%;">
         <div class="stats-bar reveal">
             <div class="stat-box">
@@ -400,7 +399,6 @@
         </div>
     </section>
 
-    <!-- CORE FEATURES / THE AQUAMARINE STANDARD -->
     <section id="features">
         <div class="section-header reveal">
             <h2>The Aquamarine Standard</h2>
@@ -433,7 +431,6 @@
         </div>
     </section>
 
-    <!-- INVENTORY SECTION -->
     <section id="featured-pets">
         <div class="section-header reveal">
             <h2>Our Current Collection</h2>
@@ -446,12 +443,9 @@
             <button class="tab-btn" onclick="filterPets('fish', this)">Aquatic Life</button>
         </div>
 
-        <div class="pets-grid reveal" id="pets-container">
-            <!-- Dynamic Content -->
-        </div>
+        <div class="pets-grid reveal" id="pets-container"></div>
     </section>
 
-    <!-- THE JOURNEY -->
     <section id="the-journey" style="background:#f8fafc; border-radius: 60px; margin-bottom: 5rem;">
         <div class="section-header reveal">
             <h2>How to Begin</h2>
@@ -481,7 +475,6 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
@@ -518,7 +511,6 @@
     </footer>
 </div>
 
-<!-- DETAIL VIEW -->
 <div id="detail-view">
     <div style="max-width:1200px; margin:auto; padding:0 5%;">
         <button onclick="history.back()" style="border:none; background:none; color:var(--primary); font-weight:800; cursor:pointer; margin-bottom:30px; display:flex; align-items:center; gap:10px;">
@@ -530,7 +522,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  /* --- CONFIGURATION --- */
   const SUPABASE_URL = 'https://bbkzmqupvtvhqcjaxmcw.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJia3ptcXVwdnR2aHFjamF4bWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjgwMTYsImV4cCI6MjA4OTgwNDAxNn0.upfrcHG8B0qZM_ruy97UL1AA-ykpCmyQ_1db0B7vkjg';
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -538,7 +529,6 @@
   let allPets = [];
   const myNumber = "94742934189";
 
-  /* --- INITIALIZATION --- */
   window.addEventListener('DOMContentLoaded', () => {
       loadPets();
       showSlides();
@@ -546,12 +536,10 @@
       initFeaturesCarousel();
   });
 
-  /* --- FEATURES CAROUSEL LOGIC --- */
   function initFeaturesCarousel() {
       if (window.innerWidth <= 600) {
           const grid = document.getElementById('features-grid');
           const pedigree = document.getElementById('pedigree-card');
-          
           setTimeout(() => {
               const centerPoint = pedigree.offsetLeft - (grid.offsetWidth / 2) + (pedigree.offsetWidth / 2);
               grid.scrollLeft = centerPoint;
@@ -565,7 +553,6 @@
       grid.scrollBy({ left: direction * scrollStep, behavior: 'smooth' });
   }
 
-  /* --- DATA LOADING --- */
   async function loadPets() {
     const { data, error } = await supabaseClient.from('pets').select('*');
     if (error) console.error("Error loading pets:", error);
@@ -575,7 +562,6 @@
     reveal(); 
   }
 
-  /* --- RENDERING --- */
   function renderPets(list) {
     const container = document.getElementById('pets-container');
     if (list.length === 0) {
@@ -594,19 +580,13 @@
     `).join('');
   }
 
-  /* --- SEARCH LOGIC --- */
   const sInput = document.getElementById('pet-search');
   const sSug = document.getElementById('search-suggestions');
 
   sInput.addEventListener('input', (e) => {
       const val = e.target.value.toLowerCase().trim();
-      if(val.length < 1) { 
-          sSug.classList.remove('active'); 
-          return; 
-      }
-      
+      if(val.length < 1) { sSug.classList.remove('active'); return; }
       const matches = allPets.filter(p => p.name.toLowerCase().includes(val)).slice(0, 5);
-      
       if(matches.length > 0) {
           sSug.innerHTML = matches.map(p => `
             <div class="suggestion-item" onclick="showPetDetails('${p.id}')">
@@ -626,13 +606,10 @@
       if(!e.target.closest('.search-container')) sSug.classList.remove('active');
   });
 
-  /* --- DETAIL VIEW LOGIC --- */
   function showPetDetails(petId, pushState = true) {
       const pet = allPets.find(p => p.id == petId);
       if(!pet) return;
-      
       if (pushState) history.pushState({view: 'details'}, pet.name, "#pet-" + petId);
-      
       const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
       
       document.getElementById('detail-content').innerHTML = `
@@ -647,7 +624,6 @@
                 <span style="color:var(--primary); font-weight:800; font-size:0.8rem; text-transform:uppercase; letter-spacing:2px;">${pet.category || 'Premium Selection'}</span>
                 <h1 style="font-size:3.5rem; font-family:'Baloo 2'; line-height:1; margin: 10px 0;">${pet.name}</h1>
                 <p class="mobile-detail-price" style="font-size:2.5rem; color:var(--primary); font-weight:900; margin-bottom: 30px;">Rs. ${pet.price}</p>
-                
                 <div class="mobile-profile-card" style="background:#f8fafc; padding:30px; border-radius:25px; margin-bottom:30px;">
                     <h4 style="margin-bottom:10px;"><i class="fa-solid fa-circle-info"></i> Companion Profile</h4>
                     <p style="color:#64748b; line-height:1.8; margin-bottom:20px;">${pet.description || 'This premium specimen has been vetted for temperament and health. It comes with our standard health guarantee and a pedigree certificate.'}</p>
@@ -658,22 +634,17 @@
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Life Support</span>
                     </div>
                 </div>
-                
                 <button onclick="window.open('https://wa.me/${myNumber}?text=Hi, I am interested in ${pet.name}')" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3);">
                     <i class="fab fa-whatsapp" style="font-size:1.6rem;"></i> INQUIRE ON WHATSAPP
                 </button>
             </div>
         </div>`;
-      
       document.body.classList.add('showing-details');
       window.scrollTo(0,0);
   }
 
-  /* --- GIFT & COUPON LOGIC --- */
   function handleGiftVisibility() {
-      if (sessionStorage.getItem('giftDismissed')) {
-          document.getElementById('gift-system').style.display = 'none';
-      }
+      if (sessionStorage.getItem('giftDismissed')) { document.getElementById('gift-system').style.display = 'none'; }
   }
 
   function dismissGift(e) { 
@@ -681,9 +652,7 @@
       document.getElementById('gift-system').style.opacity = '0';
       document.getElementById('gift-system').style.transform = 'scale(0.5)';
       sessionStorage.setItem('giftDismissed', 'true');
-      setTimeout(() => {
-          document.getElementById('gift-system').style.display = 'none';
-      }, 400);
+      setTimeout(() => { document.getElementById('gift-system').style.display = 'none'; }, 400);
   }
 
   function openCoupon() { document.getElementById('coupon-modal').style.display = 'flex'; }
@@ -695,25 +664,13 @@
       closeCoupon();
   }
 
-  /* --- UTILITIES --- */
-  function goHome() { 
-      document.body.classList.remove('showing-details'); 
-      window.scrollTo({top:0, behavior:'smooth'});
-  }
-
-  window.onpopstate = (e) => {
-      if (!e.state || e.state.view !== 'details') goHome();
-  };
+  function goHome() { document.body.classList.remove('showing-details'); window.scrollTo({top:0, behavior:'smooth'}); }
+  window.onpopstate = (e) => { if (!e.state || e.state.view !== 'details') goHome(); };
 
   function filterPets(category, el) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     el.classList.add('active');
-    
-    if(category === 'all') {
-        renderPets(allPets);
-    } else {
-        renderPets(allPets.filter(p => p.category?.toLowerCase() === category));
-    }
+    if(category === 'all') { renderPets(allPets); } else { renderPets(allPets.filter(p => p.category?.toLowerCase() === category)); }
   }
 
   function reveal() {
