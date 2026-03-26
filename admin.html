@@ -18,7 +18,7 @@
     
     /* Login Gate */
     #login-gate {
-        position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+        position: i-fixed; inset: 0; background: var(--bg); z-index: 2000;
         display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
     }
     .login-box {
@@ -261,8 +261,12 @@
 
   async function deleteSubscriber(id) {
       if(confirm('Remove this email from the community list?')) {
-          await supabaseClient.from('subscribers').delete().eq('id', id);
-          loadSubscribers();
+          const { error } = await supabaseClient.from('subscribers').delete().eq('id', id);
+          if (error) {
+              alert("Error deleting: Make sure you added the DELETE policy in Supabase.");
+          } else {
+              loadSubscribers();
+          }
       }
   }
 
@@ -317,79 +321,4 @@
     document.getElementById('pet-id').value = data.id;
     document.getElementById('pet-name').value = data.name || '';
     document.getElementById('pet-price').value = data.price || '';
-    document.getElementById('pet-category').value = data.category || ''; 
-    document.getElementById('pet-unit').value = (data.unit || 'Single').replace(/['"]+/g, ''); 
-    document.getElementById('pet-age').value = data.age || '';
-    document.getElementById('pet-desc').value = data.description || '';
-    document.getElementById('pet-health').value = data.health || '';
-    document.getElementById('pet-size').value = data.size || '';
-    document.getElementById('pet-color').value = data.coloration || '';
-    
-    currentPetImages = data.images || (data.image_url ? [data.image_url] : []);
-    
-    isEditing = true;
-    document.getElementById('form-title').innerText = "Edit Pet";
-    document.getElementById('pet-form-container').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  async function uploadFiles(files) {
-    let urls = [];
-    for (let file of files) {
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${file.name.split('.').pop()}`;
-        const { error } = await supabaseClient.storage.from('pet-images').upload(fileName, file);
-        if (!error) {
-            const { data } = supabaseClient.storage.from('pet-images').getPublicUrl(fileName);
-            urls.push(data.publicUrl);
-        }
-    }
-    return urls;
-  }
-
-  document.getElementById('pet-form').onsubmit = async (e) => {
-    e.preventDefault();
-    document.getElementById('loading-overlay').style.display = 'flex';
-
-    const fileInput = document.getElementById('pet-files');
-    let finalImages = currentPetImages;
-
-    if (fileInput.files.length > 0) {
-        const newUrls = await uploadFiles(fileInput.files);
-        finalImages = newUrls; 
-    }
-
-    const petData = {
-      name: document.getElementById('pet-name').value,
-      price: document.getElementById('pet-price').value,
-      category: document.getElementById('pet-category').value,
-      unit: document.getElementById('pet-unit').value, 
-      images: finalImages,
-      image_url: finalImages[0] || "",
-      age: document.getElementById('pet-age').value,
-      description: document.getElementById('pet-desc').value,
-      health: document.getElementById('pet-health').value,
-      size: document.getElementById('pet-size').value,
-      coloration: document.getElementById('pet-color').value
-    };
-
-    if (isEditing) {
-        await supabaseClient.from('pets').update(petData).eq('id', document.getElementById('pet-id').value);
-    } else {
-        await supabaseClient.from('pets').insert([petData]);
-    }
-
-    document.getElementById('loading-overlay').style.display = 'none';
-    prepareNewPet();
-    toggleForm();
-    loadInventory();
-  };
-
-  async function deletePet(id) { 
-      if(confirm('Delete this pet permanently?')) { 
-          await supabaseClient.from('pets').delete().eq('id', id); 
-          loadInventory(); 
-      } 
-  }
-</script>
-</body>
-</html>
+    document.getElementById(
