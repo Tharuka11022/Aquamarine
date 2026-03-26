@@ -12,6 +12,7 @@
       --card: #ffffff;
       --text: #1d1d1f;
       --border: #d2d2d7;
+      --success: #34c759;
     }
     body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
     
@@ -68,6 +69,17 @@
     .btn-edit { background: #f5f5f7; color: var(--text); padding: 8px 15px; }
     .btn-del { background: #fff1f1; color: #ff3b30; padding: 8px 15px; }
 
+    /* Community Section Styles */
+    .view-tabs { display: flex; gap: 10px; margin-bottom: 25px; background: #eee; padding: 5px; border-radius: 15px; width: fit-content; }
+    .tab-btn { padding: 8px 20px; border-radius: 12px; cursor: pointer; border: none; font-weight: 600; font-size: 13px; background: transparent; color: #86868b; transition: 0.3s; }
+    .tab-btn.active { background: white; color: var(--text); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+    .subscriber-list { background: white; border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+    .sub-item { padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f5f5f7; }
+    .sub-item:last-child { border-bottom: none; }
+    .sub-info h5 { margin: 0; font-size: 15px; font-weight: 600; }
+    .sub-info span { font-size: 12px; color: #86868b; }
+
     #loading-overlay { 
         position: fixed; inset: 0; background: rgba(255,255,255,0.7); 
         backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 3000;
@@ -99,61 +111,75 @@
 
 <div class="container" id="admin-main">
   <header>
-    <h1>Inventory</h1>
+    <h1 id="page-title">Inventory</h1>
     <div>
         <button class="btn btn-edit" onclick="location.href='index.html'">View Site</button>
-        <button class="btn btn-add" onclick="prepareNewPet()">+ Add Pet</button>
+        <button id="add-pet-btn" class="btn btn-add" onclick="prepareNewPet()">+ Add Pet</button>
     </div>
   </header>
 
-  <div id="pet-form-container">
-    <h2 id="form-title" style="margin-top:0; font-size: 20px;">Add New Pet</h2>
-    <form id="pet-form">
-      <input type="hidden" id="pet-id">
-      <div class="form-grid">
-        <div class="full-width">
-            <label>Images (Can select multiple)</label>
-            <input type="file" id="pet-files" accept="image/*" multiple style="padding: 8px;">
-        </div>
-        <div><label>Pet Name</label><input type="text" id="pet-name" required placeholder="Ex: Blue Betta"></div>
-        <div><label>Price (Rs.)</label><input type="number" id="pet-price" required placeholder="0.00"></div>
-        
-        <div>
-            <label>Category</label>
-            <select id="pet-category" required>
-                <option value="" disabled selected>Select a category</option>
-                <option value="fish">Fish</option>
-                <option value="birds">Birds</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-
-        <div>
-            <label>Sale Unit (Single/Pair)</label>
-            <select id="pet-unit" required>
-                <option value="Single">Single</option>
-                <option value="Pair">Pair</option>
-            </select>
-        </div>
-
-        <div><label>Age</label><input type="text" id="pet-age" placeholder="Ex: 6 Months"></div>
-        <div><label>Size</label><input type="text" id="pet-size" placeholder="Ex: Large"></div>
-        <div class="full-width"><label>Description</label><textarea id="pet-desc" rows="3" placeholder="Describe the pet..."></textarea></div>
-        <div><label>Coloration</label><input type="text" id="pet-color" placeholder="Ex: Red/White"></div>
-        <div><label>Health Status</label><input type="text" id="pet-health" placeholder="Ex: Excellent"></div>
-      </div>
-      <div style="display: flex; gap: 10px; margin-top: 30px;">
-        <button type="submit" id="submit-btn" class="btn btn-add" style="flex: 2;">Save Pet</button>
-        <button type="button" onclick="toggleForm()" class="btn btn-edit" style="flex: 1;">Cancel</button>
-      </div>
-    </form>
+  <div class="view-tabs">
+      <button class="tab-btn active" onclick="switchView('inventory')">Inventory</button>
+      <button class="tab-btn" onclick="switchView('community')">Community Members</button>
   </div>
 
-  <div id="inventory-list">
-    <div class="inventory-grid" id="pets-container">
-        <!-- Pets load here -->
+  <div id="inventory-view">
+    <div id="pet-form-container">
+        <h2 id="form-title" style="margin-top:0; font-size: 20px;">Add New Pet</h2>
+        <form id="pet-form">
+          <input type="hidden" id="pet-id">
+          <div class="form-grid">
+            <div class="full-width">
+                <label>Images (Can select multiple)</label>
+                <input type="file" id="pet-files" accept="image/*" multiple style="padding: 8px;">
+            </div>
+            <div><label>Pet Name</label><input type="text" id="pet-name" required placeholder="Ex: Blue Betta"></div>
+            <div><label>Price (Rs.)</label><input type="number" id="pet-price" required placeholder="0.00"></div>
+            
+            <div>
+                <label>Category</label>
+                <select id="pet-category" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="fish">Fish</option>
+                    <option value="birds">Birds</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+    
+            <div>
+                <label>Sale Unit (Single/Pair)</label>
+                <select id="pet-unit" required>
+                    <option value="Single">Single</option>
+                    <option value="Pair">Pair</option>
+                </select>
+            </div>
+    
+            <div><label>Age</label><input type="text" id="pet-age" placeholder="Ex: 6 Months"></div>
+            <div><label>Size</label><input type="text" id="pet-size" placeholder="Ex: Large"></div>
+            <div class="full-width"><label>Description</label><textarea id="pet-desc" rows="3" placeholder="Describe the pet..."></textarea></div>
+            <div><label>Coloration</label><input type="text" id="pet-color" placeholder="Ex: Red/White"></div>
+            <div><label>Health Status</label><input type="text" id="pet-health" placeholder="Ex: Excellent"></div>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 30px;">
+            <button type="submit" id="submit-btn" class="btn btn-add" style="flex: 2;">Save Pet</button>
+            <button type="button" onclick="toggleForm()" class="btn btn-edit" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+    </div>
+    
+    <div id="inventory-list">
+        <div class="inventory-grid" id="pets-container">
+            <!-- Pets load here -->
+        </div>
     </div>
   </div>
+
+  <div id="community-view" style="display: none;">
+      <div class="subscriber-list" id="subscribers-container">
+          <!-- Subscribers load here -->
+      </div>
+  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -171,8 +197,72 @@
           document.getElementById('login-gate').style.display = 'none';
           document.getElementById('admin-main').style.display = 'block';
           loadInventory();
+          loadSubscribers();
       } else {
           alert('Invalid Password');
+      }
+  }
+
+  function switchView(view) {
+      const invView = document.getElementById('inventory-view');
+      const commView = document.getElementById('community-view');
+      const addBtn = document.getElementById('add-pet-btn');
+      const tabs = document.querySelectorAll('.tab-btn');
+      const title = document.getElementById('page-title');
+
+      tabs.forEach(t => t.classList.remove('active'));
+
+      if(view === 'inventory') {
+          invView.style.display = 'block';
+          commView.style.display = 'none';
+          addBtn.style.visibility = 'visible';
+          tabs[0].classList.add('active');
+          title.innerText = "Inventory";
+          loadInventory();
+      } else {
+          invView.style.display = 'none';
+          commView.style.display = 'block';
+          addBtn.style.visibility = 'hidden';
+          tabs[1].classList.add('active');
+          title.innerText = "Community Members";
+          loadSubscribers();
+      }
+  }
+
+  async function loadSubscribers() {
+      const { data, error } = await supabaseClient
+          .from('subscribers')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+      const container = document.getElementById('subscribers-container');
+      
+      if (error) {
+          console.error("Error loading subscribers:", error);
+          container.innerHTML = `<div style="padding:40px; text-align:center; color:red;">Database access error. Check RLS policies.</div>`;
+          return;
+      }
+
+      if (!data || data.length === 0) {
+          container.innerHTML = `<div style="padding:40px; text-align:center; color:#86868b;">No community members yet.</div>`;
+          return;
+      }
+
+      container.innerHTML = data.map(sub => `
+          <div class="sub-item">
+              <div class="sub-info">
+                  <h5>${sub.email}</h5>
+                  <span>Joined on: ${new Date(sub.created_at).toLocaleDateString()}</span>
+              </div>
+              <button class="btn btn-del" onclick="deleteSubscriber(${sub.id})">Remove</button>
+          </div>
+      `).join('');
+  }
+
+  async function deleteSubscriber(id) {
+      if(confirm('Remove this email from the community list?')) {
+          await supabaseClient.from('subscribers').delete().eq('id', id);
+          loadSubscribers();
       }
   }
 
@@ -199,7 +289,6 @@
     
     data.forEach(pet => {
       const displayImg = (pet.images && pet.images.length > 0) ? pet.images[0] : (pet.image_url || '');
-      // Clean unit display
       const cleanUnit = (pet.unit || 'Single').replace(/['"]+/g, '');
       
       const div = document.createElement('div');
@@ -229,7 +318,6 @@
     document.getElementById('pet-name').value = data.name || '';
     document.getElementById('pet-price').value = data.price || '';
     document.getElementById('pet-category').value = data.category || ''; 
-    // Clean unit data when loading into the dropdown
     document.getElementById('pet-unit').value = (data.unit || 'Single').replace(/['"]+/g, ''); 
     document.getElementById('pet-age').value = data.age || '';
     document.getElementById('pet-desc').value = data.description || '';
