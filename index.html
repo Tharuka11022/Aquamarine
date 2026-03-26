@@ -63,7 +63,7 @@
     .search-wrapper { 
         background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
         padding: 6px; border-radius: 100px; display: flex; border: 1px solid rgba(255,255,255,0.3);
-        transition: 0.4s var(--easing);
+        transition: 0.4s var(--easing); align-items: center;
     }
     .search-wrapper:focus-within { background: rgba(255,255,255,0.3); box-shadow: 0 0 0 4px rgba(56,161,105,0.3); }
     
@@ -294,9 +294,9 @@
         .gift-fab-container { bottom: 20px; right: 20px; }
         .gift-btn { width: 55px; height: 55px; font-size: 1.2rem; }
         .gift-reveal-card { width: 240px; bottom: 70px; right: -5px; padding: 20px; }
-        .search-wrapper { padding: 4px; }
-        #pet-search { padding: 10px 15px; font-size: 0.95rem; }
-        .search-wrapper button { padding: 8px 15px; font-size: 0.75rem; }
+        .search-wrapper { padding: 4px; align-items: center; }
+        #pet-search { padding: 10px 15px; font-size: 0.95rem; min-width: 0; }
+        .search-wrapper button { padding: 8px 15px; font-size: 0.75rem; flex-shrink: 0; }
         .steps-container { gap: 1.5rem; }
         #detail-view { padding-top: 70px; }
 
