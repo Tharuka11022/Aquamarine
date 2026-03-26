@@ -1,3 +1,5 @@
+--- START OF FILE Paste March 26, 2026 - 9:15PM ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,6 +164,15 @@
     .pet-card:hover img { transform: scale(1.05); }
     .pet-tag { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; color: var(--primary); z-index: 5; }
 
+    /* Map Section Styles */
+    .map-wrapper { position: relative; border-radius: 40px; overflow: hidden; height: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; }
+    .map-info-card { position: absolute; top: 40px; left: 40px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 35px; border-radius: 30px; max-width: 350px; z-index: 10; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid white; }
+    .map-info-card h4 { font-family: 'Baloo 2'; font-size: 1.8rem; color: var(--dark); margin-bottom: 15px; }
+    .map-info-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; }
+    .map-info-card i { color: var(--primary); margin-top: 4px; }
+    .directions-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--dark); color: white; padding: 15px; border-radius: 15px; text-decoration: none; font-weight: 700; transition: 0.3s; }
+    .directions-btn:hover { background: var(--primary); transform: translateY(-3px); }
+
     /* Category Transition Animation */
     @keyframes petFade {
         from { opacity: 0; transform: translateY(10px); }
@@ -202,6 +213,9 @@
     @media (max-width: 900px) {
         .footer-grid { grid-template-columns: 1fr 1fr; }
         .stats-bar { border-radius: 0; width: 100%; }
+        .map-info-card { position: static; max-width: 100%; border-radius: 25px; margin-bottom: 20px; background: #f8fafc; }
+        .map-wrapper { height: auto; border-radius: 25px; display: flex; flex-direction: column; }
+        .map-wrapper iframe { height: 350px; }
     }
     @media (max-width: 600px) {
         section { padding: 3.5rem 6%; }
@@ -318,6 +332,10 @@
         #community-form > div { flex-direction: column !important; background: transparent !important; box-shadow: none !important; gap: 12px; padding: 0 !important; }
         #community-email { border-radius: 18px !important; background: white !important; padding: 18px 25px !important; width: 100% !important; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         #community-submit { border-radius: 18px !important; padding: 18px !important; width: 100% !important; font-size: 1rem !important; }
+
+        /* Mobile Map Adjustments */
+        .map-wrapper iframe { display: none; }
+        .map-wrapper { height: auto; border: none; box-shadow: none; overflow: visible; }
     }
   </style>
 </head>
@@ -489,6 +507,29 @@
                 </div>
                 <p id="community-msg" style="margin-top: 15px; font-size: 0.9rem; font-weight: 600; display: none;"></p>
             </form>
+        </div>
+    </section>
+
+    <section id="visit-us" class="reveal">
+        <div class="section-header">
+            <h2>Visit Our Showroom</h2>
+            <p>Experience the beauty and grace of our companions in person.</p>
+        </div>
+        <div class="map-wrapper">
+            <div class="map-info-card">
+                <h4>Aquamarine Premium Pets</h4>
+                <p><i class="fa-solid fa-location-dot"></i> 93C, Uthuwankanda Road<br>Thalawathugoda</p>
+                <p><i class="fa-solid fa-clock"></i> Open Daily: 12:00 AM - 12:00 PM</p>
+                <p><i class="fa-solid fa-phone"></i> +94 74 293 4189</p>
+                <a href="https://maps.google.com" target="_blank" class="directions-btn">
+                    <i class="fa-solid fa-diamond-turn-right"></i> GET DIRECTIONS
+                </a>
+            </div>
+            <!-- Replace the src below with your actual Google Maps Embed Link -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.1386514115884!2d79.9423288!3d6.873985800000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25199e567fd11%3A0x30e03986d9871911!2sAquamarine%20%7C%20Premium%20Pets!5e0!3m2!1sen!2slk!4v1774539208770!5m2!1sen!2slk" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </section>
 
