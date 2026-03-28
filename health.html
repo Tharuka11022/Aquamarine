@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Health Warranty | Aquamarine Premium Pets</title>
+  
+  <link rel="icon" type="image/png" href="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/aqua.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root { 
+        --primary: #38a169; 
+        --primary-dark: #2f855a; 
+        --primary-light: #c6f6d5; 
+        --dark: #0f172a;
+        --text-main: #1a202c;
+        --text-muted: #64748b;
+        --bg-body: #ffffff;
+        --bg-section: #f8fafc;
+        --border-color: #f1f5f9;
+        --easing: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { line-height: 1.6; color: var(--text-main); background-color: var(--bg-body); overflow-x: hidden; }
+    
+    /* Navigation Wrapper */
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Baloo 2', cursive; font-size: 1.6rem; color: var(--primary); font-weight: 800; cursor: pointer; text-transform: uppercase; text-decoration: none; }
+
+    /* Hero Section */
+    .warranty-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 160px 5% 100px;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    .warranty-hero::before {
+        content: ''; position: absolute; top: -50%; left: -10%; width: 40%; height: 100%;
+        background: radial-gradient(circle, rgba(56, 161, 105, 0.15) 0%, transparent 70%);
+        transform: rotate(-20deg);
+    }
+    .warranty-hero h1 { font-family: 'Baloo 2'; font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; line-height: 1; }
+    .badge { background: var(--primary); color: white; padding: 8px 20px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: inline-block; }
+
+    /* Content Layout */
+    .container { max-width: 1100px; margin: -50px auto 100px; padding: 0 5%; position: relative; z-index: 10; }
+    
+    .main-card {
+        background: white;
+        padding: 60px;
+        border-radius: 40px;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+        border: 1px solid var(--border-color);
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 50px; }
+    
+    .info-box {
+        padding: 35px;
+        border-radius: 30px;
+        background: var(--bg-section);
+        border: 1px solid var(--border-color);
+        transition: 0.3s;
+    }
+    .info-box:hover { transform: translateY(-5px); border-color: var(--primary-light); }
+    .info-box i { font-size: 2rem; color: var(--primary); margin-bottom: 20px; display: block; }
+    .info-box h3 { font-family: 'Baloo 2'; font-size: 1.5rem; margin-bottom: 15px; }
+    .info-box p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* Specific Warranty List */
+    .policy-section { margin-top: 60px; }
+    .policy-item { 
+        display: flex; gap: 20px; padding: 25px 0; 
+        border-bottom: 1px solid var(--border-color);
+    }
+    .policy-icon { 
+        flex-shrink: 0; width: 45px; height: 45px; background: var(--primary-light); 
+        color: var(--primary-dark); border-radius: 50%; display: flex; 
+        align-items: center; justify-content: center; font-weight: 800;
+    }
+    .policy-content h4 { font-size: 1.1rem; margin-bottom: 8px; }
+    .policy-content p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* Alert Box */
+    .owner-pledge {
+        background: #fffaf0; border: 1px dashed #ed8936;
+        padding: 40px; border-radius: 30px; margin-top: 60px;
+    }
+    .owner-pledge h3 { color: #c05621; font-family: 'Baloo 2'; margin-bottom: 15px; }
+
+    /* Footer / CTA */
+    .cta-footer { text-align: center; margin-top: 80px; }
+    .btn { 
+        display: inline-flex; align-items: center; gap: 12px; 
+        background: var(--primary); color: white; padding: 18px 35px; 
+        border-radius: 50px; text-decoration: none; font-weight: 800; 
+        transition: 0.3s; box-shadow: 0 10px 25px rgba(56, 161, 105, 0.3);
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+    @media (max-width: 768px) {
+        .main-card { padding: 40px 25px; border-radius: 30px; }
+        .warranty-hero { padding: 140px 5% 80px; }
+        .grid { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+    <a href="https://aquamarine-flax.vercel.app/" class="logo">AQUAMARINE</a>
+    <a href="https://aquamarine-flax.vercel.app/" style="text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 0.9rem;">
+        <i class="fa-solid fa-arrow-left"></i> Home
+    </a>
+</nav>
+
+<div class="warranty-hero">
+    <div class="badge">Peace of Mind Guaranteed</div>
+    <h1>Comprehensive <br>Health Warranty</h1>
+    <p style="max-width: 600px; margin: 0 auto; opacity: 0.8; font-size: 1.1rem;">At Aquamarine, we don't just sell pets; we facilitate lifetimes of joy. Our industry-leading warranty ensures your new family member is protected from day one.</p>
+</div>
+
+<div class="container">
+    <div class="main-card">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h2 style="font-family: 'Baloo 2'; font-size: 2.2rem;">The Aquamarine Promise</h2>
+            <div style="width: 60px; height: 4px; background: var(--primary); margin: 15px auto; border-radius: 10px;"></div>
+        </div>
+
+        <div class="grid">
+            <div class="info-box">
+                <i class="fa-solid fa-file-medical"></i>
+                <h3>Pre-Departure Shield</h3>
+                <p>Every companion undergoes a final 48-hour observation and a comprehensive veterinary check before being cleared for travel.</p>
+            </div>
+            <div class="info-box">
+                <i class="fa-solid fa-dna"></i>
+                <h3>Congenital Cover</h3>
+                <p>We provide a 1-year guarantee against life-threatening congenital or hereditary defects, ensuring elite lineage quality.</p>
+            </div>
+            <div class="info-box">
+                <i class="fa-solid fa-shield-virus"></i>
+                <h3>Viral Protection</h3>
+                <p>A 14-day comprehensive viral guarantee covering major species-specific illnesses from the moment of arrival.</p>
+            </div>
+        </div>
+
+        <div class="policy-section">
+            <h2 style="font-family: 'Baloo 2'; font-size: 1.8rem; margin-bottom: 30px;">Detailed Coverage</h2>
+            
+            <div class="policy-item">
+                <div class="policy-icon">1</div>
+                <div class="policy-content">
+                    <h4>Initial Health Window</h4>
+                    <p>The owner must have the pet examined by a licensed veterinarian within 72 hours of arrival. This validates the warranty and ensures a professional baseline for your pet's health.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="policy-icon">2</div>
+                <div class="policy-content">
+                    <h4>Viral Illness Guarantee</h4>
+                    <p>If the pet is diagnosed with a life-threatening viral disease (such as Parvovirus for dogs or PBFD for birds) within the first 14 days, Aquamarine will provide a full replacement or cover authorized medical costs.</p>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="policy-icon">3</div>
+                <div class="policy-content">
+                    <h4>Genetic Integrity</h4>
+                    <p>Should a life-threatening hereditary defect be discovered within 12 months, we provide a replacement of equal value. Documentation from two independent veterinarians is required for genetic claims.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="owner-pledge">
+            <h3><i class="fa-solid fa-hand-holding-heart"></i> The Owner's Pledge</h3>
+            <p style="font-size: 0.95rem; color: #7b341e;">The health of a companion is a partnership. This warranty is valid only if the pet is provided with a safe environment, age-appropriate nutrition, and recommended vaccinations. It does not cover accidental injury, neglect, or common minor ailments such as stress-induced parasites which are easily treatable upon arrival.</p>
+        </div>
+
+        <div class="cta-footer">
+            <h3 style="font-family: 'Baloo 2'; margin-bottom: 20px;">Have questions about our policy?</h3>
+            <a href="https://wa.me/94742934189" class="btn">
+                <i class="fab fa-whatsapp"></i> CHAT WITH AN EXPERT
+            </a>
+            <p style="margin-top: 20px; font-size: 0.8rem; color: var(--text-muted);">Last Updated: March 2026 • Aquamarine Premium Pets</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

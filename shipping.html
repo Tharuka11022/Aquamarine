@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipping Policy | Aquamarine Premium Pets</title>
+  
+  <link rel="icon" type="image/png" href="https://bbkzmqupvtvhqcjaxmcw.supabase.co/storage/v1/object/public/Website/aqua.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root { 
+        --primary: #38a169; 
+        --primary-dark: #2f855a; 
+        --primary-light: #c6f6d5; 
+        --dark: #1a202c;
+        --text-main: #1a202c;
+        --text-muted: #64748b;
+        --bg-body: #ffffff;
+        --bg-section: #f8fafc;
+        --border-color: #f1f5f9;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { line-height: 1.6; color: var(--text-main); background-color: var(--bg-body); overflow-x: hidden; }
+    
+    /* Navigation */
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Baloo 2', cursive; font-size: 1.6rem; color: var(--primary); font-weight: 800; text-decoration: none; text-transform: uppercase; }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, var(--dark) 0%, #2d3748 100%);
+        padding: 160px 5% 100px;
+        text-align: center;
+        color: white;
+    }
+    .hero h1 { font-family: 'Baloo 2'; font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; line-height: 1.1; }
+    .hero p { max-width: 600px; margin: 0 auto; opacity: 0.9; font-size: 1.1rem; }
+
+    /* Main Content */
+    .container { max-width: 1100px; margin: -50px auto 100px; padding: 0 5%; }
+    
+    .policy-card {
+        background: white;
+        padding: 60px;
+        border-radius: 40px;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+        border: 1px solid var(--border-color);
+    }
+
+    /* Grid Features */
+    .shipping-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 60px; }
+    .ship-item { text-align: center; padding: 30px; background: var(--bg-section); border-radius: 30px; transition: 0.3s; }
+    .ship-item:hover { transform: translateY(-5px); background: var(--primary-light); }
+    .ship-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; display: block; }
+    .ship-item h4 { font-family: 'Baloo 2'; font-size: 1.3rem; margin-bottom: 10px; }
+    .ship-item p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* Detailed Policy Text */
+    .detail-section { margin-top: 50px; }
+    .detail-block { margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
+    .detail-block:last-child { border: none; }
+    .detail-block h3 { font-family: 'Baloo 2'; font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 15px; display: flex; align-items: center; gap: 15px; }
+    .detail-block h3 i { font-size: 1.4rem; opacity: 0.5; }
+    .detail-block p { color: var(--text-muted); margin-bottom: 15px; }
+    .detail-block ul { list-style: none; }
+    .detail-block li { position: relative; padding-left: 25px; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; }
+    .detail-block li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+
+    /* Unboxing Protocol Alert */
+    .unboxing-alert {
+        background: #ebf8ff; border: 1px solid #90cdf4;
+        padding: 35px; border-radius: 30px; margin-top: 40px;
+        display: flex; gap: 25px; align-items: center;
+    }
+    .unboxing-alert i { font-size: 3rem; color: #4299e1; }
+    .unboxing-alert h4 { font-family: 'Baloo 2'; font-size: 1.4rem; color: #2b6cb0; margin-bottom: 5px; }
+    .unboxing-alert p { font-size: 0.9rem; color: #2c5282; }
+
+    /* CTA */
+    .footer-cta { text-align: center; margin-top: 80px; }
+    .btn-wa { 
+        display: inline-flex; align-items: center; gap: 12px; background: #25D366; color: white; 
+        padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; transition: 0.3s; 
+    }
+    .btn-wa:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3); }
+
+    @media (max-width: 768px) {
+        .policy-card { padding: 40px 25px; }
+        .unboxing-alert { flex-direction: column; text-align: center; }
+        .hero { padding: 140px 5% 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+    <a href="https://aquamarine-flax.vercel.app/" class="logo">AQUAMARINE</a>
+    <a href="https://aquamarine-flax.vercel.app/" style="text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 0.9rem;">
+        <i class="fa-solid fa-arrow-left"></i> Home
+    </a>
+</nav>
+
+<div class="hero">
+    <h1>Safe Passage. <br>Elite Logistics.</h1>
+    <p>Ensuring your premium companions arrive in the same pristine condition they left our care.</p>
+</div>
+
+<div class="container">
+    <div class="policy-card">
+        <div class="shipping-grid">
+            <div class="ship-item">
+                <i class="fa-solid fa-temperature-half"></i>
+                <h4>Climate Control</h4>
+                <p>Advanced temperature-regulated transport systems.</p>
+            </div>
+            <div class="ship-item">
+                <i class="fa-solid fa-wind"></i>
+                <h4>Oxygen Flow</h4>
+                <p>Active aeration and ventilation for all species.</p>
+            </div>
+            <div class="ship-item">
+                <i class="fa-solid fa-truck-fast"></i>
+                <h4>Priority Lane</h4>
+                <p>Direct routes to minimize transit stress.</p>
+            </div>
+            <div class="ship-item">
+                <i class="fa-solid fa-shield-heart"></i>
+                <h4>Live Arrival</h4>
+                <p>100% Guaranteed safe arrival at your doorstep.</p>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-block">
+                <h3><i class="fa-solid fa-map-location-dot"></i> Delivery Coverage</h3>
+                <p>Aquamarine provides professional pet logistics across the entire island. Our delivery zones are divided to ensure maximum speed:</p>
+                <ul>
+                    <li><strong>Colombo & Suburbs:</strong> Same-day delivery available for orders placed before 10:00 AM.</li>
+                    <li><strong>Island-wide:</strong> Scheduled VIP transport within 24-48 hours depending on species requirements.</li>
+                </ul>
+            </div>
+
+            <div class="detail-block">
+                <h3><i class="fa-solid fa-box-open"></i> Professional Packaging</h3>
+                <p>We use industry-leading bio-secure packaging tailored to each specific companion:</p>
+                <ul>
+                    <li><strong>Aquatics:</strong> Double-layered leak-proof bags with medical-grade oxygen and thermal insulation.</li>
+                    <li><strong>Birds:</strong> Stress-reducing darkened transport carriers with non-slip flooring and hydration access.</li>
+                    <li><strong>Exotics:</strong> Secure, escape-proof, and ventilated specialized transit containers.</li>
+                </ul>
+            </div>
+
+            <div class="detail-block">
+                <h3><i class="fa-solid fa-hand-holding-dollar"></i> Shipping Rates</h3>
+                <p>Shipping costs are calculated based on distance and the complexity of the life-support systems required during transit.</p>
+                <ul>
+                    <li>Rates start from Rs. 500 for local deliveries.</li>
+                    <li>Island-wide VIP specialized transport rates are provided during the final consultation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="unboxing-alert">
+            <i class="fa-solid fa-video"></i>
+            <div>
+                <h4>The Safe Arrival Protocol</h4>
+                <p>For your 100% Live Arrival Guarantee to be valid, we require a continuous, unedited <strong>unboxing video</strong> starting from the sealed package until the pet is visible. This helps us ensure the highest standards of safety for future journeys.</p>
+            </div>
+        </div>
+
+        <div class="footer-cta">
+            <h3 style="font-family: 'Baloo 2'; margin-bottom: 20px;">Ready to schedule your delivery?</h3>
+            <a href="https://wa.me/94742934189" class="btn-wa">
+                <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> DISPATCH CONSULTATION
+            </a>
+            <p style="margin-top: 25px; font-size: 0.8rem; color: var(--text-muted);">&copy; 2026 Aquamarine Premium Pets Logistics Team</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
