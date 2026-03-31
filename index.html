@@ -785,7 +785,26 @@
       const imgs = pet.images && pet.images.length > 0 ? pet.images : [pet.image_url];
       
       const cleanUnit = (pet.unit || 'Premium').replace(/['"]/g, '');
-      const waMessage = `Hello I’m interested in buying:%0A%0APet: ${pet.name} (${cleanUnit})%0APrice: Rs. ${pet.price}`;
+      const basePrice = parseInt(pet.price.toString().replace(/[^0-9]/g, '')) || 0;
+
+      // Global update function for the quantity selector
+      window.updateDetailQty = (change) => {
+          const qtyEl = document.getElementById('pet-qty-num');
+          const priceDisplay = document.getElementById('dynamic-detail-price');
+          const waLink = document.getElementById('wa-order-link');
+          
+          let currentQty = parseInt(qtyEl.innerText) + change;
+          if (currentQty < 1) currentQty = 1;
+          
+          qtyEl.innerText = currentQty;
+          const total = basePrice * currentQty;
+          priceDisplay.innerText = "Rs. " + total.toLocaleString();
+
+          const updatedMessage = `Hello I’m interested in buying:%0A%0APet: ${pet.name} (${cleanUnit})%0AQuantity: ${currentQty}%0ATotal Price: Rs. ${total.toLocaleString()}`;
+          waLink.setAttribute('onclick', `window.open('https://wa.me/${myNumber}?text=${updatedMessage}')`);
+      };
+
+      const initialWaMessage = `Hello I’m interested in buying:%0A%0APet: ${pet.name} (${cleanUnit})%0AQuantity: 1%0ATotal Price: Rs. ${basePrice.toLocaleString()}`;
 
       document.getElementById('detail-content').innerHTML = `
         <div class="mobile-detail-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:60px;">
@@ -798,10 +817,22 @@
             <div style="animation: fadeIn 1s var(--easing) 0.2s backwards;">
                 <span style="color:var(--primary); font-weight:800; font-size:0.8rem; text-transform:uppercase; letter-spacing:2px;">${pet.category || 'Premium Selection'}</span>
                 <h1 style="font-size:3.5rem; font-family:'Baloo 2'; line-height:1; margin: 10px 0;">${pet.name}</h1>
-                <p class="mobile-detail-price" style="font-size:2.5rem; color:var(--primary); font-weight:900; margin-bottom: 30px;">Rs. ${pet.price}</p>
+                <p id="dynamic-detail-price" class="mobile-detail-price" style="font-size:2.5rem; color:var(--primary); font-weight:900; margin-bottom: 30px;">Rs. ${basePrice.toLocaleString()}</p>
+                
                 <div class="mobile-profile-card" style="background:var(--bg-section); padding:30px; border-radius:25px; margin-bottom:30px;">
                     <h4 style="margin-bottom:10px;"><i class="fa-solid fa-circle-info"></i> Companion Profile</h4>
                     <p style="color:var(--text-muted); line-height:1.8; margin-bottom:20px;">${pet.description || 'This premium specimen has been vetted for temperament and health. It comes with our standard health guarantee and a pedigree certificate.'}</p>
+                    
+                    <!-- Quantity Selector -->
+                    <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); padding:15px 20px; border-radius:20px; margin-bottom:20px; border:1px solid var(--border-color);">
+                        <span style="font-weight:700; font-size:0.9rem; color:var(--text-main);">Select Quantity</span>
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <button onclick="updateDetailQty(-1)" style="width:36px; height:36px; border-radius:12px; border:1.5px solid var(--primary); background:transparent; color:var(--primary); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.3s;"><i class="fa-solid fa-minus"></i></button>
+                            <span id="pet-qty-num" style="font-weight:800; font-size:1.3rem; min-width:30px; text-align:center; color:var(--text-main);">1</span>
+                            <button onclick="updateDetailQty(1)" style="width:36px; height:36px; border-radius:12px; border:none; background:var(--primary); color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.3s;"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Vet Checked</span>
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Pure Breed</span>
@@ -809,7 +840,7 @@
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Life Support</span>
                     </div>
                 </div>
-                <button onclick="window.open('https://wa.me/${myNumber}?text=${waMessage}')" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3); transition:0.4s var(--easing-bounce);">
+                <button id="wa-order-link" onclick="window.open('https://wa.me/${myNumber}?text=${initialWaMessage}')" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3); transition:0.4s var(--easing-bounce);">
                     <i class="fab fa-whatsapp" style="font-size:1.6rem;"></i> Order ON WHATSAPP
                 </button>
             </div>
