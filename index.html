@@ -801,7 +801,7 @@
           priceDisplay.innerText = "Rs. " + total.toLocaleString();
 
           const updatedMessage = `Hello I’m interested in buying:%0A%0APet: ${pet.name} (${cleanUnit})%0AQuantity: ${currentQty}%0ATotal Price: Rs. ${total.toLocaleString()}`;
-          waLink.setAttribute('onclick', `window.open('https://wa.me/${myNumber}?text=${updatedMessage}')`);
+          waLink.href = `https://wa.me/${myNumber}?text=${updatedMessage}`;
       };
 
       const initialWaMessage = `Hello I’m interested in buying:%0A%0APet: ${pet.name} (${cleanUnit})%0AQuantity: 1%0ATotal Price: Rs. ${basePrice.toLocaleString()}`;
@@ -840,9 +840,9 @@
                         <span class="mobile-feature-pill"><i class="fa-solid fa-check"></i> Life Support</span>
                     </div>
                 </div>
-                <button id="wa-order-link" onclick="window.open('https://wa.me/${myNumber}?text=${initialWaMessage}')" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3); transition:0.4s var(--easing-bounce);">
+                <a id="wa-order-link" href="https://wa.me/${myNumber}?text=${initialWaMessage}" style="width:100%; padding:22px; background:var(--primary); color:white; border:none; border-radius:20px; font-weight:800; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:15px; box-shadow:0 15px 30px rgba(56,161,105,0.3); transition:0.4s var(--easing-bounce); text-decoration:none;">
                     <i class="fab fa-whatsapp" style="font-size:1.6rem;"></i> Order ON WHATSAPP
-                </button>
+                </a>
             </div>
         </div>`;
       document.body.classList.add('showing-details');
@@ -866,7 +866,7 @@
   
   function sendCouponToWA() {
       const code = document.getElementById('coupon-code').innerText;
-      window.open(`https://wa.me/${myNumber}?text=Hello! I just claimed my 25% OFF coupon: ${code}`, '_blank');
+      window.location.href = `https://wa.me/${myNumber}?text=Hello! I just claimed my 25% OFF coupon: ${code}`;
       closeCoupon();
   }
 
